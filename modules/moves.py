@@ -1,21 +1,25 @@
+import random
+
 import pyautogui as pg
 
 from modules.screens import find_it_and_click_it
 from modules.time import delay
 
-cords_to_drag = (1650, 230)
+cords_to_drag = (1700, 430)
 cords_to_start_drag = (1650, 830)
 cords_close = (116, 132)
 
 close_anyway = "close_anyway"
 
 
-
-
 def drag_to_up():
-    delay(0.06, 0.12)
-    pg.moveTo(cords_to_drag, duration=0.1)
-    pg.drag(0, 500, 0.6)
+    delay(0.02, 0.06)
+    random_x = random.uniform(-20, 20)
+    random_y = random.uniform(-20, 20)
+    pg.moveTo(cords_to_drag[0] + random_x, cords_to_drag[1] + random_y, duration=0.1)
+    pg.mouseDown()
+    pg.moveTo(cords_to_drag[0] + random_x, cords_to_drag[1] + random_y + 310, 0.4)
+    pg.mouseUp()
 
 
 def drag_to_bottom():

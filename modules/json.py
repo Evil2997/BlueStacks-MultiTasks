@@ -9,4 +9,3 @@ def save_data(file_path, data):
 def load_data(file_path):
     with open(file_path, 'r') as jf:
         return json.load(jf)
-

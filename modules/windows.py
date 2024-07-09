@@ -10,7 +10,12 @@ ahk = AHK()
 def activate_main_window():
     full_screen = "full_screen"
     for win in ahk.list_windows():
-        if win.title.startswith("BlueStacks") and not win.title.startswith("BlueStacks Multi Instance Manager"):
+        print(win.title)
+        if (
+                win.title.startswith("BlueStacks") and
+                not win.title.startswith("BlueStacks Multi Instance Manager") and
+                not win.title.startswith("BlueStacks-MultiTasks")
+        ):
             win.activate()
             find_it_and_click_it(full_screen)
     delay()

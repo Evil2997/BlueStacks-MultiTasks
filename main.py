@@ -1,6 +1,5 @@
 import pathlib
 import time
-from datetime import datetime
 from typing import Final, Literal, List
 
 import pyautogui as pg
@@ -9,11 +8,12 @@ from ahk import AHK
 from modules.json import load_data
 from modules.moves import Close_AnyWay, drag_to_bottom, drag_to_up
 from modules.screens import find_it_and_click_it, scan_BUMP_daily_reward
-from modules.time import timer_checker, delay
-from modules.windows import main_cycle
-from modules.windows import open_vpn_telegram as ACTIVATE_WINDOW
+from modules.time import delay
 from modules.time import timer_checker as TIME_CHECK
 from modules.time import timer_update as UPDATE_TIMER
+from modules.windows import main_cycle
+from modules.windows import open_vpn_telegram as ACTIVATE_WINDOW
+
 ahk = AHK()
 
 
@@ -21,7 +21,7 @@ def PreRun(finder, chat: bool = False, chat_type: Literal["image", "click"] = "i
            chatbot_string: int = -1, chat_image_name: List[str] = None):
     if chat_type not in ["image", "click"]:
         raise ValueError("chat_type должен быть 'image' или 'click'")
-
+    # [---Start---]
     for _ in range(16):
         if find_it_and_click_it(main_group):
             break
@@ -33,15 +33,14 @@ def PreRun(finder, chat: bool = False, chat_type: Literal["image", "click"] = "i
             drag_to_up()
         else:
             break
-    delay(4, 5)
     if chat:
+        delay(4, 5)
         if chat_type == "click":
             pg.click(click_to_bottom_in_BotChat[chatbot_string])
         elif chat_type == "image":
             for name in chat_image_name:
                 find_it_and_click_it(name)
                 delay(3, 4)
-
     delay(16, 20)
 
 
@@ -59,11 +58,10 @@ def Run_Diamond():
     PreRun(find_Diamond)
     # ToDo: Only num5 clicker
     pg.click(click_diamonds)
-    delay(0.4, 0.6)
     pg.press("num5")
-    delay(9.5, 10.2)
+    delay(10, 11)
     pg.press("num5")
-    delay(0.4, 0.6)
+    delay()
     pg.click(click_diamonds[0], click_diamonds[1] + 80)
     Close_AnyWay()
 
@@ -79,7 +77,7 @@ def Run_Clayton():
 
 
 def Run_BUMP():
-    PreRun(find_BUMP, chat=True, chatbot_string=0)
+    PreRun(find_BUMP, chat=True, chat_type="click", chatbot_string=0)
     scan_BUMP_daily_reward()
     delay(2, 3)
     for _ in range(2):
@@ -161,7 +159,7 @@ def Run_SimpleCoin():
 
 
 def Run_BEE():
-    PreRun(find_BEE, chat=True, chatbot_string=0)
+    PreRun(find_BEE, chat=True, chat_type="click", chatbot_string=0)
     pg.press("num9")
     delay(7, 8)
     main_cycle(upgrades_BEE)
@@ -184,7 +182,8 @@ def Run_ElonMusk():
 
 def Run_TimeFarm():
     PreRun(find_TimeFarm)
-    pg.click(TimeFarm_daily_reward)
+    find_it_and_click_it(TimeFarm_daily_reward)
+    delay()
     for _ in range(2):
         pg.click(FarmingTime)
         delay(3, 4)
@@ -202,6 +201,7 @@ def main():
                         if TIME_CHECK(seconds=sec, window_number=i, game=game, settings_file=settings_file):
                             ACTIVATE = True
                     if ACTIVATE:
+                        # time.sleep(3)
                         ACTIVATE_WINDOW(win, i)
                         print("Текущее время:", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
                         for game, value in Game_Details.items():
@@ -232,19 +232,11 @@ if __name__ == '__main__':
         "SimpleCoin": {"seconds": 28800, "function": Run_SimpleCoin},
         "ElonMusk": {"seconds": 10800, "function": Run_ElonMusk},
         "BEE": {"seconds": 14400, "function": Run_BEE},
-        # "TimeFarm": {"seconds": 14400, "function": Run_TimeFarm},
-    }
-
-    WIN_START = {
-        "win0": {"cords": (540, 200)},
-        "win1": {"cords": (540, 250)},
-        "win2": {"cords": (540, 310)},
-        "win3": {"cords": (540, 360)},
-        "win4": {"cords": (540, 420)},
+        "TimeFarm": {"seconds": 14400, "function": Run_TimeFarm},
     }
 
     if True:
-        number_bottom_drags = 25
+        number_bottom_drags = 32
         window_numbers = len(Settings)
         # [names_for_images]-[main]-[START]
         connect_to_vpn = ["collapse_all_windows", "check_all_windows",
@@ -329,7 +321,7 @@ if __name__ == '__main__':
         FarmingTime = (1000, 800)
 
         # ToDo: Set cords
-        TimeFarm_daily_reward = ()
+        TimeFarm_daily_reward = "TimeFarm_daily_reward"
 
     # [RUN_SCRIPT]-[START]
     main()

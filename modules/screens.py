@@ -1,8 +1,9 @@
 import os
 
-import pyautogui as pg
-import numpy as np
 import cv2
+import numpy as np
+import pyautogui as pg
+from PIL import ImageGrab
 
 from modules.time import delay
 
@@ -25,7 +26,8 @@ def find_template_on_region(Image_Name, region=(0, 0, 1920, 1080)):
     """
     template_path = f"Images/{Image_Name}.png"
     (x1, y1, x2, y2) = region
-    screenshot = np.array(pg.screenshot(region=(x1, y1, x2 - x1, y2 - y1)))
+    # ToDo: pip install pillow
+    screenshot = np.array(ImageGrab.grab(bbox=(x1, y1, x2 - x1, y2 - y1)))
     template = cv2.imread(template_path, cv2.IMREAD_GRAYSCALE)
     if template is None:
         raise FileNotFoundError(f"Template image not found: {template_path}")
@@ -35,7 +37,7 @@ def find_template_on_region(Image_Name, region=(0, 0, 1920, 1080)):
     result = cv2.matchTemplate(screenshot_gray, template, cv2.TM_CCOEFF_NORMED)
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
 
-    threshold = 0.85
+    threshold = 0.92
     if max_val >= threshold:
         top_left = (max_loc[0] + region[0], max_loc[1] + region[1])
     else:
@@ -47,9 +49,11 @@ def find_it_and_click_it(NAME, region=(0, 0, 1920, 1080)):
     top_left = find_template_on_region(NAME, region)
     width, height = get_image_size(NAME)
     if top_left:
+        print(NAME, "+++НАШЕЛ")
         pg.click(top_left[0] + width / 2, top_left[1] + height / 2)
         return True
     else:
+        print(NAME, "---НЕ НАШЕЛ")
         return False
 
 
