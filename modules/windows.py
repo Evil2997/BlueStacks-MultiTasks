@@ -32,3 +32,30 @@ def main_cycle(NAMES, special_name_number=-1, special_name=False, width_multipli
             if len(NAMES) == 1:
                 return result
         delay()
+
+
+def open_vpn_telegram(win, win_numeric):
+    i = win_numeric
+    WIN_START = {
+        "win0": {"cords": (540, 200)},
+        "win1": {"cords": (540, 250)},
+        "win2": {"cords": (540, 310)},
+        "win3": {"cords": (540, 360)},
+        "win4": {"cords": (540, 420)},
+    }
+
+    connect_to_vpn = ["collapse_all_windows", "check_all_windows",
+                      "clear_all", "ProtonVPN", "ActivateVPN",
+                      "collapse_all_windows"]
+
+    open_telegram = ["collapse_all_windows", "Telegram", "main_group"]
+
+    for _ in range(16):
+        win.activate()
+        win.move(0, 0)
+        delay(0.01, 0.04)
+    pg.click(WIN_START[f"win{i}"]["cords"])
+    delay(25, 30)
+    activate_main_window()
+    main_cycle(connect_to_vpn, Delay=True, delay_numeric=4)
+    main_cycle(open_telegram)

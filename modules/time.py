@@ -7,8 +7,8 @@ from typing import Final
 from modules.json import save_data, load_data
 
 
-def delay(a: float = 1, b: float = 2):
-    return time.sleep(random.uniform(a, b))
+def delay(min_seconds: float = 1.0, max_seconds: float = 2.0):
+    time.sleep(random.uniform(min_seconds, max_seconds))
 
 
 def timer_checker(seconds, window_number, game, settings_file):
@@ -30,3 +30,12 @@ def timer_checker(seconds, window_number, game, settings_file):
         return True
     else:
         return False
+
+
+def timer_update(settings_file, window_numeric, game):
+    i = window_numeric
+    path_to_Settings: Final[pathlib.Path] = pathlib.Path(__file__).parent.parent / settings_file
+    Settings = load_data(path_to_Settings)
+
+    Settings[f"win{i}"][f"time_start_{game}"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    save_data(path_to_Settings, Settings)

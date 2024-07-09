@@ -1,21 +1,27 @@
 import pathlib
 import time
 from datetime import datetime
-from typing import Final
-from ahk import AHK
+from typing import Final, Literal, List
 
 import pyautogui as pg
+from ahk import AHK
 
-from modules.json import load_data, save_data
+from modules.json import load_data
 from modules.moves import Close_AnyWay, drag_to_bottom, drag_to_up
 from modules.screens import find_it_and_click_it, scan_BUMP_daily_reward
 from modules.time import timer_checker, delay
-from modules.windows import activate_main_window, main_cycle
-
+from modules.windows import main_cycle
+from modules.windows import open_vpn_telegram as ACTIVATE_WINDOW
+from modules.time import timer_checker as TIME_CHECK
+from modules.time import timer_update as UPDATE_TIMER
 ahk = AHK()
 
 
-def PreRun(finder):
+def PreRun(finder, chat: bool = False, chat_type: Literal["image", "click"] = "image",
+           chatbot_string: int = -1, chat_image_name: List[str] = None):
+    if chat_type not in ["image", "click"]:
+        raise ValueError("chat_type должен быть 'image' или 'click'")
+
     for _ in range(16):
         if find_it_and_click_it(main_group):
             break
@@ -27,13 +33,22 @@ def PreRun(finder):
             drag_to_up()
         else:
             break
+    delay(4, 5)
+    if chat:
+        if chat_type == "click":
+            pg.click(click_to_bottom_in_BotChat[chatbot_string])
+        elif chat_type == "image":
+            for name in chat_image_name:
+                find_it_and_click_it(name)
+                delay(3, 4)
+
+    delay(16, 20)
 
 
 def Run_Blum():
     PreRun(find_Blum)
-    delay(14, 16)
     pg.click(claim_reward_daily)
-    delay()
+    delay(2, 3)
     for _ in range(2):
         pg.click(claim_farm)
         delay(2, 3)
@@ -42,7 +57,7 @@ def Run_Blum():
 
 def Run_Diamond():
     PreRun(find_Diamond)
-    delay(8, 9)
+    # ToDo: Only num5 clicker
     pg.click(click_diamonds)
     delay(0.4, 0.6)
     pg.press("num5")
@@ -55,7 +70,6 @@ def Run_Diamond():
 
 def Run_Clayton():
     PreRun(find_Clayton)
-    delay(6, 7)
     pg.click(claim_daily_reward)
     delay()
     for _ in range(2):
@@ -65,24 +79,20 @@ def Run_Clayton():
 
 
 def Run_BUMP():
-    PreRun(find_BUMP)
-    delay(3, 4)
-    drag_to_bottom()
-    delay()
-    pg.click(click_to_bottom_in_BotChat)
-    delay(12, 14)
+    PreRun(find_BUMP, chat=True, chatbot_string=0)
     scan_BUMP_daily_reward()
-    delay()
+    delay(2, 3)
     for _ in range(2):
         find_it_and_click_it(green_X)
         delay(0.2, 0.5)
     for _ in range(16):
         pg.click(middle_screen)
         delay(0.2, 0.6)
+    pg.press("num3")
     for _ in range(256):
         is_it_clicked = find_it_and_click_it(click_at_moon)
-        delay(0.01, 0.04)
         if is_it_clicked:
+            pg.press("num3")
             break
         else:
             pg.click(middle_screen)
@@ -91,7 +101,6 @@ def Run_BUMP():
 
 def Run_PocketFi():
     PreRun(find_PocketFi)
-    delay(6, 7)
     main_cycle(get_daily_FiReward)
     delay()
     pg.click(get_reward_Fi)
@@ -104,7 +113,6 @@ def Run_PocketFi():
 
 def Run_HEXN():
     PreRun(find_HEXN)
-    delay(15, 18)
     pg.click(claim_reward_HEXN)
     delay()
     pg.click(start_farm_HEXN)
@@ -112,12 +120,7 @@ def Run_HEXN():
 
 
 def Run_DejenDog():
-    PreRun(find_DejenDog)
-    delay()
-    find_it_and_click_it(ChatDog_Enter)
-    delay(0.4, 0.6)
-    find_it_and_click_it(ChatDog_Start)
-    delay(6, 7)
+    PreRun(find_DejenDog, chat=True, chat_type="image", chat_image_name=[ChatDog_Enter, ChatDog_Start])
     pg.press("num3")
     delay(80, 90)
     pg.press("num3")
@@ -129,7 +132,6 @@ def Run_DejenDog():
 
 def Run_Seeds():
     PreRun(find_Seeds)
-    delay(12, 14)
     find_it_and_click_it(seeds_claim)
     delay()
     pg.click(caterpillar_claim_on_tree)
@@ -141,7 +143,6 @@ def Run_Seeds():
 
 def Run_SimpleCoin():
     PreRun(find_SimpleCoin)
-    delay(14, 16)
     for _ in range(2):
         delay()
         pg.click(claim_coins)
@@ -156,49 +157,37 @@ def Run_SimpleCoin():
     pg.press("num3")
     delay(9, 10)
     pg.press("num3")
-
     Close_AnyWay()
 
 
 def Run_BEE():
-    PreRun(find_BEE)
-    delay(2, 3)
-    pg.click(Chat_open_BEE)
-    delay(0.2, 0.4)
-    find_it_and_click_it(BEE_sure)
-    delay(14, 16)
+    PreRun(find_BEE, chat=True, chatbot_string=0)
     pg.press("num9")
     delay(7, 8)
     main_cycle(upgrades_BEE)
     delay(0.2, 0.6)
     pg.press("num9")
     delay(7, 8)
-    for _ in range(20):
-        pg.click(upgrades_BEE_stage_1)
-        delay(0.6, 1)
-    for _ in range(20):
-        pg.click(upgrades_BEE_stage_2)
-        delay(0.6, 1)
+    for stage in upgrades_BEE_stages:
+        for _ in range(20):
+            pg.click(stage)
+            delay(0.6, 1)
     for _ in range(2):
         Close_AnyWay()
 
 
 def Run_ElonMusk():
     PreRun(find_ElonMusk)
-    delay(12, 14)
     find_it_and_click_it(Musk_take)
     Close_AnyWay()
 
 
 def Run_TimeFarm():
     PreRun(find_TimeFarm)
-    delay()
-    pg.click(ChatBot_and_FarmingTime)
-    delay(10, 14)
-
+    pg.click(TimeFarm_daily_reward)
     for _ in range(2):
-        pg.click(ChatBot_and_FarmingTime)
-        delay(2, 3)
+        pg.click(FarmingTime)
+        delay(3, 4)
     Close_AnyWay()
 
 
@@ -210,28 +199,16 @@ def main():
                 for i in range(window_numbers):
                     for game, value in Game_Details.items():
                         sec = value["seconds"]
-                        if timer_checker(seconds=sec, window_number=i, game=game, settings_file=settings_file):
+                        if TIME_CHECK(seconds=sec, window_number=i, game=game, settings_file=settings_file):
                             ACTIVATE = True
                     if ACTIVATE:
-                        # [ACTIVATE_WINDOW]---[START]
-                        for _ in range(16):
-                            win.activate()
-                            win.move(0, 0)
-                            delay(0.01, 0.04)
-                        pg.click(WIN_START[f"win{i}"]["cords"])
-                        delay(25, 30)
-                        activate_main_window()
-                        main_cycle(connect_to_vpn, Delay=True, delay_numeric=4)
-                        main_cycle(open_telegram)
-                        # [ACTIVATE_WINDOW]---[END]
+                        ACTIVATE_WINDOW(win, i)
                         print("Текущее время:", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
                         for game, value in Game_Details.items():
                             sec = value["seconds"]
-                            if timer_checker(seconds=sec, window_number=i, game=game, settings_file=settings_file):
+                            if TIME_CHECK(seconds=sec, window_number=i, game=game, settings_file=settings_file):
                                 Game_Details[game]["function"]()
-                                # ### UPDATE TIMER ###
-                                Settings[f"win{i}"][f"time_start_{game}"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                                save_data(path_to_Settings, Settings)
+                                UPDATE_TIMER(window_numeric=i, game=game, settings_file=settings_file)
                         main_cycle(close_all_windows)
                         ACTIVATE = False
                 time.sleep(600)
@@ -284,7 +261,7 @@ if __name__ == '__main__':
         main_group = "main_group"
         # close_anyway = "close_anyway"
 
-        click_to_bottom_in_BotChat = (1000, 880)
+        click_to_bottom_in_BotChat = [(900, 880), (900, 800)]  # Add more if what need
 
         close_all_windows = ["close_window", "close_window_yes"]
         # [Telegram_params]-[End]
@@ -341,17 +318,19 @@ if __name__ == '__main__':
         claim_reward_HEXN = (940, 880)
         start_farm_HEXN = (940, 840)
         Chat_open_BEE = (890, 890)
-        BEE_sure = "BEE_sure"
         full_screen_BEE = (1300, 500)
         upgrades_BEE = ["upgrades_BEE", "upgrades_BEE_2"]
         bee_lvl_up = "bee_lvl_up"
-        upgrades_BEE_stage_1 = (1100, 550)
-        upgrades_BEE_stage_2 = (1100, 280)
+        upgrades_BEE_stages = [(1100, 550), (1100, 280)]
         Musk_take = "Musk_take"
         find_BEE = ["BEE"]
         find_ElonMusk = ["ElonMusk"]
         find_TimeFarm = ["TimeFarm"]
-        ChatBot_and_FarmingTime = (1000, 800)
+        FarmingTime = (1000, 800)
+
+        # ToDo: Set cords
+        TimeFarm_daily_reward = ()
+
     # [RUN_SCRIPT]-[START]
     main()
     # [RUN_SCRIPT]-[END]
