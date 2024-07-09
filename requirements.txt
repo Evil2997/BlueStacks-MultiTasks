@@ -1,0 +1,4 @@
+datetime
+pyautogui
+ahk
+opencv-python
