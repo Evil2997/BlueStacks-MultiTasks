@@ -35,3 +35,26 @@ def Close_AnyWay():
         delay(0.4, 0.6)
         find_it_and_click_it(close_anyway)
         delay(0.4, 0.6)
+
+
+# Универсальная функция для движения мыши
+def move_mouse(start, end):
+    pg.mouseUp()
+    pg.moveTo(start)
+    pg.mouseDown()
+    pg.moveTo(end)
+    pg.mouseUp()
+
+# Список координат (up, down, left, right)
+moves = [(), (), (), ()]
+
+# Функция случайного движения
+def random_moves_clayton():
+    start_end_pairs = [(moves[1], moves[0]), (moves[0], moves[1]), (moves[3], moves[2]), (moves[2], moves[3])]
+    start, end = random.choice(start_end_pairs)
+    move_mouse(start, end)
+
+# Пример выполнения 10 случайных движений с задержкой
+for _ in range(10):
+    random_moves_clayton()
+    delay(0.02, 0.1)
