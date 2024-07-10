@@ -150,7 +150,7 @@ def Run_SimpleCoin():
     delay(4, 5)
     find_it_and_click_it(fortuna_reward)
     delay(0.06, 0.2)
-    Close_AnyWay()
+    pg.click(cords_close)
     delay(0.06, 0.2)
     pg.press("num3")
     delay(9, 10)
@@ -170,8 +170,7 @@ def Run_BEE():
         for _ in range(20):
             pg.click(stage)
             delay(0.6, 1)
-    for _ in range(2):
-        Close_AnyWay()
+    Close_AnyWay()
 
 
 def Run_ElonMusk():
@@ -187,6 +186,82 @@ def Run_TimeFarm():
     for _ in range(2):
         pg.click(FarmingTime)
         delay(3, 4)
+    Close_AnyWay()
+
+
+def Run_Baboon():
+    PreRun(find_Baboon, chat=True, chat_type="click", chatbot_string=1)
+    for coordinates in Baboon_daily_reward:
+        pg.click(coordinates)
+        delay(0.4, 0.8)
+    for battery in combo_battery:
+        pg.click(battery)
+        delay(0.4, 0.8)
+    pg.click(Baboon_game_battery)
+    pg.press("num4")
+    delay(90, 100)
+    pg.press("num4")
+    for coordinates in repair_battery:
+        pg.click(coordinates)
+        delay(0.4, 0.8)
+    Close_AnyWay()
+
+
+def Run_Tomato():
+    PreRun(find_Tomato)
+    for _ in range(4):
+        pg.click(Tomato_claim_and_farm)
+        delay()
+    pg.click(play_Tomato)
+    delay(2, 3)
+    for i in range(7):
+        time_start = time.time()
+        while time.time() - time_start <= 20:
+            find_it_and_click_it(Red_Tomato)
+            delay(0.01, 0.04)
+        delay(4, 5)
+        pg.click(start_Tomato_game_again)
+    Close_AnyWay()
+
+
+def Run_Time_TON_Ecosystem():
+    PreRun(find_Time_TON_Ecosystem, chat=True, chat_type="click", chatbot_string=2)
+    for coordinates in Ecosystem_claim:
+        pg.click(coordinates)
+        delay(0.4, 0.8)
+    Close_AnyWay()
+
+
+def Run_TON_Station():
+    PreRun(find_TON_Station)
+    for coordinates in TON_Station_claim:
+        pg.click(coordinates)
+        delay(0.4, 0.6)
+    Close_AnyWay()
+
+
+def Run_Cyber_Finance():
+    PreRun(find_Cyber_Finance, chat=True, chat_type="click", chatbot_string=2)
+    for coordinates in upgrade_egg_hummer:
+        pg.click(coordinates)
+        delay(0.4, 0.6)
+    main_cycle(hummer_accept_close)
+    Close_AnyWay()
+
+
+def Run_Fastmint():
+    PreRun(find_Fastmint, chat=True, chat_type="click", chatbot_string=2)
+    for coordinates in Fastmint_claim_and_farm:
+        pg.click(coordinates)
+        delay(0.4, 0.6)
+    Close_AnyWay()
+
+
+def Run_SnapSter():
+    PreRun(find_SnapSter, chat=True, chat_type="click", chatbot_string=1)
+    for coordinates in SnapSter_claim_and_farm:
+        pg.click(coordinates)
+        delay(0.4, 0.6)
     Close_AnyWay()
 
 
@@ -233,6 +308,13 @@ if __name__ == '__main__':
         "ElonMusk": {"seconds": 10800, "function": Run_ElonMusk},
         "BEE": {"seconds": 14400, "function": Run_BEE},
         "TimeFarm": {"seconds": 14400, "function": Run_TimeFarm},
+        # "Baboon": {"seconds": 43200, "function": Run_Baboon},
+        # "Baboon": {"seconds": Раз в сутки, "function": Run_Tomato},
+        # "Baboon": {"seconds": 28800, "function": Run_Time_TON_Ecosystem},
+        # "Baboon": {"seconds": 28800, "function": Run_TON_Station},
+        # "Baboon": {"seconds": 43200, "function": Run_Cyber_Finance},  # 86400
+        # "Baboon": {"seconds": 21600, "function": Run_Fastmint},
+        # "Baboon": {"seconds": 86400, "function": Run_SnapSter},
     }
 
     if True:
@@ -319,10 +401,37 @@ if __name__ == '__main__':
         find_ElonMusk = ["ElonMusk"]
         find_TimeFarm = ["TimeFarm"]
         FarmingTime = (1000, 800)
-
-        # ToDo: Set cords
         TimeFarm_daily_reward = "TimeFarm_daily_reward"
 
+    # ToDo: Set cords / make images
+    find_Baboon = ["Baboon"]
+    Baboon_daily_reward = [(), ()]
+    combo_battery = [(), (), ()]
+    bust_battery = [("click_bust_menu"), ("upgrade"), ("confirm")]
+    repair_battery = [(), ()]
+    Baboon_game_battery = ()
+
+    find_Tomato = ["Tomato"]
+    Tomato_claim_and_farm = ()
+    play_Tomato = ()
+    Red_Tomato = "Red_Tomato"
+    start_Tomato_game_again = ()
+
+    find_Time_TON_Ecosystem = ["Time_TON_Ecosystem"]
+    Ecosystem_claim = [(), (), (), ()]
+
+    find_TON_Station = ["TON_Station"]
+    TON_Station_claim = [(), ()]
+
+    find_Cyber_Finance = ["Cyber_Finance"]
+    upgrade_egg_hummer = [(), ()]
+    hummer_accept_close = ["hummer_accept", "hummer_close"]
+
+    find_Fastmint = ["find_Fastmint"]
+    Fastmint_claim_and_farm = [(), ()]
+
+    find_SnapSter = [""]
+    SnapSter_claim_and_farm = [(), ()]
     # [RUN_SCRIPT]-[START]
     main()
     # [RUN_SCRIPT]-[END]
