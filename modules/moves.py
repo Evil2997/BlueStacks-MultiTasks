@@ -29,8 +29,9 @@ def drag_to_bottom():
 
 
 def Close_AnyWay():
-    delay()
-    pg.click(cords_close)
-    delay(0.4, 0.6)
-    find_it_and_click_it(close_anyway)
-    delay(0.4, 0.6)
+    for _ in range(2):
+        delay(4, 5)
+        pg.click(cords_close)
+        delay(0.4, 0.6)
+        find_it_and_click_it(close_anyway)
+        delay(0.4, 0.6)
