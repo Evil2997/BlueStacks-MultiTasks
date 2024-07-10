@@ -11,7 +11,7 @@ from modules.screens import find_it_and_click_it, scan_BUMP_daily_reward
 from modules.time import delay
 from modules.time import timer_checker as TIME_CHECK
 from modules.time import timer_update as UPDATE_TIMER
-from modules.windows import main_cycle
+from modules.windows import main_cycle, Stop_BS_Windows
 from modules.windows import open_vpn_telegram as ACTIVATE_WINDOW
 
 ahk = AHK()
@@ -276,7 +276,6 @@ def main():
                         if TIME_CHECK(seconds=sec, window_number=i, game=game, settings_file=settings_file):
                             ACTIVATE = True
                     if ACTIVATE:
-                        # time.sleep(3)
                         ACTIVATE_WINDOW(win, i)
                         print("Текущее время:", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
                         for game, value in Game_Details.items():
@@ -284,7 +283,7 @@ def main():
                             if TIME_CHECK(seconds=sec, window_number=i, game=game, settings_file=settings_file):
                                 Game_Details[game]["function"]()
                                 UPDATE_TIMER(window_numeric=i, game=game, settings_file=settings_file)
-                        main_cycle(close_all_windows)
+                        Stop_BS_Windows()
                         ACTIVATE = False
                 time.sleep(600)
     pass
@@ -294,20 +293,20 @@ if __name__ == '__main__':
     settings_file = "Settings.json"
     path_to_Settings: Final[pathlib.Path] = pathlib.Path(__file__).parent / settings_file
     Settings = load_data(path_to_Settings)
-
+    # ToDo: Сделать проверку раз в сутки, обновление по 00:00 UTC
     Game_Details = {
         "Blum": {"seconds": 28800, "function": Run_Blum},
         "Diamond": {"seconds": 28800, "function": Run_Diamond},
         "Clayton": {"seconds": 28800, "function": Run_Clayton},
         "BUMP": {"seconds": 21600, "function": Run_BUMP},
-        "PocketFi": {"seconds": 18000, "function": Run_PocketFi},
-        "HEXN": {"seconds": 14400, "function": Run_HEXN},
-        "DejenDog": {"seconds": 14400, "function": Run_DejenDog},
-        "Seeds": {"seconds": 10800, "function": Run_Seeds},
-        "SimpleCoin": {"seconds": 28800, "function": Run_SimpleCoin},
-        "ElonMusk": {"seconds": 10800, "function": Run_ElonMusk},
-        "BEE": {"seconds": 14400, "function": Run_BEE},
-        "TimeFarm": {"seconds": 14400, "function": Run_TimeFarm},
+        # "PocketFi": {"seconds": 18000, "function": Run_PocketFi},
+        # "HEXN": {"seconds": 14400, "function": Run_HEXN},
+        # "DejenDog": {"seconds": 14400, "function": Run_DejenDog},
+        # "Seeds": {"seconds": 10800, "function": Run_Seeds},
+        # "SimpleCoin": {"seconds": 28800, "function": Run_SimpleCoin},
+        # "ElonMusk": {"seconds": 10800, "function": Run_ElonMusk},
+        # "BEE": {"seconds": 14400, "function": Run_BEE},
+        # "TimeFarm": {"seconds": 14400, "function": Run_TimeFarm},
         # "Baboon": {"seconds": 43200, "function": Run_Baboon},
         # "Baboon": {"seconds": Раз в сутки, "function": Run_Tomato},
         # "Baboon": {"seconds": 28800, "function": Run_Time_TON_Ecosystem},
@@ -336,8 +335,6 @@ if __name__ == '__main__':
         # close_anyway = "close_anyway"
 
         click_to_bottom_in_BotChat = [(900, 880), (900, 800)]  # Add more if what need
-
-        close_all_windows = ["close_window", "close_window_yes"]
         # [Telegram_params]-[End]
 
         # [Blum_params]-[Start]
