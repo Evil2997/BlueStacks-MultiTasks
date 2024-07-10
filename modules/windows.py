@@ -6,6 +6,14 @@ from modules.screens import find_it_and_click_it, find_template_on_region, get_i
 
 ahk = AHK()
 
+def Stop_BS_Windows():
+    close_all_windows = ["stop_all_BS_win", "yes_close_all"]
+    for win in ahk.list_windows():
+        if win.title.startswith("BlueStacks Multi Instance Manager"):
+            for _ in range(16):
+                win.activate()
+            main_cycle(close_all_windows)
+
 
 def activate_main_window():
     full_screen = "full_screen"
@@ -36,7 +44,7 @@ def main_cycle(NAMES, special_name_number=-1, special_name=False, width_multipli
             result = find_it_and_click_it(name)
             if len(NAMES) == 1:
                 return result
-        delay()
+        delay(2, 3)
 
 
 def open_vpn_telegram(win, win_numeric):
