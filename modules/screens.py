@@ -1,4 +1,5 @@
 import os
+import time
 
 import cv2
 import numpy as np
@@ -26,7 +27,6 @@ def find_template_on_region(Image_Name, region=(0, 0, 1920, 1080)):
     """
     template_path = f"Images/{Image_Name}.png"
     (x1, y1, x2, y2) = region
-    # ToDo: pip install pillow
     screenshot = np.array(ImageGrab.grab(bbox=(x1, y1, x2 - x1, y2 - y1)))
     template = cv2.imread(template_path, cv2.IMREAD_GRAYSCALE)
     if template is None:
@@ -45,16 +45,43 @@ def find_template_on_region(Image_Name, region=(0, 0, 1920, 1080)):
     return top_left
 
 
-def find_it_and_click_it(NAME, region=(0, 0, 1920, 1080)):
-    top_left = find_template_on_region(NAME, region)
-    width, height = get_image_size(NAME)
-    if top_left:
-        print(NAME, "+++НАШЕЛ")
-        pg.click(top_left[0] + width / 2, top_left[1] + height / 2)
-        return True
-    else:
-        print(NAME, "---НЕ НАШЕЛ")
-        return False
+def find_it_and_click_it(name_list: list[str], region=(0, 0, 1920, 1080)):
+    for name in name_list:
+        top_left = find_template_on_region(name, region)
+        width, height = get_image_size(name)
+        if top_left:
+            pg.click(top_left[0] + width / 2, top_left[1] + height / 2)
+            return True
+        elif len(name_list) == 1:
+            return False
+
+
+def hunt_for_the_button_in_list(name_list: list[str], hunt_in_seconds=10, region=(0, 0, 1920, 1080)):
+    for name in name_list:
+        time_start = time.time()
+        while time.time() - time_start < hunt_in_seconds:
+            top_left = find_template_on_region(name, region)
+            width, height = get_image_size(name)
+            if top_left:
+                pg.click(top_left[0] + width / 2, top_left[1] + height / 2)
+                return True
+            else:
+                delay(0.01, 0.1)
+        else:
+            if len(name_list) == 1:
+                return False
+
+
+def cycle_hunter_click(name_list: list[str], region=(0, 0, 1920, 1080)):
+    for name in name_list:
+        while True:
+            top_left = find_template_on_region(name, region)
+            width, height = get_image_size(name)
+            if top_left:
+                pg.click(top_left[0] + width / 2, top_left[1] + height / 2)
+                break
+            else:
+                delay(0.01, 0.1)
 
 
 def scan_BUMP_daily_reward(region=(0, 0, 1920, 1080)):
