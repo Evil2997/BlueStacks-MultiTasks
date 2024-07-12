@@ -56,7 +56,7 @@ def Run_Blum():
 
 def Run_Diamond():
     PreRun(find_Diamond)
-    # ToDo: Only num5 clicker
+    # ToDo: Клик только по дейлику
     pg.click(click_diamonds)
     pg.press("num5")
     delay(10, 11)
