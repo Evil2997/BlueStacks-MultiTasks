@@ -29,6 +29,8 @@ def drag_to_bottom():
 
 
 def Close_AnyWay():
+    # ToDo: Если на месте крестика - 4 полоски, подробности телеграм аккаунта,
+    #       то выходим из цикла не нажимая на "cords_close"
     for _ in range(2):
         delay(4, 5)
         pg.click(cords_close)
