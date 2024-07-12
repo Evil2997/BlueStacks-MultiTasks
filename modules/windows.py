@@ -1,53 +1,39 @@
+import time
+
 import pyautogui as pg
 from ahk import AHK
 
+from modules.screens import cycle_hunter_click, hunt_for_the_button_in_list
 from modules.time import delay
-from modules.screens import find_it_and_click_it, find_template_on_region, get_image_size
 
 ahk = AHK()
 
 
 def Stop_BS_Windows():
     close_all_windows = ["stop_all_BS_win", "yes_close_all"]
+    close_all_BS_window = [(350, 590), (500, 360)]
     for win in ahk.list_windows():
         if win.title.startswith("BlueStacks Multi Instance Manager"):
-            for _ in range(16):
+            for _ in range(8):
                 win.activate()
-                delay(0.01, 0.2)
-            main_cycle(close_all_windows)
-            delay()
+                delay(0.02, 0.2)
+            for coordinates in close_all_BS_window:
+                pg.click(coordinates)
+                delay()
 
 
 def activate_main_window():
-    full_screen = "full_screen"
+    full_screen = ["full_screen"]
     for win in ahk.list_windows():
-        print(win.title)
         if (
                 win.title.startswith("BlueStacks") and
                 not win.title.startswith("BlueStacks Multi Instance Manager") and
                 not win.title.startswith("BlueStacks-MultiTasks")
         ):
             win.activate()
-            find_it_and_click_it(full_screen)
+            hunt_for_the_button_in_list(full_screen, hunt_in_seconds=30)
+            break
     delay()
-
-
-def main_cycle(NAMES, special_name_number=-1, special_name=False, width_multiplication=1, width_division=2,
-               height_multiplication=1, height_division=2, Delay=False, delay_numeric=-1):
-    for name in NAMES:
-        if Delay and name == NAMES[delay_numeric]:
-            delay(10, 12)
-        if special_name and name == NAMES[special_name_number]:
-            top_left = find_template_on_region(name)
-            width, height = get_image_size(name)
-            if top_left:
-                pg.click(top_left[0] + width * width_multiplication / width_division,
-                         top_left[1] + height * height_multiplication / height_division)
-        else:
-            result = find_it_and_click_it(name)
-            if len(NAMES) == 1:
-                return result
-        delay(2, 3)
 
 
 def open_vpn_telegram(win, win_numeric):
@@ -60,11 +46,9 @@ def open_vpn_telegram(win, win_numeric):
         "win4": {"cords": (540, 420)},
     }
 
-    connect_to_vpn = ["collapse_all_windows", "check_all_windows",
-                      "clear_all", "ProtonVPN", "ActivateVPN",
-                      "collapse_all_windows"]
-
-    open_telegram = ["collapse_all_windows", "Telegram", "main_group"]
+    connect_to_vpn_AND_open_telegram = ["collapse_all_windows", "check_all_windows",
+                                        "clear_all", "ProtonVPN", "ActivateVPN",
+                                        "collapse_all_windows", "Telegram", "main_group"]
 
     for _ in range(16):
         win.activate()
@@ -73,5 +57,5 @@ def open_vpn_telegram(win, win_numeric):
     pg.click(WIN_START[f"win{i}"]["cords"])
     delay(25, 30)
     activate_main_window()
-    main_cycle(connect_to_vpn, Delay=True, delay_numeric=4)
-    main_cycle(open_telegram)
+    cycle_hunter_click(connect_to_vpn_AND_open_telegram)
+    delay(25, 30)
