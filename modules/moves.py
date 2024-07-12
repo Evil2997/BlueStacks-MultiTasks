@@ -2,14 +2,14 @@ import random
 
 import pyautogui as pg
 
-from modules.screens import find_it_and_click_it
+from modules.screens import find_it_and_click_it, find_template_on_region
 from modules.time import delay
 
 cords_to_drag = (1700, 430)
 cords_to_start_drag = (1650, 830)
 cords_close = (116, 132)
 
-close_anyway = "close_anyway"
+close_anyway = ["close_anyway"]
 
 
 def drag_to_up():
@@ -23,15 +23,16 @@ def drag_to_up():
 
 
 def drag_to_bottom():
-    delay(0.04, 0.08)
+    delay(0.02, 0.1)
     pg.moveTo(cords_to_start_drag, duration=0.06)
     pg.dragTo(cords_to_drag, duration=0.12)
 
 
 def Close_AnyWay():
-    # ToDo: Если на месте крестика - 4 полоски, подробности телеграм аккаунта,
-    #       то выходим из цикла не нажимая на "cords_close"
-    for _ in range(2):
+    telegram_account_settings = "telegram_account_settings"
+    for _ in range(4):
+        if find_template_on_region(telegram_account_settings):
+            break
         delay(4, 5)
         pg.click(cords_close)
         delay(0.4, 0.6)
