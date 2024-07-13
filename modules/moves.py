@@ -3,7 +3,7 @@ import random
 import pyautogui as pg
 
 from modules.screens import find_it_and_click_it, find_template_on_region
-from modules.time import delay
+from modules.Timers import delay
 
 cords_to_drag = (1700, 430)
 cords_to_start_drag = (1650, 830)
@@ -13,10 +13,11 @@ close_anyway = ["close_anyway"]
 
 
 def drag_to_up():
+    random_y = random.uniform(-25, 25)
     pg.mouseUp()
     pg.moveTo(cords_to_drag[0], cords_to_drag[1])
     pg.mouseDown()
-    pg.moveTo(cords_to_drag[0], cords_to_drag[1] + 320, 0.1)
+    pg.moveTo(cords_to_drag[0], cords_to_drag[1] + random_y + 325, 0.16)
     pg.mouseUp()
 
 
