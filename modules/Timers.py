@@ -46,9 +46,6 @@ def check_reward(window_number, game, rewards_file):
     path_to_Rewards: Final[pathlib.Path] = pathlib.Path(__file__).parent.parent / rewards_file
     Rewards = load_data(path_to_Rewards)
 
-    current_time_utc = datetime.now(timezone.utc)
-    formatted_current_time = current_time_utc.strftime("%Y-%m-%d %H:%M:%S")
-
     default_time = datetime(2002, 10, 29, 10, 0, 0, tzinfo=timezone.utc)
     default_time_str = default_time.strftime("%Y-%m-%d %H:%M:%S")
 
@@ -64,6 +61,7 @@ def check_reward(window_number, game, rewards_file):
 
     next_reward_time = last_reward_time.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1)
     next_reward_time.strftime("%Y-%m-%d %H:%M:%S")
+    current_time_utc = datetime.now(timezone.utc)
 
     if current_time_utc >= next_reward_time:
         return True
