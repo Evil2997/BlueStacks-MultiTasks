@@ -13,19 +13,18 @@ close_anyway = ["close_anyway"]
 
 
 def drag_to_up():
-    delay(0.02, 0.06)
-    random_x = random.uniform(-20, 20)
-    random_y = random.uniform(-20, 20)
-    pg.moveTo(cords_to_drag[0] + random_x, cords_to_drag[1] + random_y, duration=0.1)
+    pg.mouseUp()
+    pg.moveTo(cords_to_drag[0], cords_to_drag[1])
     pg.mouseDown()
-    pg.moveTo(cords_to_drag[0] + random_x, cords_to_drag[1] + random_y + 310, 0.4)
+    pg.moveTo(cords_to_drag[0], cords_to_drag[1] + 320, 0.1)
     pg.mouseUp()
 
 
 def drag_to_bottom():
-    delay(0.02, 0.1)
-    pg.moveTo(cords_to_start_drag, duration=0.06)
-    pg.dragTo(cords_to_drag, duration=0.12)
+    pg.moveTo(cords_to_start_drag)
+    pg.mouseDown()
+    pg.moveTo(cords_to_drag, duration=0.06)
+    pg.mouseUp()
 
 
 def Close_AnyWay():
