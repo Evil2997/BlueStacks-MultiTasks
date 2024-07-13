@@ -35,8 +35,7 @@ def move_mouse(start, end):
     pg.mouseUp()
 
 
-if __name__ == '__main__':
-    Clayton_512_play = ["Clayton_512_play"]
-    take_reward_512 = ["take_reward_512"]
-    Clayton_512_start = (940, 780)
-    Clayton_512_back = (940, 880)
+Clayton_512_play = ["Clayton_512_play"]
+take_reward_512 = ["take_reward_512"]
+Clayton_512_start = (940, 780)
+Clayton_512_back = (940, 880)
