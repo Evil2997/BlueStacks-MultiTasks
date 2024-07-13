@@ -48,7 +48,6 @@ def check_reward(window_number, game, rewards_file):
 
     current_time_utc = datetime.now(timezone.utc)
     formatted_current_time = current_time_utc.strftime("%Y-%m-%d %H:%M:%S")
-    print(f"Текущее время UTC: {formatted_current_time}")
 
     default_time = datetime(2002, 10, 29, 10, 0, 0, tzinfo=timezone.utc)
     default_time_str = default_time.strftime("%Y-%m-%d %H:%M:%S")
@@ -77,5 +76,5 @@ def update_time_reward(rewards_file, window_numeric, game):
     path_to_Rewards: Final[pathlib.Path] = pathlib.Path(__file__).parent.parent / rewards_file
     Rewards = load_data(path_to_Rewards)
 
-    game[f"win{i}"][f"daily_reward_{game}"] = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+    Rewards[f"win{i}"][f"daily_reward_{game}"] = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
     save_data(file_path=path_to_Rewards, data=Rewards)
