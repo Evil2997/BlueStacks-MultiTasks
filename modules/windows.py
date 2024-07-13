@@ -2,7 +2,7 @@ import pyautogui as pg
 from ahk import AHK
 
 from modules.screens import cycle_hunter_click, hunt_for_the_button_in_list
-from modules.time import delay
+from modules.Timers import delay
 
 ahk = AHK()
 

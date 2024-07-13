@@ -6,7 +6,7 @@ import numpy as np
 import pyautogui as pg
 from PIL import ImageGrab
 
-from modules.time import delay
+from modules.Timers import delay
 
 
 def get_image_size(image_name):
