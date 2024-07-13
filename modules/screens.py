@@ -18,7 +18,7 @@ def get_image_size(image_name):
     return width, height
 
 
-def find_template_on_region(Image_Name, region=(0, 0, 1920, 1080)):
+def find_template_on_region(Image_Name, region=(0, 0, 1920, 1080), threshold=0.92):
     """
     Поиск фрагмента в нужном регионе экрана
     :param region: регион экрана в диапазоне (0, 0, 1920, 1080)
@@ -37,7 +37,6 @@ def find_template_on_region(Image_Name, region=(0, 0, 1920, 1080)):
     result = cv2.matchTemplate(screenshot_gray, template, cv2.TM_CCOEFF_NORMED)
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
 
-    threshold = 0.92
     if max_val >= threshold:
         top_left = (max_loc[0] + region[0], max_loc[1] + region[1])
     else:
@@ -45,9 +44,9 @@ def find_template_on_region(Image_Name, region=(0, 0, 1920, 1080)):
     return top_left
 
 
-def find_it_and_click_it(name_list: list[str], region=(0, 0, 1920, 1080)):
+def find_it_and_click_it(name_list: list[str], region=(0, 0, 1920, 1080), threshold=0.92):
     for name in name_list:
-        top_left = find_template_on_region(name, region)
+        top_left = find_template_on_region(name, region, threshold=threshold)
         width, height = get_image_size(name)
         if top_left:
             pg.click(top_left[0] + width / 2, top_left[1] + height / 2)
@@ -82,6 +81,7 @@ def cycle_hunter_click(name_list: list[str], region=(0, 0, 1920, 1080)):
                 break
             else:
                 delay(0.01, 0.1)
+        delay(0.2, 0.4)
 
 
 def scan_BUMP_daily_reward(region=(0, 0, 1920, 1080)):
