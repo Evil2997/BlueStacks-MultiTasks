@@ -1,5 +1,3 @@
-import time
-
 import pyautogui as pg
 from ahk import AHK
 
@@ -48,8 +46,8 @@ def open_vpn_telegram(win, win_numeric):
 
     connect_to_vpn_AND_open_telegram = ["collapse_all_windows", "check_all_windows",
                                         "clear_all", "ProtonVPN", "ActivateVPN",
-                                        "collapse_all_windows", "Telegram", "main_group"]
-
+                                        "collapse_all_windows", "Telegram"]
+    main_group = ["main_group"]
     for _ in range(16):
         win.activate()
         win.move(0, 0)
@@ -58,4 +56,6 @@ def open_vpn_telegram(win, win_numeric):
     delay(25, 30)
     activate_main_window()
     cycle_hunter_click(connect_to_vpn_AND_open_telegram)
-    delay(25, 30)
+    delay(15, 20)
+    cycle_hunter_click(main_group)
+    delay(8, 10)
