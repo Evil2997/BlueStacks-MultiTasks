@@ -80,8 +80,8 @@ def cycle_hunter_click(name_list: list[str], region=(0, 0, 1920, 1080)):
                 pg.click(top_left[0] + width / 2, top_left[1] + height / 2)
                 break
             else:
-                delay(0.01, 0.1)
-        delay(0.2, 0.4)
+                delay(0.01, 0.08)
+        delay(0.8, 1.2)
 
 
 def scan_BUMP_daily_reward(region=(0, 0, 1920, 1080)):
