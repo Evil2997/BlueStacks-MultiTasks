@@ -44,8 +44,9 @@ def PreRun(finder,
     if chat:
         delay(6, 8)
         if chat_type == "click":
-            for _ in range(2):
-                pg.click(click_to_bottom_in_BotChat[chatbot_string])
+            # for _ in range(2):
+            pg.click(click_to_bottom_in_BotChat[chatbot_string])
+            # delay(0.(02, 0.1)
         elif chat_type == "image":
             cycle_hunter_click(chat_image_name)
     delay(16, 20)
@@ -188,14 +189,18 @@ def Run_SimpleCoin(dailik):
 def Run_BEE(dailik):
     for i in range(2):
         PreRun(find_BEE, chat=True, chat_type="click", chatbot_string=0)
-        pg.press("num9")
-        delay(7, 8)
+        drag_to_bottom()
+        delay()
         if i == 0:
             Close_AnyWay()
-    hunt_for_the_button_in_list(upgrades_BEE)
-    delay(0.2, 0.6)
-    pg.press("num9")
-    delay(7, 8)
+    drag_to_bottom(duration=0.6)
+    delay()
+    for coordinates in upgrades_BEE:
+        pg.click(coordinates)
+        delay(0.01, 0.1)
+    delay(8, 10)
+    drag_to_bottom(duration=0.6)
+    delay()
     for stage in upgrades_BEE_stages:
         for _ in range(20):
             pg.click(stage)
@@ -248,10 +253,10 @@ def Run_Tomato(dailik):
     delay(2, 3)
     for i in range(7):
         time_start = time.time()
-        while time.time() - time_start <= 20:
+        while time.time() - time_start <= 22:
             find_it_and_click_it(Red_Tomato)
             delay(0.01, 0.04)
-        delay(4, 5)
+        delay(10, 20)
         pg.click(start_Tomato_game_again)
     Close_AnyWay()
 
@@ -431,7 +436,7 @@ if __name__ == '__main__':
         start_farm_HEXN = (940, 840)
         Chat_open_BEE = (890, 890)
         full_screen_BEE = (1300, 500)
-        upgrades_BEE = ["upgrades_BEE", "upgrades_BEE_2"]
+        upgrades_BEE = [(1150, 950), (1100, 950), (1200, 950)]
         bee_lvl_up = ["bee_lvl_up"]
         upgrades_BEE_stages = [(1100, 550), (1100, 280)]
         Musk_take = ["Musk_take"]
@@ -445,7 +450,6 @@ if __name__ == '__main__':
         Seeds_Check_news = ["Seeds_Check_news"]
         fortuna_null_reward = ["fortuna_null_reward"]
         daily_Seeds = [(1240, 440), (380, 530), (940, 530), (1500, 530), (380, 760), (940, 760), (1500, 760), (950, 750)]
-
     # ToDo: Set cords / make images
     find_Baboon = ["Baboon"]
     Baboon_daily_reward = [(), ()]
@@ -476,7 +480,8 @@ if __name__ == '__main__':
     find_SnapSter = ["SnapSter"]
     SnapSter_claim_and_farm = [(), ()]
     # [RUN_SCRIPT]-[START]
-    main()
+    Run_BEE(True)
+    # main()
     # [RUN_SCRIPT]-[END]
 
     print("Время окончания сеанса:", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))

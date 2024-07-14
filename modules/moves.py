@@ -5,7 +5,7 @@ import pyautogui as pg
 from modules.screens import find_it_and_click_it, find_template_on_region
 from modules.Timers import delay
 
-cords_to_drag = (1700, 430)
+cords_to_drag = (1700, 300)
 cords_to_start_drag = (1650, 830)
 cords_close = (116, 132)
 
@@ -21,10 +21,10 @@ def drag_to_up():
     pg.mouseUp()
 
 
-def drag_to_bottom():
+def drag_to_bottom(duration=0.06):
     pg.moveTo(cords_to_start_drag)
     pg.mouseDown()
-    pg.moveTo(cords_to_drag, duration=0.06)
+    pg.moveTo(cords_to_drag, duration=duration)
     pg.mouseUp()
 
 
