@@ -476,9 +476,7 @@ if __name__ == '__main__':
     find_SnapSter = ["SnapSter"]
     SnapSter_claim_and_farm = [(), ()]
     # [RUN_SCRIPT]-[START]
-
-    Run_Seeds(True)
-    # main()
+    main()
     # [RUN_SCRIPT]-[END]
 
     print("Время окончания сеанса:", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
