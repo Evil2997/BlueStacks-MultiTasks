@@ -13,7 +13,7 @@ close_anyway = ["close_anyway"]
 
 
 def drag_to_up():
-    random_y = random.uniform(-25, 25)
+    random_y = random.uniform(-15, 15)
     pg.mouseUp()
     pg.moveTo(cords_to_drag[0], cords_to_drag[1])
     pg.mouseDown()
