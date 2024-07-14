@@ -1,11 +1,10 @@
 import random
-import time
 
 import pyautogui as pg
 
 from modules.Timers import delay
 from modules.moves import drag_to_bottom
-from modules.screens import hunt_for_the_button_in_list
+from modules.screens import hunt_for_the_button_in_list, find_it_and_click_it
 
 
 def play_512(how_much_you_want_to_play):
@@ -14,25 +13,19 @@ def play_512(how_much_you_want_to_play):
     delay()
     for game in range(how_much_you_want_to_play):
         pg.click(Clayton_512_start)
-        time_start = time.time()
-        while time.time() - time_start <= 150:
-            random_moves()
+        for i in range(65536):
+            pg.press(random_moves())
+            if i % 10 == 0:
+                if find_it_and_click_it(take_reward_512):
+                    break
         hunt_for_the_button_in_list(take_reward_512)
     pg.click(Clayton_512_back)
 
 
 def random_moves():
-    moves = [(940, 470), (940, 850), (700, 650), (1170, 650)]
-    start_end_pairs = [(moves[1], moves[0]), (moves[0], moves[1]), (moves[3], moves[2]), (moves[2], moves[3])]
-    start, end = random.choice(start_end_pairs)
-    move_mouse(start, end)
-
-
-def move_mouse(start, end):
-    pg.moveTo(start)
-    pg.mouseDown()
-    pg.moveTo(end)
-    pg.mouseUp()
+    moves = ["up", "down", "left", "right"]
+    move = random.choice(moves)
+    return move
 
 
 Clayton_512_play = ["Clayton_512_play"]
