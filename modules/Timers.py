@@ -49,14 +49,11 @@ def check_reward(window_number, game, rewards_file):
     default_time = datetime(2002, 10, 29, 10, 0, 0, tzinfo=timezone.utc)
     default_time_str = default_time.strftime("%Y-%m-%d %H:%M:%S")
 
-    window_number = f"win{i}"
-    daily_reward_key = f"daily_reward_{game}"
-
     try:
-        last_reward_time = datetime.strptime(Rewards[window_number][daily_reward_key], "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
+        last_reward_time = datetime.strptime(Rewards[f"win{i}"][f"daily_reward_{game}"], "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
     except (ValueError, KeyError, TypeError):
         last_reward_time = default_time
-        Rewards[window_number][daily_reward_key] = default_time_str
+        Rewards[f"win{i}"][f"daily_reward_{game}"] = default_time_str
         save_data(path_to_Rewards, Rewards)
 
     next_reward_time = last_reward_time.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1)
