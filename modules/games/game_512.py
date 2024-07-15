@@ -19,6 +19,7 @@ def play_512(how_much_you_want_to_play):
                 if find_it_and_click_it(take_reward_512):
                     break
         hunt_for_the_button_in_list(take_reward_512)
+        delay()
     pg.click(Clayton_512_back)
 
 

@@ -20,7 +20,6 @@ from modules.games.game_512 import play_512
 ahk = AHK()
 
 
-# 3:45
 def PreRun(finder,
            chat: bool = False,
            chat_type: Literal["image", "click"] = "image",
@@ -76,14 +75,14 @@ def Run_Diamond(dailik):
 
 
 def Run_Clayton(dailik):
-    how_much_you_want_to_play = 1
+    how_much_you_want_to_play = 2
     PreRun(find_Clayton)
     if dailik:
         pg.click(claim_daily_reward)
         delay()
-    for _ in range(2):
+    for _ in range(4):
         pg.click(claim_coins)
-        delay()
+        delay(0.5, 0.8)
     play_512(how_much_you_want_to_play)
     Close_AnyWay()
 
@@ -116,9 +115,9 @@ def Run_PocketFi(dailik):
     drag_to_bottom()
     if dailik:
         hunt_for_the_button_in_list(get_daily_FiReward)
-        delay(0.4, 0.6)
+        delay()
         pg.click(get_reward_Fi)
-    delay(0.2, 0.5)
+    delay()
     pg.click(cords_close)
     delay()
     drag_to_bottom()
@@ -450,6 +449,7 @@ if __name__ == '__main__':
         Seeds_Check_news = ["Seeds_Check_news"]
         fortuna_null_reward = ["fortuna_null_reward"]
         daily_Seeds = [(1240, 440), (380, 530), (940, 530), (1500, 530), (380, 760), (940, 760), (1500, 760), (950, 750)]
+
     # ToDo: Set cords / make images
     find_Baboon = ["Baboon"]
     Baboon_daily_reward = [(), ()]
@@ -480,8 +480,7 @@ if __name__ == '__main__':
     find_SnapSter = ["SnapSter"]
     SnapSter_claim_and_farm = [(), ()]
     # [RUN_SCRIPT]-[START]
-    Run_BEE(True)
-    # main()
+    main()
     # [RUN_SCRIPT]-[END]
 
     print("Время окончания сеанса:", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))

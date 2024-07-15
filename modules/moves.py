@@ -17,7 +17,7 @@ def drag_to_up():
     pg.mouseUp()
     pg.moveTo(cords_to_drag[0], cords_to_drag[1])
     pg.mouseDown()
-    pg.moveTo(cords_to_drag[0], cords_to_drag[1] + random_y + 325, 0.16)
+    pg.moveTo(cords_to_drag[0], cords_to_drag[1] + random_y + 295, 0.16)
     pg.mouseUp()
 
 
