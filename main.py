@@ -5,17 +5,17 @@ from typing import Final, Literal, List
 import pyautogui as pg
 from ahk import AHK
 
-from modules.json_files import load_data
-from modules.moves import Close_AnyWay, drag_to_bottom, drag_to_up
-from modules.screens import find_it_and_click_it, scan_BUMP_daily_reward, hunt_for_the_button_in_list
+from modules.Timers import check_reward as CHECK_DAILY_REWARD
 from modules.Timers import delay
 from modules.Timers import timer_checker as TIME_CHECK
 from modules.Timers import timer_update as UPDATE_TIMER
-from modules.windows import cycle_hunter_click, Stop_BS_Windows
-from modules.windows import open_vpn_telegram as ACTIVATE_WINDOW
-from modules.Timers import check_reward as CHECK_DAILY_REWARD
 from modules.Timers import update_time_reward as UPDATE_TIME_DAILY_REWARD
 from modules.games.game_512 import play_512
+from modules.json_files import load_data
+from modules.moves import Close_AnyWay, drag_to_bottom, drag_to_up
+from modules.screens import find_it_and_click_it, scan_BUMP_daily_reward, hunt_for_the_button_in_list
+from modules.windows import cycle_hunter_click, Stop_BS_Windows
+from modules.windows import open_vpn_telegram as ACTIVATE_WINDOW
 
 ahk = AHK()
 
@@ -75,7 +75,7 @@ def Run_Diamond(dailik):
 
 
 def Run_Clayton(dailik):
-    how_much_you_want_to_play = 2
+    how_much_you_want_to_play = 4
     PreRun(find_Clayton)
     if dailik:
         pg.click(claim_daily_reward)
@@ -138,10 +138,9 @@ def Run_DejenDog(dailik):
     pg.press("num3")
     delay(80, 90)
     pg.press("num3")
-    drag_to_bottom()
-    hunt_for_the_button_in_list(dog_lvlup_menu)
-    delay()
-    pg.click(Dog_LevelUp)
+    for coordinates in dog_lvlup_menu:
+        pg.click(coordinates)
+        delay(8, 9)
     Close_AnyWay()
 
 
@@ -186,12 +185,7 @@ def Run_SimpleCoin(dailik):
 
 
 def Run_BEE(dailik):
-    for i in range(2):
-        PreRun(find_BEE, chat=True, chat_type="click", chatbot_string=0)
-        drag_to_bottom()
-        delay()
-        if i == 0:
-            Close_AnyWay()
+    PreRun(find_BEE, chat=True, chat_type="click", chatbot_string=0)
     drag_to_bottom(duration=0.6)
     delay()
     for coordinates in upgrades_BEE:
@@ -417,12 +411,11 @@ if __name__ == '__main__':
         get_reward_Fi = (940, 980)
         # [PocketFi_params]-[End]
 
-        Dog_LevelUp = (800, 500)
         find_HEXN = ["HEXN"]
         find_DejenDog = ["DejenDog"]
         find_Seeds = ["Seeds"]
         find_SimpleCoin = ["SimpleCoin"]
-        dog_lvlup_menu = ["dog_lvlup_menu"]
+        dog_lvlup_menu = [(880, 980), (800, 500)]
         seeds_claim = ["seeds_claim"]
         caterpillar_is_not_ready = ["caterpillar_is_not_ready"]
         caterpillar_claim_on_tree = (980, 560)
@@ -448,7 +441,8 @@ if __name__ == '__main__':
         Got_It_Daily = ["Got_It_Daily"]
         Seeds_Check_news = ["Seeds_Check_news"]
         fortuna_null_reward = ["fortuna_null_reward"]
-        daily_Seeds = [(1240, 440), (380, 530), (940, 530), (1500, 530), (380, 760), (940, 760), (1500, 760), (950, 750)]
+        daily_Seeds = [(1240, 440), (380, 530), (940, 530), (1500, 530), (380, 760), (940, 760), (1500, 760),
+                       (950, 750)]
 
     # ToDo: Set cords / make images
     find_Baboon = ["Baboon"]
