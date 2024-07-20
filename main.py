@@ -4,6 +4,7 @@ from typing import Final, Literal, List
 
 import pyautogui as pg
 from ahk import AHK
+from unicodedata import digit
 
 from modules.Timers import check_reward as CHECK_DAILY_REWARD
 from modules.Timers import delay
@@ -83,7 +84,7 @@ def Run_Clayton(dailik):
     for _ in range(4):
         pg.click(claim_coins)
         delay(0.5, 0.8)
-    play_512(how_much_you_want_to_play)
+    # play_512(how_much_you_want_to_play)
     Close_AnyWay()
 
 
@@ -203,6 +204,10 @@ def Run_BEE(dailik):
 
 def Run_ElonMusk(dailik):
     PreRun(find_ElonMusk)
+    if dailik:
+        for coordinate in Elon_daily:
+            pg.click(coordinate)
+            delay(0.4, 0.8)
     hunt_for_the_button_in_list(Musk_take)
     Close_AnyWay()
 
@@ -348,7 +353,7 @@ if __name__ == '__main__':
         # "Tomato": {"seconds": Раз в сутки, "function": Run_Tomato},
         "Time_TON_Ecosystem": {"seconds": 28800, "function": Run_Time_TON_Ecosystem},
         "TON_Station": {"seconds": 28800, "function": Run_TON_Station},
-        "Cyber_Finance": {"seconds": 43200, "function": Run_Cyber_Finance},  # 86400
+        "Cyber_Finance": {"seconds": 7200, "function": Run_Cyber_Finance},  # 86400
         "SnapSter": {"seconds": 86400, "function": Run_SnapSter},
     }
 
@@ -363,14 +368,11 @@ if __name__ == '__main__':
 
         # [Telegram_params]-[Start]
         open_telegram = ["collapse_all_windows", "Telegram", "main_group"]
-        # cords_to_drag = (1650, 230)
-        # cords_to_start_drag = (1650, 830)
         cords_close = (116, 132)
         farm_group = (127, 364)
         main_group = ["main_group"]
-        # close_anyway = "close_anyway"
 
-        click_to_bottom_in_BotChat = [(900, 880), (900, 800)]  # Add more if what need
+        click_to_bottom_in_BotChat = [(900, 880), (900, 800), (900, 720)]
         # [Telegram_params]-[End]
 
         # [Blum_params]-[Start]
@@ -461,7 +463,7 @@ if __name__ == '__main__':
 
         find_SnapSter = ["SnapSter"]
         SnapSter_claim_and_farm = (1350, 540)
-
+        Elon_daily = [(1600, 960), (1200, 580), (900, 910)]
     # To Do: Set cords / make images
     find_Tomato = ["Tomato"]
     Tomato_claim_and_farm = ()
