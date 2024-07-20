@@ -6,7 +6,6 @@ from modules.screens import find_it_and_click_it, find_template_on_region
 from modules.Timers import delay
 
 cords_to_drag = (1700, 300)
-cords_to_start_drag = (1650, 830)
 cords_close = (116, 132)
 
 close_anyway = ["close_anyway"]
@@ -21,10 +20,12 @@ def drag_to_up():
     pg.mouseUp()
 
 
-def drag_to_bottom(duration=0.06):
-    pg.moveTo(cords_to_start_drag)
+def drag_to_bottom(duration=0.16):
+    random_y = random.uniform(-15, 15)
+    pg.mouseUp()
+    pg.moveTo(cords_to_drag[0], cords_to_drag[1] + random_y + 495)
     pg.mouseDown()
-    pg.moveTo(cords_to_drag, duration=duration)
+    pg.moveTo(cords_to_drag[0], cords_to_drag[1], duration=duration)
     pg.mouseUp()
 
 
