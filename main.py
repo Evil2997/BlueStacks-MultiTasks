@@ -4,16 +4,15 @@ from typing import Final, Literal, List
 
 import pyautogui as pg
 from ahk import AHK
-from unicodedata import digit
 
+from games.game_512 import play_512
 from modules.Timers import check_reward as CHECK_DAILY_REWARD
 from modules.Timers import delay
 from modules.Timers import timer_checker as TIME_CHECK
 from modules.Timers import timer_update as UPDATE_TIMER
 from modules.Timers import update_time_reward as UPDATE_TIME_DAILY_REWARD
-from modules.games.game_512 import play_512
 from modules.json_files import load_data
-from modules.moves import Close_AnyWay, drag_to_bottom, drag_to_up
+from modules.moves import Close_AnyWay, drag_to_bottom, drag_to_up, auto_clicker
 from modules.screens import find_it_and_click_it, scan_BUMP_daily_reward, hunt_for_the_button_in_list
 from modules.windows import cycle_hunter_click, Stop_BS_Windows
 from modules.windows import open_vpn_telegram as ACTIVATE_WINDOW
@@ -26,7 +25,8 @@ def PreRun(finder,
            chat_type: Literal["image", "click"] = "image",
            chatbot_string: int = -1,
            chat_image_name: List[str] = None,
-           threshold: float = 0.92):
+           threshold: float = 0.92
+           ):
     if chat_type not in ["image", "click"]:
         raise ValueError("chat_type должен быть 'image' или 'click'")
     # [---Start---]
@@ -44,9 +44,7 @@ def PreRun(finder,
     if chat:
         delay(6, 8)
         if chat_type == "click":
-            # for _ in range(2):
             pg.click(click_to_bottom_in_BotChat[chatbot_string])
-            # delay(0.(02, 0.1)
         elif chat_type == "image":
             cycle_hunter_click(chat_image_name)
     delay(16, 20)
@@ -62,16 +60,21 @@ def Run_Blum(dailik):
         delay(2, 3)
     Close_AnyWay()
 
-
 def Run_Diamond(dailik):
     PreRun(find_Diamond)
     if dailik:
-        pg.click(click_diamonds)
-    pg.press("num5")
+        for coordinates in diamond_daily_reward:
+            pg.click(coordinates)
+            delay(0.4, 0.8)
+        pg.press("Esc")
+        delay()
+        pg.click(diamond_game)
+        delay()
+    pg.press("num3")
     delay(10, 11)
-    pg.press("num5")
+    pg.press("num3")
     delay()
-    pg.click(click_diamonds[0], click_diamonds[1] + 80)
+    pg.click(get_diamonds_reward_from_game)
     Close_AnyWay()
 
 
@@ -81,10 +84,11 @@ def Run_Clayton(dailik):
     if dailik:
         pg.click(claim_daily_reward)
         delay()
+    drag_to_bottom(duration=0.4)
     for _ in range(4):
         pg.click(claim_coins)
         delay(0.5, 0.8)
-    # play_512(how_much_you_want_to_play)
+    play_512(how_much_you_want_to_play)
     Close_AnyWay()
 
 
@@ -92,14 +96,15 @@ def Run_BUMP(dailik):
     PreRun(find_BUMP, chat=True, chat_type="click", chatbot_string=0)
     scan_BUMP_daily_reward()
     delay(2, 3)
-    for _ in range(2):
+    for _ in range(3):
         find_it_and_click_it(green_X)
+        find_it_and_click_it(gray_X)
         delay(0.2, 0.5)
     for _ in range(16):
         pg.click(middle_screen)
         delay(0.2, 0.6)
     pg.press("num5")
-    for _ in range(256):
+    for _ in range(1000):
         is_it_clicked = find_it_and_click_it(click_at_moon)
         if is_it_clicked:
             pg.press("num5")
@@ -128,8 +133,13 @@ def Run_PocketFi(dailik):
 
 def Run_HEXN(dailik):
     PreRun(find_HEXN)
+    for coordinates in rocket_time_reward:
+        pg.click(coordinates)
+        delay(0.4, 0.6)
+    pg.press("Esc")
+    delay()
     pg.click(claim_reward_HEXN)
-    delay(3, 4)
+    delay(4, 5)
     pg.click(start_farm_HEXN)
     Close_AnyWay()
 
@@ -154,10 +164,9 @@ def Run_Seeds(dailik):
             if coordinates == daily_Seeds[7]:
                 drag_to_bottom()
                 delay(0.2, 0.6)
-    find_it_and_click_it(Seeds_Check_news)
-    delay()
-    find_it_and_click_it(seeds_claim)
-    delay()
+    for coordinates in seeds_claim:
+        pg.click(coordinates)
+        delay(0.4, 1)
     pg.click(caterpillar_claim_on_tree)
     delay()
     find_it_and_click_it(caterpillar_is_not_ready)
@@ -168,16 +177,14 @@ def Run_Seeds(dailik):
 def Run_SimpleCoin(dailik):
     PreRun(find_SimpleCoin)
     for _ in range(2):
+        pg.click(claim_SimpleCoins)
         delay()
-        pg.click(claim_coins)
-    find_it_and_click_it(fortuna_open)
+    pg.click(fortuna_open)
     delay()
     pg.click(fortuna_run)
     delay(4, 5)
     find_it_and_click_it(fortuna_reward)
     find_it_and_click_it(fortuna_null_reward)
-    delay()
-    pg.click(cords_close)
     delay()
     pg.press("num3")
     delay(12, 15)
@@ -186,9 +193,12 @@ def Run_SimpleCoin(dailik):
 
 
 def Run_BEE(dailik):
-    PreRun(find_BEE, chat=True, chat_type="click", chatbot_string=2)
-    drag_to_bottom(duration=0.6)
-    delay()
+    for i in [0, 1]:
+        PreRun(find_BEE, chat=True, chat_type="click", chatbot_string=2)
+        drag_to_bottom(duration=0.6)
+        delay()
+        if i == 0:
+            Close_AnyWay()
     for coordinates in upgrades_BEE:
         pg.click(coordinates)
         delay(0.01, 0.1)
@@ -204,11 +214,11 @@ def Run_BEE(dailik):
 
 def Run_ElonMusk(dailik):
     PreRun(find_ElonMusk)
+    pg.click(Musk_take)
     if dailik:
         for coordinate in Elon_daily:
             pg.click(coordinate)
             delay(0.4, 0.8)
-    hunt_for_the_button_in_list(Musk_take)
     Close_AnyWay()
 
 
@@ -219,7 +229,7 @@ def Run_TimeFarm(dailik):
         delay()
     for _ in range(2):
         pg.click(FarmingTime)
-        delay(3, 4)
+        delay(6, 8)
     Close_AnyWay()
 
 
@@ -239,7 +249,7 @@ def Run_Baboon(dailik):
     pg.press("num3")
     for coordinates in repair_battery:
         pg.click(coordinates)
-        delay(0.4, 0.8)
+        delay()
     Close_AnyWay()
 
 
@@ -286,7 +296,7 @@ def Run_Cyber_Finance(dailik):
     for coordinates in upgrade_egg_hummer:
         pg.click(coordinates)
         delay(0.4, 0.6)
-    cycle_hunter_click(hummer_accept_close)
+    hunt_for_the_button_in_list(hummer_close)
     Close_AnyWay()
 
 
@@ -339,115 +349,122 @@ if __name__ == '__main__':
     Game_Details = {
         "Blum": {"seconds": 28800, "function": Run_Blum},
         "Diamond": {"seconds": 28800, "function": Run_Diamond},
-        "Clayton": {"seconds": 28800, "function": Run_Clayton},
-        "BUMP": {"seconds": 21600, "function": Run_BUMP},
-        "PocketFi": {"seconds": 18000, "function": Run_PocketFi},
-        "HEXN": {"seconds": 14400, "function": Run_HEXN},
-        "DejenDog": {"seconds": 14400, "function": Run_DejenDog},
-        "Seeds": {"seconds": 10800, "function": Run_Seeds},
-        "SimpleCoin": {"seconds": 28800, "function": Run_SimpleCoin},
-        "ElonMusk": {"seconds": 10800, "function": Run_ElonMusk},
-        "BEE": {"seconds": 14400, "function": Run_BEE},
-        "TimeFarm": {"seconds": 14400, "function": Run_TimeFarm},
-        "Baboon": {"seconds": 43200, "function": Run_Baboon},
+        # "Clayton": {"seconds": 28800, "function": Run_Clayton},
+        # "BUMP": {"seconds": 21600, "function": Run_BUMP},
+        # "PocketFi": {"seconds": 18000, "function": Run_PocketFi},
+        # "HEXN": {"seconds": 14400, "function": Run_HEXN},
+        # "DejenDog": {"seconds": 14400, "function": Run_DejenDog},
+        # "Seeds": {"seconds": 10800, "function": Run_Seeds},
+        # "SimpleCoin": {"seconds": 28800, "function": Run_SimpleCoin},
+        # "ElonMusk": {"seconds": 10800, "function": Run_ElonMusk},
+        # "BEE": {"seconds": 14400, "function": Run_BEE},
+        # "TimeFarm": {"seconds": 14400, "function": Run_TimeFarm},
+        # "Baboon": {"seconds": 43200, "function": Run_Baboon},
         # "Tomato": {"seconds": Раз в сутки, "function": Run_Tomato},
-        "Time_TON_Ecosystem": {"seconds": 28800, "function": Run_Time_TON_Ecosystem},
-        "TON_Station": {"seconds": 28800, "function": Run_TON_Station},
-        "Cyber_Finance": {"seconds": 7200, "function": Run_Cyber_Finance},  # 86400
-        "SnapSter": {"seconds": 86400, "function": Run_SnapSter},
+        # "Time_TON_Ecosystem": {"seconds": 28800, "function": Run_Time_TON_Ecosystem},
+        # "TON_Station": {"seconds": 28800, "function": Run_TON_Station},
+        # "Cyber_Finance": {"seconds": 7200, "function": Run_Cyber_Finance},  # 86400
+        # "SnapSter": {"seconds": 86400, "function": Run_SnapSter},
+        # +3 game
     }
 
     if True:
-        number_bottom_drags = 64
+        number_bottom_drags = len(Game_Details) * 4
         window_numbers = len(Settings)
-        # [names_for_images]-[main]-[START]
+        # [names_for_images]---[START]
         connect_to_vpn = ["collapse_all_windows", "check_all_windows",
                           "clear_all", "ProtonVPN", "ActivateVPN",
                           "collapse_all_windows"]
-        # [names_for_images]-[main]-[END]
-
-        # [Telegram_params]-[Start]
-        open_telegram = ["collapse_all_windows", "Telegram", "main_group"]
-        cords_close = (116, 132)
-        farm_group = (127, 364)
         main_group = ["main_group"]
-
+        cords_close = (116, 132)
         click_to_bottom_in_BotChat = [(900, 880), (900, 800), (900, 720)]
-        # [Telegram_params]-[End]
+        # [names_for_images]---[END]
+
+        #
+        middle_screen = (960, 540)
+        #
 
         # [Blum_params]-[Start]
         find_Blum = ["Blum"]
         claim_farm = (940, 840)
         claim_reward_daily = (750, 960)
-        gray_small_X = "gray_small_X"
         # [Blum_params]-[End]
 
         # [Diamond_params]-[Start]
         find_Diamond = ["Diamond"]
-        click_diamonds = (940, 740)
+        get_diamonds_reward_from_game = (940, 820)
+        diamond_daily_reward = [(1160, 340), (870, 480)]
+        diamond_clicker = (940, 580)
+        diamond_game = (720, 340)
         # [Diamond_params]-[End]
 
         # [Clayton_params]-[Start]
         find_Clayton = ["Clayton"]
         claim_daily_reward = (940, 840)
-        claim_coins = (940, 820)
+        claim_coins = (940, 720)
         # [Clayton_params]-[End]
 
         # [BUMP_params]-[Start]
         find_BUMP = ["BUMP"]
-        button_position = (1660, 880)
-        top_position = (1660, 280)
         green_X = ["green_X"]
+        gray_X = ["gray_X"]
         click_at_moon = ["click_at_moon"]
-        middle_screen = (960, 540)
         # [BUMP_params]-[End]
 
         # [PocketFi_params]-[Start]
         find_PocketFi = ["PocketFi"]
-        # claim_switch = ["Claim_SWITCH"]
         get_daily_FiReward = ["FiQuests", "FiPresent"]
         get_reward_Fi = (940, 980)
         # [PocketFi_params]-[End]
 
         find_HEXN = ["HEXN"]
-        find_DejenDog = ["DejenDog"]
-        find_Seeds = ["Seeds"]
-        find_SimpleCoin = ["SimpleCoin"]
-        dog_lvlup_menu = [(880, 980), (800, 500)]
-        seeds_claim = ["seeds_claim"]
-        caterpillar_is_not_ready = ["caterpillar_is_not_ready"]
-        caterpillar_claim_on_tree = (980, 560)
-        fortuna_open = ["fortuna_open"]
-        fortuna_run = (900, 900)
-        fortuna_reward = ["fortuna_reward"]
-        sell_caterpillar = ["sell_caterpillar"]
-        ChatDog = ["ChatDog_Enter"]
+        rocket_time_reward = [(1440, 260),
+                              (570, 330), (930, 330), (1300, 330),
+                              (570, 570), (930, 570), (1300, 570),
+                              (570, 800), (930, 800), (1300, 800)]
         claim_reward_HEXN = (940, 880)
         start_farm_HEXN = (940, 840)
-        Chat_open_BEE = (890, 890)
-        full_screen_BEE = (1300, 500)
-        upgrades_BEE = [(1150, 950), (1100, 950), (1200, 950)]
-        bee_lvl_up = ["bee_lvl_up"]
-        upgrades_BEE_stages = [(1100, 550), (1100, 280)]
-        Musk_take = ["Musk_take"]
-        find_BEE = ["BEE"]
-        find_ElonMusk = ["ElonMusk"]
-        find_TimeFarm = ["TimeFarm"]
-        FarmingTime = (1000, 800)
-        TimeFarm_daily_reward = (1000, 980)
-        Seeds_Daily = ["Seeds_Daily"]
+
+        find_DejenDog = ["DejenDog"]
+        ChatDog = ["ChatDog_Enter"]
+        dog_lvlup_menu = [(880, 980), (800, 500)]
+
+
+        find_Seeds = ["Seeds"]
+        caterpillar_is_not_ready = ["caterpillar_is_not_ready"]
+        sell_caterpillar = ["sell_caterpillar"]
         Got_It_Daily = ["Got_It_Daily"]
-        Seeds_Check_news = ["Seeds_Check_news"]
-        fortuna_null_reward = ["fortuna_null_reward"]
-        daily_Seeds = [(1240, 440), (380, 530), (940, 530), (1500, 530), (380, 760), (940, 760), (1500, 760),
+        seeds_claim = [(950, 750), (1200, 750)]
+        caterpillar_claim_on_tree = (980, 560)
+        daily_Seeds = [(1240, 440),
+                       (380, 530), (940, 530), (1500, 530),
+                       (380, 760), (940, 760), (1500, 760),
                        (950, 750)]
+
+        find_SimpleCoin = ["SimpleCoin"]
+        fortuna_reward = ["fortuna_reward"]
+        fortuna_null_reward = ["fortuna_null_reward"]
+        fortuna_open = (1700, 700)
+        fortuna_run = (900, 900)
+        claim_SimpleCoins = (920, 820)
+
+        find_BEE = ["BEE"]
+        upgrades_BEE = [(1150, 950), (1100, 950), (1200, 950)]
+        upgrades_BEE_stages = [(1100, 860), (1100, 600), (1100, 320)]
+
+        find_ElonMusk = ["ElonMusk"]
+        Musk_take = (950, 950)
+        Elon_daily = [(1600, 960), (1200, 580), (900, 910)]
+
+        find_TimeFarm = ["TimeFarm"]
+        FarmingTime = (940, 810)
+        TimeFarm_daily_reward = (1000, 960)
 
         find_Baboon = ["Baboon"]
         Baboon_daily_reward = [(950, 950), (690, 890), (940, 1000)]
         combo_battery = [(740, 420), (940, 420), (1140, 420), (950, 950)]
         bust_battery = [(1060, 900), (1000, 660), (930, 980)]
         repair_battery = [(1200, 770), (930, 980)]
-
 
         find_Time_TON_Ecosystem = ["Time_TON_Ecosystem"]
         daily_TON_Ecosystem = (950, 920)
@@ -457,22 +474,22 @@ if __name__ == '__main__':
         TON_Station_claim = (950, 800)
 
         find_Cyber_Finance = ["Cyber_Finance"]
+        hummer_close = ["hummer_close"]
         claim_Cyber_Finance = (940, 540)
         upgrade_egg_hummer = [(1470, 860), (1470, 860), (1060, 740)]
-        hummer_accept_close = ["hummer_close"]
 
         find_SnapSter = ["SnapSter"]
         SnapSter_claim_and_farm = (1350, 540)
-        Elon_daily = [(1600, 960), (1200, 580), (900, 910)]
+
     # To Do: Set cords / make images
     find_Tomato = ["Tomato"]
+    Red_Tomato = ["Red_Tomato"]
     Tomato_claim_and_farm = ()
     play_Tomato = ()
-    Red_Tomato = ["Red_Tomato"]
     start_Tomato_game_again = ()
 
-    # [RUN_SCRIPT]-[START]
+    # [RUN_SCRIPT]---[START]
     main()
-    # [RUN_SCRIPT]-[END]
+    # [RUN_SCRIPT]---[END]
 
     print("Время окончания сеанса:", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
