@@ -24,6 +24,7 @@ def play_512(how_much_you_want_to_play):
                     delay()
                     find_it_and_click_it(main_menu)
                     break
+    delay(3, 4)
 
 
 def random_moves():
