@@ -39,3 +39,8 @@ def Close_AnyWay():
         delay(0.4, 0.6)
         find_it_and_click_it(close_anyway)
         delay(0.4, 0.6)
+
+def swipe_right(duration=0.2):
+    pg.moveTo(cords_to_swipe[0], cords_to_swipe[1])
+    pg.dragTo(cords_to_swipe[0] + 800, cords_to_swipe[1], duration=duration)
+    pg.mouseUp()
