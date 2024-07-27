@@ -5,17 +5,19 @@ from typing import Final, Literal, List
 import pyautogui as pg
 from ahk import AHK
 
-from games.game_512 import play_512
 from modules.Timers import check_reward as CHECK_DAILY_REWARD
 from modules.Timers import delay
 from modules.Timers import timer_checker as TIME_CHECK
 from modules.Timers import timer_update as UPDATE_TIMER
 from modules.Timers import update_time_reward as UPDATE_TIME_DAILY_REWARD
 from modules.json_files import load_data
-from modules.moves import Close_AnyWay, drag_to_bottom, drag_to_up, auto_clicker
+from modules.moves import Close_AnyWay, drag_to_bottom, drag_to_up
 from modules.screens import find_it_and_click_it, scan_BUMP_daily_reward, hunt_for_the_button_in_list
 from modules.windows import cycle_hunter_click, Stop_BS_Windows
 from modules.windows import open_vpn_telegram as ACTIVATE_WINDOW
+from special_events.game_512 import play_512
+
+# from special_events.BUMB_bust import buy_bust
 
 ahk = AHK()
 
@@ -60,6 +62,7 @@ def Run_Blum(dailik):
         delay(2, 3)
     Close_AnyWay()
 
+
 def Run_Diamond(dailik):
     PreRun(find_Diamond)
     if dailik:
@@ -79,7 +82,7 @@ def Run_Diamond(dailik):
 
 
 def Run_Clayton(dailik):
-    how_much_you_want_to_play = 4
+    how_much_you_want_to_play = 2
     PreRun(find_Clayton)
     if dailik:
         pg.click(claim_daily_reward)
@@ -100,39 +103,42 @@ def Run_BUMP(dailik):
         find_it_and_click_it(green_X)
         find_it_and_click_it(gray_X)
         delay(0.2, 0.5)
+    # BUST
+    # delay()
+    # buy_bust()
+    # BUST
     for _ in range(16):
         pg.click(middle_screen)
         delay(0.2, 0.6)
-    pg.press("num5")
-    for _ in range(1000):
+    pg.press("num3")
+    for _ in range(256):
         is_it_clicked = find_it_and_click_it(click_at_moon)
         if is_it_clicked:
-            pg.press("num5")
+            pg.press("num3")
             break
         else:
             delay(0.01, 0.2)
     else:
-        pg.press("num5")
+        pg.press("num3")
     Close_AnyWay()
 
 
 def Run_PocketFi(dailik):
     PreRun(find_PocketFi, threshold=0.7)
-    drag_to_bottom()
-    if dailik:
-        hunt_for_the_button_in_list(get_daily_FiReward)
+    for coordinates in mining_fi:
+        pg.click(coordinates)
         delay()
-        pg.click(get_reward_Fi)
-    delay()
-    pg.click(cords_close)
-    delay()
-    drag_to_bottom()
-    pg.click(middle_screen)
+    if dailik:
+        for coordinates in get_daily_FiReward:
+            pg.click(coordinates)
+            delay(0.4, 1)
+    pg.click(claim_switch)
     Close_AnyWay()
 
 
 def Run_HEXN(dailik):
     PreRun(find_HEXN)
+    pg.click(agree_new_updates)
     for coordinates in rocket_time_reward:
         pg.click(coordinates)
         delay(0.4, 0.6)
@@ -146,9 +152,11 @@ def Run_HEXN(dailik):
 
 def Run_DejenDog(dailik):
     PreRun(find_DejenDog, chat=True, chat_type="image", chat_image_name=ChatDog)
+    drag_to_bottom(duration=0.4)
     pg.press("num3")
     delay(80, 90)
     pg.press("num3")
+    delay(4, 6)
     for coordinates in dog_lvlup_menu:
         pg.click(coordinates)
         delay(8, 9)
@@ -160,17 +168,14 @@ def Run_Seeds(dailik):
     if dailik:
         for coordinates in daily_Seeds:
             pg.click(coordinates)
-            delay(0.4, 1)
+            delay(0.2, 0.6)
             if coordinates == daily_Seeds[7]:
-                drag_to_bottom()
+                drag_to_bottom(duration=0.4)
                 delay(0.2, 0.6)
     for coordinates in seeds_claim:
         pg.click(coordinates)
         delay(0.4, 1)
     pg.click(caterpillar_claim_on_tree)
-    delay()
-    find_it_and_click_it(caterpillar_is_not_ready)
-    find_it_and_click_it(sell_caterpillar)
     Close_AnyWay()
 
 
@@ -186,26 +191,34 @@ def Run_SimpleCoin(dailik):
     find_it_and_click_it(fortuna_reward)
     find_it_and_click_it(fortuna_null_reward)
     delay()
-    pg.press("num3")
+    pg.press("num5")
     delay(12, 15)
-    pg.press("num3")
+    pg.press("num5")
     Close_AnyWay()
 
 
 def Run_BEE(dailik):
-    for i in [0, 1]:
-        PreRun(find_BEE, chat=True, chat_type="click", chatbot_string=2)
-        drag_to_bottom(duration=0.6)
-        delay()
-        if i == 0:
-            Close_AnyWay()
+    PreRun(find_BEE, chat=True, chat_type="click", chatbot_string=2)
+    drag_to_bottom(duration=0.6)
+    delay()
+    # BEE_check_daily()
+    pg.click(daily_BEE)
+    delay(3, 4)
     for coordinates in upgrades_BEE:
         pg.click(coordinates)
         delay(0.01, 0.1)
     delay(8, 10)
-    drag_to_bottom(duration=0.6)
-    delay()
-    for stage in upgrades_BEE_stages:
+    for _ in range(3):
+        drag_to_bottom(duration=0.33)
+        delay()
+    for i, stage in enumerate(upgrades_BEE_stages):
+        if i == 3:
+            pg.click(other_menu_BEE)
+            delay()
+            for coordinates in upgrades_BEE:
+                pg.click(coordinates)
+                delay(0.01, 0.1)
+            delay(4, 5)
         for _ in range(20):
             pg.click(stage)
             delay(0.6, 1)
@@ -218,17 +231,14 @@ def Run_ElonMusk(dailik):
     if dailik:
         for coordinate in Elon_daily:
             pg.click(coordinate)
-            delay(0.4, 0.8)
+            delay()
     Close_AnyWay()
 
 
 def Run_TimeFarm(dailik):
     PreRun(find_TimeFarm)
-    if dailik:
-        pg.click(TimeFarm_daily_reward)
-        delay()
-    for _ in range(2):
-        pg.click(FarmingTime)
+    for coordinates in FarmingTime:
+        pg.click(coordinates)
         delay(6, 8)
     Close_AnyWay()
 
@@ -349,15 +359,15 @@ if __name__ == '__main__':
     Game_Details = {
         "Blum": {"seconds": 28800, "function": Run_Blum},
         "Diamond": {"seconds": 28800, "function": Run_Diamond},
-        # "Clayton": {"seconds": 28800, "function": Run_Clayton},
-        # "BUMP": {"seconds": 21600, "function": Run_BUMP},
-        # "PocketFi": {"seconds": 18000, "function": Run_PocketFi},
-        # "HEXN": {"seconds": 14400, "function": Run_HEXN},
-        # "DejenDog": {"seconds": 14400, "function": Run_DejenDog},
-        # "Seeds": {"seconds": 10800, "function": Run_Seeds},
-        # "SimpleCoin": {"seconds": 28800, "function": Run_SimpleCoin},
+        "Clayton": {"seconds": 28800, "function": Run_Clayton},
+        "BUMP": {"seconds": 21600, "function": Run_BUMP},
+        "PocketFi": {"seconds": 18000, "function": Run_PocketFi},
+        "HEXN": {"seconds": 7200, "function": Run_HEXN},
+        "DejenDog": {"seconds": 14400, "function": Run_DejenDog},
+        "Seeds": {"seconds": 14400, "function": Run_Seeds},
+        "SimpleCoin": {"seconds": 28800, "function": Run_SimpleCoin},
         # "ElonMusk": {"seconds": 10800, "function": Run_ElonMusk},
-        # "BEE": {"seconds": 14400, "function": Run_BEE},
+        "BEE": {"seconds": 14400, "function": Run_BEE},
         # "TimeFarm": {"seconds": 14400, "function": Run_TimeFarm},
         # "Baboon": {"seconds": 43200, "function": Run_Baboon},
         # "Tomato": {"seconds": Раз в сутки, "function": Run_Tomato},
@@ -413,8 +423,9 @@ if __name__ == '__main__':
 
         # [PocketFi_params]-[Start]
         find_PocketFi = ["PocketFi"]
-        get_daily_FiReward = ["FiQuests", "FiPresent"]
-        get_reward_Fi = (940, 980)
+        mining_fi = [(1570, 240), (940, 930)]
+        get_daily_FiReward = [(830, 930), (940, 720), (940, 990), (1000, 220), (940, 930)]
+        claim_switch = (940, 720)
         # [PocketFi_params]-[End]
 
         find_HEXN = ["HEXN"]
@@ -424,22 +435,20 @@ if __name__ == '__main__':
                               (570, 800), (930, 800), (1300, 800)]
         claim_reward_HEXN = (940, 880)
         start_farm_HEXN = (940, 840)
+        agree_new_updates = (940, 940)
 
         find_DejenDog = ["DejenDog"]
         ChatDog = ["ChatDog_Enter"]
-        dog_lvlup_menu = [(880, 980), (800, 500)]
-
+        dog_lvlup_menu = [(940, 950), (800, 440)]
 
         find_Seeds = ["Seeds"]
-        caterpillar_is_not_ready = ["caterpillar_is_not_ready"]
-        sell_caterpillar = ["sell_caterpillar"]
-        Got_It_Daily = ["Got_It_Daily"]
         seeds_claim = [(950, 750), (1200, 750)]
-        caterpillar_claim_on_tree = (980, 560)
-        daily_Seeds = [(1240, 440),
+        caterpillar_claim_on_tree = (980, 650)
+        daily_Seeds = [(1240, 540),
                        (380, 530), (940, 530), (1500, 530),
                        (380, 760), (940, 760), (1500, 760),
-                       (950, 750)]
+                       (940, 750),
+                       (950, 950)]
 
         find_SimpleCoin = ["SimpleCoin"]
         fortuna_reward = ["fortuna_reward"]
@@ -449,16 +458,17 @@ if __name__ == '__main__':
         claim_SimpleCoins = (920, 820)
 
         find_BEE = ["BEE"]
+        daily_BEE = (950, 980)
         upgrades_BEE = [(1150, 950), (1100, 950), (1200, 950)]
-        upgrades_BEE_stages = [(1100, 860), (1100, 600), (1100, 320)]
+        upgrades_BEE_stages = [(1090, 810), (1090, 540), (1090, 270), (1090, 700)]
+        other_menu_BEE = (290, 950)
 
         find_ElonMusk = ["ElonMusk"]
         Musk_take = (950, 950)
-        Elon_daily = [(1600, 960), (1200, 580), (900, 910)]
+        Elon_daily = [(1600, 960), (1200, 580), (900, 950)]
 
         find_TimeFarm = ["TimeFarm"]
-        FarmingTime = (940, 810)
-        TimeFarm_daily_reward = (1000, 960)
+        FarmingTime = [(160, 950), (940, 810), (940, 810)]
 
         find_Baboon = ["Baboon"]
         Baboon_daily_reward = [(950, 950), (690, 890), (940, 1000)]
