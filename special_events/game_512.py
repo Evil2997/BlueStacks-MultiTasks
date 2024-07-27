@@ -2,16 +2,16 @@ import random
 
 import pyautogui as pg
 
-from games import *
 from modules.Timers import delay
-from modules.moves import drag_to_bottom, swipe_right
+from modules.moves import swipe_right, drag_to_up
 from modules.screens import find_it_and_click_it
+from special_events import *
 
 
 def play_512(how_much_you_want_to_play):
     for game in range(how_much_you_want_to_play):
         delay(3, 4)
-        drag_to_bottom()
+        drag_to_up(duration=0.4)
         delay()
         swipe_right()
         delay()

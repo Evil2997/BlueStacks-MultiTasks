@@ -1,5 +1,4 @@
 import random
-import time
 
 import pyautogui as pg
 
@@ -8,7 +7,7 @@ from modules.screens import find_it_and_click_it, find_template_on_region
 
 cords_to_drag = (1700, 300)
 cords_close = (116, 132)
-cords_to_swipe = (700, 360)
+cords_to_swipe = (700, 750)
 
 close_anyway = ["close_anyway"]
 
@@ -37,6 +36,7 @@ def Close_AnyWay():
         delay(0.4, 0.6)
         find_it_and_click_it(close_anyway)
         delay(0.4, 0.6)
+
 
 def swipe_right(duration=0.2):
     pg.moveTo(cords_to_swipe[0], cords_to_swipe[1])
