@@ -34,7 +34,7 @@ def activate_main_window():
     delay()
 
 
-def open_vpn_telegram(win, win_numeric):
+def activate_window(win, win_numeric):
     i = win_numeric
     WIN_START = {
         "win0": {"cords": (540, 200)},
@@ -53,9 +53,9 @@ def open_vpn_telegram(win, win_numeric):
         win.move(0, 0)
         delay(0.01, 0.04)
     pg.click(WIN_START[f"win{i}"]["cords"])
-    delay(40, 60)
+    delay(30, 40)
     activate_main_window()
     cycle_hunter_click(connect_to_vpn_AND_open_telegram)
-    delay(30, 40)
-    cycle_hunter_click(main_group)
-    delay(8, 10)
+    delay(20, 30)
+    hunt_for_the_button_in_list(main_group)
+    delay(14, 16)
