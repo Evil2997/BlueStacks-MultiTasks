@@ -12,14 +12,14 @@ cords_to_swipe = (700, 750)
 close_anyway = ["close_anyway"]
 
 
-def drag_to_up(duration=0.2):
+def drag_to_up(duration=0.12):
     random_y = random.uniform(-15, 15)
     pg.moveTo(cords_to_drag[0], cords_to_drag[1])
     pg.dragTo(cords_to_drag[0], cords_to_drag[1] + random_y + 295, duration=duration)
     pg.mouseUp()
 
 
-def drag_to_bottom(duration=0.2):
+def drag_to_bottom(duration=0.12):
     random_y = random.uniform(-15, 15)
     pg.moveTo(cords_to_drag[0], cords_to_drag[1] + random_y + 495)
     pg.dragTo(cords_to_drag[0], cords_to_drag[1], duration=duration)
