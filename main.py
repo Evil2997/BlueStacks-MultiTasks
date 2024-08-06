@@ -5,6 +5,7 @@ from typing import Final, Literal, List
 import pyautogui as pg
 from ahk import AHK
 
+from applications.BEE.run import Run_BEE
 from applications.BUMP.run import Run_BUMP
 from applications.Blum.run import Run_Blum
 from applications.Clayton.run import Run_Clayton
@@ -94,34 +95,6 @@ def Run_DejenDog(dailik):
     for coordinates in dog_lvlup_menu:
         pg.click(coordinates)
         delay(8, 9)
-    Close_AnyWay()
-
-
-def Run_BEE(dailik):
-    PreRun(find_BEE, chat=True, chat_type="click", chatbot_string=2)
-    drag_to_bottom(duration=0.6)
-    delay()
-    # BEE_check_daily()
-    pg.click(daily_BEE)
-    delay(3, 4)
-    for coordinates in upgrades_BEE:
-        pg.click(coordinates)
-        delay(0.01, 0.1)
-    delay(8, 10)
-    for _ in range(3):
-        drag_to_bottom(duration=0.33)
-        delay()
-    for i, stage in enumerate(upgrades_BEE_stages):
-        if i == 3:
-            pg.click(other_menu_BEE)
-            delay()
-            for coordinates in upgrades_BEE:
-                pg.click(coordinates)
-                delay(0.01, 0.1)
-            delay(4, 5)
-        for _ in range(20):
-            pg.click(stage)
-            delay(0.6, 1)
     Close_AnyWay()
 
 
@@ -272,86 +245,14 @@ if __name__ == '__main__':
         main_group = ["main_group"]
         cords_close = (116, 132)
         click_to_bottom_in_BotChat = [(890, 880), (890, 800), (890, 720)]
-        # [names_for_images]---[END]
-
         middle_screen = (960, 540)
         close_main_group = (730, 130)
         bug_while_scrolling_chat = "bug_while_scrolling_chat"
-
-        # # [Blum_params]-[Start]
-        # find_Blum = ["Blum"]
-        # claim_farm = (940, 840)
-        # claim_reward_daily = (750, 960)
-        # # [Blum_params]-[End]
-        #
-        # # [Diamond_params]-[Start]
-        # find_Diamond = ["Diamond"]
-        # get_diamonds_reward_from_game = (940, 820)
-        # diamond_daily_reward = [(1160, 340), (870, 480)]
-        # diamond_clicker = (940, 580)
-        # diamond_game = (720, 340)
-        # # [Diamond_params]-[End]
-        #
-        # # [Clayton_params]-[Start]
-        # find_Clayton = ["Clayton"]
-        # claim_daily_reward = (920, 870)
-        # claim_coins = (940, 720)
-        # # [Clayton_params]-[End]
-        #
-        # # [BUMP_params]-[Start]
-        # find_BUMP = ["BUMP"]
-        # green_X = ["green_X"]
-        # gray_X = ["gray_X"]
-        # # [BUMP_params]-[End]
-        #
-        # # [PocketFi_params]-[Start]
-        # find_PocketFi = ["PocketFi"]
-        # mining_fi = [(1570, 240), (940, 930)]
-        # get_daily_FiReward = [(830, 930), (940, 720), (940, 990), (1000, 220), (940, 930)]
-        # claim_switch = (940, 720)
-        # # [PocketFi_params]-[End]
-        #
-        # find_HEXN = ["HEXN"]
-        # rocket_time_reward = [(1440, 260),
-        #                       (570, 330), (930, 330), (1300, 330),
-        #                       (570, 570), (930, 570), (1300, 570),
-        #                       (570, 800), (930, 800), (1300, 800)]
-        # claim_reward_HEXN = [(240, 940), (940, 820), (940, 820)]
-        # agree_new_updates = (940, 940)
+        # [names_for_images]---[END]
 
         find_DejenDog = ["DejenDog"]
         ChatDog = ["ChatDog_Enter"]
         dog_lvlup_menu = [(940, 950), (800, 440)]
-
-        find_Seeds = ["Seeds"]
-        seeds_claim = [(950, 750), (1200, 750)]
-        caterpillar_claim_on_tree = (980, 660)
-        open_daily_Seeds = (1240, 540)
-        daily_Seeds = [(720, 370), (940, 370), (1200, 370),
-                       (720, 590), (940, 590), (1200, 590),
-                       (940, 800)]
-        claim_ticket_Seeds = (940, 500)
-        get_ticket_Seeds = [(1240, 630), (1080, 900)]
-
-        find_SimpleCoin = ["SimpleCoin"]
-        fortuna_reward = ["fortuna_reward"]
-        fortuna_null_reward = ["fortuna_null_reward"]
-        fortuna_open = (1700, 700)
-        fortuna_run = (900, 900)
-        claim_SimpleCoins = (920, 820)
-
-        find_BEE = ["BEE"]
-        daily_BEE = (950, 980)
-        upgrades_BEE = [(1150, 950), (1100, 950), (1200, 950)]
-        upgrades_BEE_stages = [(1090, 810), (1090, 540), (1090, 270), (1090, 700)]
-        other_menu_BEE = (290, 950)
-
-        find_ElonMusk = ["ElonMusk"]
-        Musk_take = (950, 950)
-        Elon_daily = [(1600, 960), (1200, 490), (920, 920)]
-
-        find_TimeFarm = ["TimeFarm"]
-        FarmingTime = [(160, 950), (940, 810), (940, 810)]
 
         find_Baboon = ["Baboon"]
         Baboon_daily_reward = [(950, 950), (690, 890), (940, 1000)]
