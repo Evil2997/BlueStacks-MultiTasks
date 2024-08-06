@@ -11,10 +11,11 @@ from modules.Timers import timer_checker as TIME_CHECK
 from modules.Timers import timer_update as UPDATE_TIMER
 from modules.Timers import update_time_reward as UPDATE_TIME_DAILY_REWARD
 from modules.json_files import load_data
-from modules.moves import Close_AnyWay, drag_to_bottom, drag_to_up
-from modules.screens import find_it_and_click_it, scan_BUMP_daily_reward, hunt_for_the_button_in_list
+from modules.moves import Close_AnyWay, drag_to_bottom, drag_to_up, swipe_right, swipe_left
+from modules.screens import find_it_and_click_it, scan_BUMP_daily_reward, hunt_for_the_button_in_list, \
+    find_template_on_region
 from modules.windows import cycle_hunter_click, Stop_BS_Windows
-from modules.windows import open_vpn_telegram as ACTIVATE_WINDOW
+from modules.windows import activate_window as ACTIVATE_WINDOW
 from special_events.game_512 import play_512
 
 # from special_events.BUMB_bust import buy_bust
@@ -22,9 +23,34 @@ from special_events.game_512 import play_512
 ahk = AHK()
 
 
+def primary_hunter_click(finder, threshold):
+    MAIN_CYCLE = True
+    while MAIN_CYCLE:
+        if not MAIN_CYCLE:
+            break
+        find_it_and_click_it(main_group)
+        for _ in range(3):
+            delay(0.4, 0.6)
+            pg.click(close_main_group)
+        delay(4, 5)
+        find_it_and_click_it(main_group)
+        for _ in range(20):
+            if not MAIN_CYCLE:
+                break
+            if find_template_on_region(bug_while_scrolling_chat):
+                pg.click(close_main_group)
+                find_it_and_click_it(main_group)
+            for _ in range(20):
+                if find_it_and_click_it(finder, threshold=threshold):
+                    MAIN_CYCLE = False
+                    break
+                else:
+                    drag_to_up()
+
+
 def PreRun(finder,
            chat: bool = False,
-           chat_type: Literal["image", "click"] = "image",
+           chat_type: Literal["image", "click"] = "click",
            chatbot_string: int = -1,
            chat_image_name: List[str] = None,
            threshold: float = 0.92
@@ -34,17 +60,15 @@ def PreRun(finder,
     # [---Start---]
     for _ in range(16):
         if find_it_and_click_it(main_group):
+            find_it_and_click_it(main_group)
             break
         delay(0.04, 0.6)
-    for _ in range(number_bottom_drags):
-        drag_to_bottom()
-    while True:
-        if not find_it_and_click_it(finder, threshold=threshold):
-            drag_to_up()
-        else:
-            break
+    drag_to_bottom()
+
+    primary_hunter_click(finder=finder, threshold=threshold)
+
     if chat:
-        delay(6, 8)
+        delay(8, 10)
         if chat_type == "click":
             pg.click(click_to_bottom_in_BotChat[chatbot_string])
         elif chat_type == "image":
@@ -65,19 +89,20 @@ def Run_Blum(dailik):
 
 def Run_Diamond(dailik):
     PreRun(find_Diamond)
+    for i in [0, 1]:
+        pg.press("num4")
+        delay(12, 14)
+        pg.press("num4")
+        delay()
+        pg.click(get_diamonds_reward_from_game)
+        delay()
+        if i == 0:
+            pg.click(get_diamonds_reward_from_game)
+            delay(16, 20)
     if dailik:
         for coordinates in diamond_daily_reward:
             pg.click(coordinates)
-            delay(0.4, 0.8)
-        pg.press("Esc")
-        delay()
-        pg.click(diamond_game)
-        delay()
-    pg.press("num3")
-    delay(10, 11)
-    pg.press("num3")
-    delay()
-    pg.click(get_diamonds_reward_from_game)
+            delay()
     Close_AnyWay()
 
 
@@ -91,7 +116,7 @@ def Run_Clayton(dailik):
     for _ in range(4):
         pg.click(claim_coins)
         delay(0.5, 0.8)
-    play_512(how_much_you_want_to_play)
+    # play_512(how_much_you_want_to_play)
     Close_AnyWay()
 
 
@@ -103,6 +128,9 @@ def Run_BUMP(dailik):
         find_it_and_click_it(green_X)
         find_it_and_click_it(gray_X)
         delay(0.2, 0.5)
+        for _ in range(2):
+            swipe_left()
+            delay(0.2, 0.5)
     # BUST
     # delay()
     # buy_bust()
@@ -110,16 +138,16 @@ def Run_BUMP(dailik):
     for _ in range(16):
         pg.click(middle_screen)
         delay(0.2, 0.6)
-    pg.press("num3")
+    pg.press("num4")
     for _ in range(256):
         is_it_clicked = find_it_and_click_it(click_at_moon)
         if is_it_clicked:
-            pg.press("num3")
+            pg.press("num4")
             break
         else:
             delay(0.01, 0.2)
     else:
-        pg.press("num3")
+        pg.press("num4")
     Close_AnyWay()
 
 
@@ -138,25 +166,23 @@ def Run_PocketFi(dailik):
 
 def Run_HEXN(dailik):
     PreRun(find_HEXN)
-    pg.click(agree_new_updates)
+    for coordinates in claim_reward_HEXN:
+        pg.click(coordinates)
+        delay(6, 8)
     for coordinates in rocket_time_reward:
         pg.click(coordinates)
         delay(0.4, 0.6)
-    pg.press("Esc")
-    delay()
-    pg.click(claim_reward_HEXN)
-    delay(4, 5)
-    pg.click(start_farm_HEXN)
     Close_AnyWay()
 
 
 def Run_DejenDog(dailik):
     PreRun(find_DejenDog, chat=True, chat_type="image", chat_image_name=ChatDog)
     drag_to_bottom(duration=0.4)
-    pg.press("num3")
-    delay(80, 90)
-    pg.press("num3")
-    delay(4, 6)
+    for _ in range(3):
+        pg.press("num3")  # ON
+        delay(16, 24)
+        pg.press("num3")  # OFF
+        delay(4, 6)
     for coordinates in dog_lvlup_menu:
         pg.click(coordinates)
         delay(8, 9)
@@ -166,16 +192,26 @@ def Run_DejenDog(dailik):
 def Run_Seeds(dailik):
     PreRun(find_Seeds)
     if dailik:
+        pg.click(open_daily_Seeds)
+        delay(3, 4)
+        drag_to_bottom(duration=0.4, cords_to_drag=(940, 300))
         for coordinates in daily_Seeds:
             pg.click(coordinates)
             delay(0.2, 0.6)
-            if coordinates == daily_Seeds[7]:
-                drag_to_bottom(duration=0.4)
-                delay(0.2, 0.6)
+        drag_to_up(duration=0.4, cords_to_drag=(940, 300))
+        pg.click(claim_ticket_Seeds)
+        pg.press("Esc")
+        delay()
+        for coordinates in get_ticket_Seeds:
+            pg.click(coordinates)
+            delay(6, 8)
+        pg.press("Esc")
+        delay()
     for coordinates in seeds_claim:
         pg.click(coordinates)
         delay(0.4, 1)
-    pg.click(caterpillar_claim_on_tree)
+    for _ in range(2):
+        pg.click(caterpillar_claim_on_tree)
     Close_AnyWay()
 
 
@@ -191,9 +227,9 @@ def Run_SimpleCoin(dailik):
     find_it_and_click_it(fortuna_reward)
     find_it_and_click_it(fortuna_null_reward)
     delay()
-    pg.press("num5")
+    pg.press("num2")
     delay(12, 15)
-    pg.press("num5")
+    pg.press("num2")
     Close_AnyWay()
 
 
@@ -228,15 +264,16 @@ def Run_BEE(dailik):
 def Run_ElonMusk(dailik):
     PreRun(find_ElonMusk)
     pg.click(Musk_take)
+    delay(4, 5)
     if dailik:
         for coordinate in Elon_daily:
             pg.click(coordinate)
-            delay()
+            delay(4, 5)
     Close_AnyWay()
 
 
 def Run_TimeFarm(dailik):
-    PreRun(find_TimeFarm)
+    PreRun(find_TimeFarm, chat=True, chat_type="click", chatbot_string=1)
     for coordinates in FarmingTime:
         pg.click(coordinates)
         delay(6, 8)
@@ -254,9 +291,11 @@ def Run_Baboon(dailik):
             delay(0.4, 0.8)
         pg.press("Esc")
         delay()
-    pg.press("num3")
-    delay(90, 100)
-    pg.press("num3")
+    for _ in range(4):
+        pg.press("num3")
+        delay(20, 25)
+        pg.press("num3")
+        delay()
     for coordinates in repair_battery:
         pg.click(coordinates)
         delay()
@@ -387,11 +426,13 @@ if __name__ == '__main__':
                           "collapse_all_windows"]
         main_group = ["main_group"]
         cords_close = (116, 132)
-        click_to_bottom_in_BotChat = [(900, 880), (900, 800), (900, 720)]
+        click_to_bottom_in_BotChat = [(890, 880), (890, 800), (890, 720)]
         # [names_for_images]---[END]
 
         #
         middle_screen = (960, 540)
+        close_main_group = (730, 130)
+        bug_while_scrolling_chat = "bug_while_scrolling_chat"
         #
 
         # [Blum_params]-[Start]
@@ -410,7 +451,7 @@ if __name__ == '__main__':
 
         # [Clayton_params]-[Start]
         find_Clayton = ["Clayton"]
-        claim_daily_reward = (940, 840)
+        claim_daily_reward = (920, 870)
         claim_coins = (940, 720)
         # [Clayton_params]-[End]
 
@@ -433,8 +474,7 @@ if __name__ == '__main__':
                               (570, 330), (930, 330), (1300, 330),
                               (570, 570), (930, 570), (1300, 570),
                               (570, 800), (930, 800), (1300, 800)]
-        claim_reward_HEXN = (940, 880)
-        start_farm_HEXN = (940, 840)
+        claim_reward_HEXN = [(240, 940), (940, 820), (940, 820)]
         agree_new_updates = (940, 940)
 
         find_DejenDog = ["DejenDog"]
@@ -443,12 +483,13 @@ if __name__ == '__main__':
 
         find_Seeds = ["Seeds"]
         seeds_claim = [(950, 750), (1200, 750)]
-        caterpillar_claim_on_tree = (980, 650)
-        daily_Seeds = [(1240, 540),
-                       (380, 530), (940, 530), (1500, 530),
-                       (380, 760), (940, 760), (1500, 760),
-                       (940, 750),
-                       (950, 950)]
+        caterpillar_claim_on_tree = (980, 660)
+        open_daily_Seeds = (1240, 540)
+        daily_Seeds = [(720, 370), (940, 370), (1200, 370),
+                       (720, 590), (940, 590), (1200, 590),
+                       (940, 800)]
+        claim_ticket_Seeds = (940, 500)
+        get_ticket_Seeds = [(1240, 630), (1080, 900)]
 
         find_SimpleCoin = ["SimpleCoin"]
         fortuna_reward = ["fortuna_reward"]
