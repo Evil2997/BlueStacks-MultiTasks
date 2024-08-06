@@ -1,15 +1,14 @@
 import pyautogui as pg
 from ahk import AHK
 
-from modules.screens import cycle_hunter_click, hunt_for_the_button_in_list
+from modules import *
 from modules.Timers import delay
+from modules.screens import cycle_hunter_click, hunt_for_the_button_in_list
 
 ahk = AHK()
 
 
 def Stop_BS_Windows():
-    close_all_windows = ["stop_all_BS_win", "yes_close_all"]
-    close_all_BS_window = [(350, 590), (500, 360)]
     for win in ahk.list_windows():
         if win.title.startswith("BlueStacks Multi Instance Manager"):
             for _ in range(8):
@@ -21,7 +20,6 @@ def Stop_BS_Windows():
 
 
 def activate_main_window():
-    full_screen = ["full_screen"]
     for win in ahk.list_windows():
         if (
                 win.title.startswith("BlueStacks") and
@@ -36,18 +34,6 @@ def activate_main_window():
 
 def activate_window(win, win_numeric):
     i = win_numeric
-    WIN_START = {
-        "win0": {"cords": (540, 200)},
-        "win1": {"cords": (540, 250)},
-        "win2": {"cords": (540, 310)},
-        "win3": {"cords": (540, 360)},
-        "win4": {"cords": (540, 420)},
-    }
-
-    connect_to_vpn_AND_open_telegram = ["collapse_all_windows", "check_all_windows",
-                                        "clear_all", "ProtonVPN", "ActivateVPN",
-                                        "collapse_all_windows", "Telegram"]
-    main_group = ["main_group"]
     for _ in range(16):
         win.activate()
         win.move(0, 0)
