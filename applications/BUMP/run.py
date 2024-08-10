@@ -1,6 +1,7 @@
 from applications import *
 from applications.BUMP import *
 from modules.moves import Close_AnyWay, swipe_left
+from modules.screens import click_on_images
 
 
 def buy_bust_bump():
@@ -30,7 +31,7 @@ def moon_bump():
 
 def Run_BUMP(dailik):
     PreRun(find_BUMP, chat=True, chat_type="click", chatbot_string=0)
-    scan_BUMP_daily_reward()
+    click_on_images(target_colors=colors_daily)
     delay(2, 3)
     for _ in range(3):
         find_it_and_click_it(green_X)

@@ -82,3 +82,32 @@ def cycle_hunter_click(name_list: list[str], region=(0, 0, 1920, 1080)):
             else:
                 delay(0.01, 0.08)
         delay(0.8, 1.2)
+
+
+def click_on_images(target_colors, region=(0, 0, 1920, 1080), pixel_threshold=300):
+    (x1, y1, x2, y2) = region
+    screenshot = np.array(pg.screenshot(region=(x1, y1, x2 - x1, y2 - y1)))
+
+    final_mask = np.zeros((screenshot.shape[0], screenshot.shape[1]), dtype=np.uint8)
+
+    tolerance = 3
+    for color in target_colors:
+        lower_bound = np.array([c - tolerance for c in color])
+        upper_bound = np.array([c + tolerance for c in color])
+        mask = cv2.inRange(screenshot, lower_bound, upper_bound)
+        final_mask = cv2.bitwise_or(final_mask, mask)
+
+    cv2.imwrite("1.png", final_mask)
+
+    image = cv2.imread("1.png", cv2.IMREAD_GRAYSCALE)
+    os.remove("1.png")
+    white_pixels = np.column_stack(np.where(image == 255))
+    print(len(white_pixels))
+    if len(white_pixels) > pixel_threshold:
+        center_x = int(np.mean(white_pixels[:, 1]))
+        center_y = int(np.mean(white_pixels[:, 0]))
+        pg.click(center_x, center_y)
+        delay()
+        return True
+    else:
+        return False

@@ -19,9 +19,8 @@ def drag_to_bottom(duration=0.16, cords_to_drag=cords_to_drag):
     pg.dragTo(cords_to_drag[0], cords_to_drag[1], duration=duration)
 
 
-def Close_AnyWay():
-    telegram_account_settings = "telegram_account_settings"
-    for _ in range(4):
+def Close_AnyWay(times_to_click=4):
+    for _ in range(times_to_click):
         if find_template_on_region(telegram_account_settings):
             break
         delay(4, 5)

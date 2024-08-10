@@ -13,6 +13,8 @@ connect_to_vpn_AND_open_telegram = [
 ]
 main_group = ["main_group"]
 
+telegram_account_settings = "telegram_account_settings"
+
 close_all_windows = ["stop_all_BS_win", "yes_close_all"]
 close_all_BS_window = [(350, 590), (500, 360)]
 full_screen = ["full_screen"]
