@@ -49,6 +49,7 @@ def find_it_and_click_it(name_list: list[str], region=(0, 0, 1920, 1080), thresh
         top_left = find_template_on_region(name, region, threshold=threshold)
         width, height = get_image_size(name)
         if top_left:
+            delay(0.2, 0.3)
             pg.click(top_left[0] + width / 2, top_left[1] + height / 2)
             return True
         elif len(name_list) == 1:
@@ -62,6 +63,7 @@ def hunt_for_the_button_in_list(name_list: list[str], hunt_in_seconds=10, region
             top_left = find_template_on_region(name, region)
             width, height = get_image_size(name)
             if top_left:
+                delay(0.2, 0.3)
                 pg.click(top_left[0] + width / 2, top_left[1] + height / 2)
                 return True
             else:
@@ -77,6 +79,7 @@ def cycle_hunter_click(name_list: list[str], region=(0, 0, 1920, 1080)):
             top_left = find_template_on_region(name, region)
             width, height = get_image_size(name)
             if top_left:
+                delay(0.2, 0.3)
                 pg.click(top_left[0] + width / 2, top_left[1] + height / 2)
                 break
             else:
