@@ -19,7 +19,9 @@ def Run_BEE(dailik):
                 drag_to_bottom(duration=0.2)
                 delay()
         for _ in range(40):
-            click_on_images(target_colors=colors_upgrades)
+            if click_on_images(target_colors=colors_upgrades):
+                delay()
         if i == 0:
             pg.click(other_menu_BEE)
+            delay(3, 4)
     Close_AnyWay()

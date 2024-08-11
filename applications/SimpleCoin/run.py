@@ -5,7 +5,9 @@ from modules.moves import Close_AnyWay
 
 def Run_SimpleCoin(dailik):
     PreRun(find_SimpleCoin)
-    for _ in range(2):
+    pg.click(news_click)
+    delay()
+    for _ in range(3):
         pg.click(claim_SimpleCoins)
         delay()
     pg.click(fortuna_open)
