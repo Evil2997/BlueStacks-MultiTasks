@@ -12,18 +12,14 @@ def Run_BEE(dailik):
         delay(3, 4)
 
     for i in [0, 1]:
-        for coordinates in upgrades_BEE:
-            pg.click(coordinates)
-            delay(0.01, 0.1)
-        delay(4, 5)
+        pg.click(upgrades_BEE)
+        delay(3, 4)
         if i == 0:
             for _ in range(3):
-                drag_to_bottom(duration=0.33)
+                drag_to_bottom(duration=0.2)
                 delay()
         for _ in range(40):
-            if click_on_images(target_colors=colors_upgrades):
-                delay(0.2, 0.4)
+            click_on_images(target_colors=colors_upgrades)
         if i == 0:
-            pg.press('Esc')
-
+            pg.click(other_menu_BEE)
     Close_AnyWay()

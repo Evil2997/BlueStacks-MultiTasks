@@ -105,12 +105,11 @@ def click_on_images(target_colors, region=(0, 0, 1920, 1080), pixel_threshold=30
     image = cv2.imread("1.png", cv2.IMREAD_GRAYSCALE)
     os.remove("1.png")
     white_pixels = np.column_stack(np.where(image == 255))
-    print(len(white_pixels))
+
     if len(white_pixels) > pixel_threshold:
         center_x = int(np.mean(white_pixels[:, 1]))
         center_y = int(np.mean(white_pixels[:, 0]))
         pg.click(center_x, center_y)
-        delay()
         return True
     else:
         return False

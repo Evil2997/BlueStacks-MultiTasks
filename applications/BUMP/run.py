@@ -30,7 +30,7 @@ def moon_bump():
 
 
 def Run_BUMP(dailik):
-    PreRun(find_BUMP, chat=True, chat_type="click", chatbot_string=0)
+    PreRun(find_BUMP, chat=True, chat_type="click", chatbot_string=1)
     click_on_images(target_colors=colors_daily)
     delay(2, 3)
     for _ in range(3):
