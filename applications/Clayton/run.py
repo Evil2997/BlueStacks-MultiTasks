@@ -1,3 +1,5 @@
+import random
+
 from applications import *
 from applications.Clayton import *
 from modules.moves import Close_AnyWay, swipe_right
@@ -38,5 +40,5 @@ def Run_Clayton(dailik):
     for _ in range(4):
         pg.click(claim_coins)
         delay(0.5, 0.8)
-    # play_512(how_much_you_want_to_play)
+    play_512(how_much_you_want_to_play)
     Close_AnyWay()
