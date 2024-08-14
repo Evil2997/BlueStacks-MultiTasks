@@ -2,10 +2,8 @@ import pathlib
 import time
 from typing import Final
 
-import pyautogui as pg
 from ahk import AHK
 
-from applications import PreRun
 from applications.BEE.run import Run_BEE
 from applications.BUMP.run import Run_BUMP
 from applications.Baboon.run import Run_Baboon
@@ -24,6 +22,7 @@ from applications.TON_Station.run import Run_TON_Station
 from applications.TimeFarm.run import Run_TimeFarm
 from applications.Time_TON_Ecosystem.run import Run_Time_TON_Ecosystem
 from applications.Tomato.run import Run_Tomato
+
 from modules.Timers import check_reward as CHECK_DAILY_REWARD
 from modules.Timers import delay
 from modules.Timers import timer_checker as TIME_CHECK
@@ -31,8 +30,6 @@ from modules.Timers import timer_update as UPDATE_TIMER
 from modules.Timers import update_time_reward as UPDATE_TIME_DAILY_REWARD
 from modules.json_files import load_data
 from modules.json_files import align_json_values as SORTED_JSON
-from modules.moves import Close_AnyWay, drag_to_bottom
-from modules.screens import find_it_and_click_it, hunt_for_the_button_in_list
 from modules.windows import Stop_BS_Windows
 from modules.windows import activate_window as ACTIVATE_WINDOW
 
