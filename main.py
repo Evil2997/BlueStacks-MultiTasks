@@ -1,10 +1,11 @@
 import pathlib
 import time
-from typing import Final, Literal, List
+from typing import Final
 
 import pyautogui as pg
 from ahk import AHK
 
+from applications import PreRun
 from applications.BEE.run import Run_BEE
 from applications.BUMP.run import Run_BUMP
 from applications.Blum.run import Run_Blum
@@ -22,67 +23,15 @@ from modules.Timers import timer_checker as TIME_CHECK
 from modules.Timers import timer_update as UPDATE_TIMER
 from modules.Timers import update_time_reward as UPDATE_TIME_DAILY_REWARD
 from modules.json_files import load_data
-from modules.moves import Close_AnyWay, drag_to_bottom, drag_to_up
-from modules.screens import find_it_and_click_it, hunt_for_the_button_in_list, \
-    find_template_on_region
+from modules.json_files import align_json_values as SORTED_JSON
+from modules.moves import Close_AnyWay, drag_to_bottom
+from modules.screens import find_it_and_click_it, hunt_for_the_button_in_list
+from modules.windows import Stop_BS_Windows
 from modules.windows import activate_window as ACTIVATE_WINDOW
-from modules.windows import cycle_hunter_click, Stop_BS_Windows
 
 ahk = AHK()
-
-
-def primary_hunter_click(finder, threshold):
-    MAIN_CYCLE = True
-    while MAIN_CYCLE:
-        if not MAIN_CYCLE:
-            break
-        find_it_and_click_it(main_group)
-        for _ in range(3):
-            delay(0.4, 0.6)
-            pg.click(close_main_group)
-        delay(4, 5)
-        find_it_and_click_it(main_group)
-        for _ in range(20):
-            if not MAIN_CYCLE:
-                break
-            if find_template_on_region(bug_while_scrolling_chat):
-                pg.click(close_main_group)
-                find_it_and_click_it(main_group)
-            for _ in range(20):
-                if find_it_and_click_it(finder, threshold=threshold):
-                    MAIN_CYCLE = False
-                    break
-                else:
-                    drag_to_up()
-
-
-def PreRun(finder,
-           chat: bool = False,
-           chat_type: Literal["image", "click"] = "click",
-           chatbot_string: int = -1,
-           chat_image_name: List[str] = None,
-           threshold: float = 0.92
-           ):
-    if chat_type not in ["image", "click"]:
-        raise ValueError("chat_type должен быть 'image' или 'click'")
-    # [---Start---]
-    for _ in range(16):
-        if find_it_and_click_it(main_group):
-            find_it_and_click_it(main_group)
-            break
-        delay(0.04, 0.6)
-    drag_to_bottom()
-
-    primary_hunter_click(finder=finder, threshold=threshold)
-
-    if chat:
-        delay(8, 10)
-        if chat_type == "click":
-            pg.click(click_to_bottom_in_BotChat[chatbot_string])
-        elif chat_type == "image":
-            cycle_hunter_click(chat_image_name)
-    delay(18, 20)
-
+# pyautogui.FailSafeException: PyAutoGUI fail-safe triggered from mouse moving to a corner of the screen.
+# To disable this fail-safe, set pyautogui.FAILSAFE to False. DISABLING FAIL-SAFE IS NOT RECOMMENDED.
 
 def Run_DejenDog(dailik):
     PreRun(find_DejenDog, chat=True, chat_type="image", chat_image_name=ChatDog)
@@ -196,11 +145,14 @@ def main():
                                     get_daily_rewards_in_this_game = False
                                 Game_Details[game]["function"](get_daily_rewards_in_this_game)
                                 UPDATE_TIMER(window_numeric=i, game=game, settings_file=settings_file)
+                                SORTED_JSON(settings_file, settings_file)
                                 if CHECK_DAILY_REWARD(window_number=i, game=game, rewards_file=rewards_file):
                                     UPDATE_TIME_DAILY_REWARD(window_numeric=i, game=game, rewards_file=rewards_file)
+                                    SORTED_JSON(rewards_file, rewards_file)
                         Stop_BS_Windows()
                         ACTIVATE = False
                 time.sleep(600)
+                break
     pass
 
 
@@ -217,21 +169,21 @@ if __name__ == '__main__':
         "Blum": {"seconds": 28800, "function": Run_Blum},
         "Diamond": {"seconds": 28800, "function": Run_Diamond},
         "Clayton": {"seconds": 28800, "function": Run_Clayton},
-        "BUMP": {"seconds": 21600, "function": Run_BUMP},
+        # "BUMP": {"seconds": 21600, "function": Run_BUMP},
         "PocketFi": {"seconds": 18000, "function": Run_PocketFi},
-        "HEXN": {"seconds": 3600, "function": Run_HEXN},
-        # "DejenDog": {"seconds": 14400, "function": Run_DejenDog},
+        "HEXN": {"seconds": 14400, "function": Run_HEXN},
         "Seeds": {"seconds": 14400, "function": Run_Seeds},
         "SimpleCoin": {"seconds": 28800, "function": Run_SimpleCoin},
         "ElonMusk": {"seconds": 10800, "function": Run_ElonMusk},
-        # "BEE": {"seconds": 14400, "function": Run_BEE},
+        "BEE": {"seconds": 10800, "function": Run_BEE},
         "TimeFarm": {"seconds": 14400, "function": Run_TimeFarm},
         # "Baboon": {"seconds": 43200, "function": Run_Baboon},
-        # "Tomato": {"seconds": Раз в сутки, "function": Run_Tomato},
         # "Time_TON_Ecosystem": {"seconds": 28800, "function": Run_Time_TON_Ecosystem},
         # "TON_Station": {"seconds": 28800, "function": Run_TON_Station},
         # "Cyber_Finance": {"seconds": 7200, "function": Run_Cyber_Finance},  # 86400
         # "SnapSter": {"seconds": 86400, "function": Run_SnapSter},
+        # "Tomato": {"seconds": Раз в сутки, "function": Run_Tomato},
+        # "DejenDog": {"seconds": 14400, "function": Run_DejenDog},
         # +3 game
     }
 
