@@ -12,7 +12,7 @@ main_group = ["main_group"]
 connect_to_vpn = ["collapse_all_windows", "check_all_windows",
                   "clear_all", "ProtonVPN", "ActivateVPN",
                   "collapse_all_windows"]
-
+telegram = ["Telegram"]
 bug_while_scrolling_chat = "bug_while_scrolling_chat"
 
 cords_close = (116, 132)
@@ -57,6 +57,7 @@ def PreRun(finder,
         raise ValueError("chat_type должен быть 'image' или 'click'")
     # [---Start---]
     for _ in range(16):
+        find_it_and_click_it(telegram)
         if find_it_and_click_it(main_group):
             find_it_and_click_it(main_group)
             break
