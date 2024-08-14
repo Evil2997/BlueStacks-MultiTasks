@@ -1,4 +1,7 @@
 find_Cyber_Finance = ["Cyber_Finance"]
-hummer_close = ["hummer_close"]
 claim_Cyber_Finance = (940, 540)
-upgrade_egg_hummer = [(1470, 860), (1470, 860), (1060, 740)]
+open_grades = (1570, 970)
+upgrade_egg_hummer = [(560, 860), (1060, 830)]
+open_tasks = (1150, 970)
+daily_video_for_money = (1740, 510)
+grades_numeric = 4

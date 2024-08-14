@@ -57,7 +57,6 @@ def PreRun(finder,
         raise ValueError("chat_type должен быть 'image' или 'click'")
     # [---Start---]
     for _ in range(16):
-        find_it_and_click_it(telegram)
         if find_it_and_click_it(main_group):
             find_it_and_click_it(main_group)
             break
