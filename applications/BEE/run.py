@@ -11,17 +11,19 @@ def Run_BEE(dailik):
         pg.click(daily_BEE)
         delay(3, 4)
 
-    for i in [0, 1]:
-        pg.click(upgrades_BEE)
-        delay(3, 4)
-        if i == 0:
-            for _ in range(3):
-                drag_to_bottom(duration=0.2)
-                delay()
-        for _ in range(40):
-            if click_on_images(target_colors=colors_upgrades):
-                delay()
-        if i == 0:
-            pg.click(other_menu_BEE)
-            delay(3, 4)
+    pg.click(upgrades_BEE)
+    delay(3, 4)
+    for _ in range(3):
+        drag_to_bottom(duration=0.2)
+        delay()
+    for _ in range(20):
+        for coordinates in upgrades_all:
+            pg.click(coordinates)
+            delay()
+    pg.click(other_menu_BEE)
+    delay(3, 4)
+    for _ in range(20):
+        pg.click(upgrades_last)
+        delay()
+
     Close_AnyWay()
