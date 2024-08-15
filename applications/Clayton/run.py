@@ -33,6 +33,8 @@ def random_moves():
 def Run_Clayton(dailik):
     how_much_you_want_to_play = 2
     PreRun(find_Clayton)
+    pg.click(clayton_pre_game_ads)
+    delay()
     if dailik:
         pg.click(claim_daily_reward)
         delay()

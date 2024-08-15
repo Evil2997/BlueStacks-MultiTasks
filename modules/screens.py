@@ -51,7 +51,8 @@ def find_it_and_click_it(name_list: list[str], region=(0, 0, 1920, 1080), thresh
         if top_left:
             delay(0.2, 0.3)
             pg.click(top_left[0] + width / 2, top_left[1] + height / 2)
-            return True
+            if len(name_list) == 1:
+                return True
         elif len(name_list) == 1:
             return False
 
@@ -65,12 +66,8 @@ def hunt_for_the_button_in_list(name_list: list[str], hunt_in_seconds=10, region
             if top_left:
                 delay(0.2, 0.3)
                 pg.click(top_left[0] + width / 2, top_left[1] + height / 2)
-                return True
             else:
                 delay(0.01, 0.1)
-        else:
-            if len(name_list) == 1:
-                return False
 
 
 def cycle_hunter_click(name_list: list[str], region=(0, 0, 1920, 1080)):
@@ -83,7 +80,7 @@ def cycle_hunter_click(name_list: list[str], region=(0, 0, 1920, 1080)):
                 pg.click(top_left[0] + width / 2, top_left[1] + height / 2)
                 break
             else:
-                delay(0.01, 0.08)
+                delay(0.04, 0.2)
         delay(0.8, 1.2)
 
 

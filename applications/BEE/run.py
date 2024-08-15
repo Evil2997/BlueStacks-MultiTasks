@@ -19,7 +19,8 @@ def Run_BEE(dailik):
     for _ in range(20):
         for coordinates in upgrades_all:
             pg.click(coordinates)
-            delay()
+            delay(0.02, 0.2)
+        delay()
     pg.click(other_menu_BEE)
     delay(3, 4)
     for _ in range(20):
