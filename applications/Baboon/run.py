@@ -15,9 +15,9 @@ def Run_Baboon(dailik):
         pg.press("Esc")
         delay()
     for _ in range(4):
-        pg.press("num5")
+        pg.press("num4")
         delay(25, 30)
-        pg.press("num5")
+        pg.press("num4")
         delay()
         for coordinates in repair_battery:
             pg.click(coordinates)

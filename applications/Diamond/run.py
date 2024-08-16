@@ -25,7 +25,7 @@ def Old_Run_Diamond(dailik):
 def Run_Diamond(dailik):
     PreRun(find_Diamond)
     if dailik:
-        for i in [1, 1, 1, 1, 1, 0]:
+        for i in [1, 1, 1, 1, 0]:
             pg.press("num4")
             for _ in range(65536):
                 if find_it_and_click_it(get_reward_diamond):

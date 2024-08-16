@@ -23,8 +23,8 @@ def Run_BEE(dailik):
     pg.click(other_menu_BEE)
     delay(3, 4)
     pg.click(upgrades_BEE)
-    for _ in range(20):
+    for _ in range(30):
         pg.click(upgrades_last)
-        delay(0.25, 0.5)
+        delay(0.6, 0.8)
 
     Close_AnyWay()

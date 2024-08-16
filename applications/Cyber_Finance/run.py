@@ -13,7 +13,7 @@ def Run_Cyber_Finance(dailik):
         pg.click(open_tasks)
         delay()
         for _ in range(20):
-            pg.click(daily_video_for_money)
+            find_it_and_click_it(CyberFinance_play_video_ads)
             delay(18, 20)
             pg.click(daily_video_for_money)
             delay()
