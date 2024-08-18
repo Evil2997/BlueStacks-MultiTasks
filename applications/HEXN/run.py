@@ -7,8 +7,12 @@ def Run_HEXN(dailik):
     PreRun(find_HEXN)
     for coordinates in claim_reward_HEXN:
         pg.click(coordinates)
-        delay(6, 8)
+        delay(2, 3)
+    # rocket()
+    Close_AnyWay()
+
+
+def rocket():
     for coordinates in rocket_time_reward:
         pg.click(coordinates)
         delay(0.4, 0.6)
-    Close_AnyWay()

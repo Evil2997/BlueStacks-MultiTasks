@@ -36,6 +36,8 @@ def find_template_on_region(Image_Name, region=(0, 0, 1920, 1080), threshold=0.9
 
     result = cv2.matchTemplate(screenshot_gray, template, cv2.TM_CCOEFF_NORMED)
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+    # if Image_Name == "" and max_val >= 0.7:
+    #     print(max_val)
 
     if max_val >= threshold:
         top_left = (max_loc[0] + region[0], max_loc[1] + region[1])

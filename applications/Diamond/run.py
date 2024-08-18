@@ -25,7 +25,11 @@ def Old_Run_Diamond(dailik):
 def Run_Diamond(dailik):
     PreRun(find_Diamond)
     if dailik:
-        for i in [1, 1, 1, 1, 0]:
+        for coordinates in diamond_daily_reward:
+            pg.click(coordinates)
+            delay()
+    for _ in range(8):
+        if find_it_and_click_it(diamond_tap_to_start_game):
             pg.press("num4")
             for _ in range(65536):
                 if find_it_and_click_it(get_reward_diamond):
@@ -35,28 +39,20 @@ def Run_Diamond(dailik):
                     break
                 else:
                     delay(0.02, 0.2)
+            # [Watch_ADS]-[Start]
             delay()
-            pg.click(get_diamonds_reward_from_game)
-            delay()
-            if i == 1:
+            if find_it_and_click_it(diamond_watch_ads):
                 pg.click(get_diamonds_reward_from_game)
                 delay(18, 20)
-        for coordinates in diamond_daily_reward:
-            pg.click(coordinates)
-            delay()
-    else:
-        pg.press("num4")
-        delay(20, 25)
-        pg.press("num4")
-        delay()
-        pg.click(get_diamonds_reward_from_game)
+            else:
+                break
+            # [Watch_ADS]-[End]
     # [Upgrades]-[Start]
     pg.click(open_upgrades)
     delay()
-    for _ in range(4):
-        pg.click(grade_1)
-        delay()
-        pg.click(grade_2)
-        delay()
+    pg.click(grade_1)
+    delay()
+    pg.click(grade_2)
+    delay()
     # [Upgrades]-[End]
     Close_AnyWay()

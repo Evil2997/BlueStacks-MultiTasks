@@ -9,7 +9,6 @@ def Run_BEE(dailik):
     if click_on_images(target_colors=colors_check_daily):
         pg.click(daily_BEE)
         delay()
-
     pg.click(upgrades_BEE)
     delay()
     for _ in range(3):
@@ -26,5 +25,4 @@ def Run_BEE(dailik):
     for _ in range(30):
         pg.click(upgrades_last)
         delay(0.6, 0.8)
-
     Close_AnyWay()

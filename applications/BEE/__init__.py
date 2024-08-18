@@ -3,6 +3,8 @@ daily_BEE = (950, 990)
 upgrades_BEE = (1150, 950)
 other_menu_BEE = (290, 950)
 
+multiply = ["bee_stage_1", "bee_stage_2", "bee_stage_3", "bee_stage_4"]
+
 upgrades_all = [(1100, 810), (1100, 540), (1100, 270)]
 upgrades_last = (1100, 700)
 

@@ -31,7 +31,7 @@ def random_moves():
 
 
 def Run_Clayton(dailik):
-    how_much_you_want_to_play = 2
+    how_much_you_want_to_play = 4
     PreRun(find_Clayton)
     pg.click(clayton_pre_game_ads)
     delay()
@@ -41,6 +41,6 @@ def Run_Clayton(dailik):
     drag_to_bottom(duration=0.4)
     for _ in range(4):
         pg.click(claim_coins)
-        delay(0.5, 0.8)
+        delay(0.6, 1)
     play_512(how_much_you_want_to_play)
     Close_AnyWay()
