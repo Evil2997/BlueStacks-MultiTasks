@@ -1,6 +1,7 @@
 find_Clayton = ["Clayton"]
 claim_daily_reward = (920, 870)
 claim_coins = (940, 720)
+clayton_lvl_up = ["clayton_lvl_up"]
 
 # [Clayton_game_512]---[Start]
 main_menu_Clayton_game = ["main_menu_Clayton_game"]

@@ -31,7 +31,7 @@ def Run_Diamond(dailik):
     for _ in range(8):
         if find_it_and_click_it(diamond_tap_to_start_game):
             pg.press("num4")
-            for _ in range(65536):
+            for _ in range(1024):
                 if find_it_and_click_it(get_reward_diamond):
                     pg.press("num4")
                     delay()
@@ -39,6 +39,8 @@ def Run_Diamond(dailik):
                     break
                 else:
                     delay(0.02, 0.2)
+            # else:
+            #     pg.press("num4")
             # [Watch_ADS]-[Start]
             delay()
             if find_it_and_click_it(diamond_watch_ads):

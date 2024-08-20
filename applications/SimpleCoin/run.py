@@ -10,13 +10,15 @@ def Run_SimpleCoin(dailik):
     for _ in range(3):
         pg.click(claim_SimpleCoins)
         delay()
-    pg.click(fortuna_open)
-    delay()
-    pg.click(fortuna_run)
-    delay(4, 5)
-    find_it_and_click_it(fortuna_reward)
-    find_it_and_click_it(fortuna_null_reward)
-    delay()
+    # [Fortuna]---[Start]
+    # pg.click(fortuna_open)
+    # delay()
+    # pg.click(fortuna_run)
+    # delay(4, 5)
+    # find_it_and_click_it(fortuna_reward)
+    # find_it_and_click_it(fortuna_null_reward)
+    # delay()
+    # [Fortuna]---[End]
     pg.press("num4")
     delay(16, 18)
     pg.press("num4")
