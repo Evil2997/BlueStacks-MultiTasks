@@ -22,7 +22,7 @@ def Old_Run_Diamond(dailik):
     Close_AnyWay()
 
 
-def Run_Diamond(dailik):
+def Run_Diamond(dailik, event):
     PreRun(find_Diamond)
     if dailik:
         for coordinates in diamond_daily_reward:

@@ -29,18 +29,22 @@ def moon_bump():
         pg.press("num4")
 
 
-def Run_BUMP(dailik):
+def Run_BUMP(dailik, event):
     PreRun(find_BUMP, chat=True, chat_type="click", chatbot_string=1)
-    click_on_images(target_colors=colors_daily)
-    delay(2, 3)
     for _ in range(3):
+        for _ in range(4):
+            click_on_images(target_colors=colors_daily)
+            delay(0.4, 0.6)
+            drag_to_bottom(duration=0.4, cords_to_drag=(940, 300))
+            delay(0.4, 0.6)
         find_it_and_click_it(green_X)
         find_it_and_click_it(gray_X)
         delay(0.4, 0.6)
         for _ in range(2):
             swipe_left()
             delay(0.4, 0.6)
-    # buy_bust_bump()
+    if event:
+        buy_bust_bump()
     for _ in range(16):
         pg.click(middle_screen)
         delay(0.01, 0.1)

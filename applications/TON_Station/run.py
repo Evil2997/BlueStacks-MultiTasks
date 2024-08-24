@@ -3,7 +3,7 @@ from applications.TON_Station import *
 from modules.moves import Close_AnyWay
 
 
-def Run_TON_Station(dailik):
+def Run_TON_Station(dailik, event):
     PreRun(find_TON_Station)
     for _ in range(2):
         pg.click(TON_Station_claim)

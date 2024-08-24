@@ -4,7 +4,7 @@ from modules.moves import Close_AnyWay
 from modules.screens import click_on_images
 
 
-def Run_BEE(dailik):
+def Run_BEE(dailik, event):
     PreRun(find_BEE, chat=True, chat_type="click", chatbot_string=2)
     if click_on_images(target_colors=colors_check_daily):
         pg.click(daily_BEE)

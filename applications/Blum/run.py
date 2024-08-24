@@ -3,7 +3,7 @@ from applications.Blum import *
 from modules.moves import Close_AnyWay
 
 
-def Run_Blum(dailik):
+def Run_Blum(dailik, event):
     PreRun(find_Blum)
     if dailik:
         pg.click(claim_reward_daily)

@@ -3,7 +3,7 @@ from applications.Time_TON_Ecosystem import *
 from modules.moves import Close_AnyWay
 
 
-def Run_Time_TON_Ecosystem(dailik):
+def Run_Time_TON_Ecosystem(dailik, event):
     PreRun(find_Time_TON_Ecosystem, chat=True, chat_type="click", chatbot_string=2)
     if dailik:
         pg.click(daily_TON_Ecosystem)

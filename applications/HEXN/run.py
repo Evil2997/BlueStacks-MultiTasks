@@ -3,7 +3,7 @@ from applications.HEXN import *
 from modules.moves import Close_AnyWay
 
 
-def Run_HEXN(dailik):
+def Run_HEXN(dailik, event):
     PreRun(find_HEXN)
     for coordinates in claim_reward_HEXN:
         pg.click(coordinates)

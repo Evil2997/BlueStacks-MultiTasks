@@ -3,7 +3,7 @@ from applications.SimpleCoin import *
 from modules.moves import Close_AnyWay
 
 
-def Run_SimpleCoin(dailik):
+def Run_SimpleCoin(dailik, event):
     PreRun(find_SimpleCoin)
     pg.click(news_click)
     delay()

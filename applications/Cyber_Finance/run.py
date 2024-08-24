@@ -4,7 +4,7 @@ from modules.moves import Close_AnyWay
 from modules.screens import hunt_for_the_button_in_list
 
 
-def Run_Cyber_Finance(dailik):
+def Run_Cyber_Finance(dailik, event):
     PreRun(find_Cyber_Finance, chat=True, chat_type="click", chatbot_string=2)
     for _ in range(3):
         pg.click(claim_Cyber_Finance)
