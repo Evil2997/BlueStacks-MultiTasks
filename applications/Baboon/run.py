@@ -3,7 +3,8 @@ from applications.Baboon import *
 from modules.moves import Close_AnyWay
 
 
-def Run_Baboon(dailik, event):
+def Run_Baboon(dailik, event, win_main):
+    find_Baboon = find_Baboon_2 if win_main else find_Baboon_1
     PreRun(find_Baboon, chat=True, chat_type="click", chatbot_string=0)
     if dailik:
         for coordinates in Baboon_daily_reward:

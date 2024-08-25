@@ -1,5 +1,6 @@
 click_at_moon = ["click_at_moon"]
-find_BUMP = ["BUMP"]
+find_BUMP_1 = ["BUMP"]
+find_BUMP_2 = ["BUMP_2"]
 green_X = ["green_X"]
 gray_X = ["gray_X"]
 BUMP_ready = ["BUMP_ready"]

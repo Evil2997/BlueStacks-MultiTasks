@@ -32,7 +32,9 @@ def random_moves():
     return move
 
 
-def Run_Clayton(dailik, event):
+def Run_Clayton(dailik, event, win_main):
+    find_Clayton = find_Clayton_2 if win_main else find_Clayton_1
+
     how_much_you_want_to_play = 4
     PreRun(find_Clayton)
     pg.click(clayton_pre_game_ads)

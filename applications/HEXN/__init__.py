@@ -1,4 +1,5 @@
-find_HEXN = ["HEXN"]
+find_HEXN_1 = ["HEXN"]
+find_HEXN_2 = ["HEXN_2"]
 rocket_time_reward = [(1440, 260),
                       (360, 530), (930, 530), (1500, 530),
                       (360, 750), (930, 750), (1500, 750),

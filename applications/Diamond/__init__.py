@@ -1,5 +1,6 @@
 # [Diamond_params]-[Start]
-find_Diamond = ["Diamond"]
+find_Diamond_1 = ["Diamond"]
+find_Diamond_2 = ["Diamond_2"]
 get_diamonds_reward_from_game = (940, 820)
 diamond_daily_reward = [(1160, 340), (870, 480), (300, 940), (740, 340)]
 diamond_clicker = (940, 580)

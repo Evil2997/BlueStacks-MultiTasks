@@ -1,4 +1,5 @@
-find_Cyber_Finance = ["Cyber_Finance"]
+find_Cyber_Finance_1 = ["Cyber_Finance"]
+find_Cyber_Finance_2 = ["Cyber_Finance_2"]
 CyberFinance_play_video_ads = ["CyberFinance_play_video_ads"]
 claim_Cyber_Finance = (940, 540)
 open_grades = (1570, 970)

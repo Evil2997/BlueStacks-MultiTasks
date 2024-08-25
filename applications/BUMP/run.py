@@ -29,7 +29,9 @@ def moon_bump():
         pg.press("num4")
 
 
-def Run_BUMP(dailik, event):
+def Run_BUMP(dailik, event, win_main):
+    find_BUMP = find_BUMP_2 if win_main else find_BUMP_1
+
     PreRun(find_BUMP, chat=True, chat_type="click", chatbot_string=1)
     dailik = True
     for _ in range(16):

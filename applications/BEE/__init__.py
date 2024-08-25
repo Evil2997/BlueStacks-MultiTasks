@@ -1,4 +1,5 @@
-find_BEE = ["BEE"]
+find_BEE_1 = ["BEE"]
+find_BEE_2 = ["BEE_2"]
 daily_BEE = (950, 990)
 upgrades_BEE = (1150, 950)
 other_menu_BEE = (290, 950)

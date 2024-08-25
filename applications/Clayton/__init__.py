@@ -1,4 +1,5 @@
-find_Clayton = ["Clayton"]
+find_Clayton_1 = ["Clayton"]
+find_Clayton_2 = ["Clayton_2"]
 claim_daily_reward = (920, 870)
 claim_coins = (940, 720)
 clayton_lvl_up = ["clayton_lvl_up"]
