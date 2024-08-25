@@ -94,10 +94,21 @@ def timer_buster(seconds, window_number, game, special_events__file):
 
         default_timestamp_HUMAN = "2002-10-29 10:00:00"
         current_time = datetime.now()
+
+        win_key = f"win{i}"
+        time_key = f"time_start_{game}"
+
+        if win_key not in Special_Events:
+            Special_Events[win_key] = {}
+
+        if time_key not in Special_Events[win_key]:
+            Special_Events[win_key][time_key] = default_timestamp_HUMAN
+            save_data(path_to__Special_Events, Special_Events)
+
         try:
-            timestamp = datetime.strptime(Special_Events[f"win{i}"][f"time_start_{game}"], "%Y-%m-%d %H:%M:%S")
+            timestamp = datetime.strptime(Special_Events[win_key][time_key], "%Y-%m-%d %H:%M:%S")
         except (ValueError, KeyError, TypeError):
-            Special_Events[f"win{i}"][f"time_start_{game}"] = default_timestamp_HUMAN
+            Special_Events[win_key][time_key] = default_timestamp_HUMAN
             save_data(path_to__Special_Events, Special_Events)
             timestamp = datetime.strptime(default_timestamp_HUMAN, "%Y-%m-%d %H:%M:%S")
 
