@@ -1,4 +1,3 @@
-import logging
 import pathlib
 import time
 from typing import Final
@@ -33,6 +32,7 @@ from modules.Timers import timer_update_buster as UPDATE_TIME_TO_EXTRA_BONUS
 from modules.Timers import update_time_reward as UPDATE_TIME_DAILY_REWARD
 from modules.json_files import load_data
 from modules.json_files import align_json_values as SORTED_JSON
+from modules.screens import find_template_on_region
 from modules.tesseract import setup_tesseract
 from modules.windows import Stop_BS_Windows
 from modules.windows import activate_window as ACTIVATE_WINDOW
@@ -46,6 +46,7 @@ def main():
         for win in ahk.list_windows():
             if win.title.startswith("BlueStacks Multi Instance Manager"):
                 for i in range(window_numbers):
+                    name_main = (i == 5)
                     games_is_activated_now = []
                     for game, value in Game_Settings.items():
                         sec = value["seconds"]
@@ -58,9 +59,9 @@ def main():
                             f"Текущее время: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())}, Номер окна: {i}, Запущено было:{games_is_activated_now}")
                         for game, value in Game_Settings.items():
                             sec = value["seconds"]
-                            if value["special_event_1"]:
+                            try:
                                 sec_1 = value["special_event_1"]
-                            else:
+                            except KeyError:
                                 sec_1 = False
                             if TIME_CHECK(seconds=sec, window_number=i, game=game, settings_file=settings_file):
                                 if CHECK_DAILY_REWARD(window_number=i, game=game, rewards_file=rewards_file):
@@ -73,7 +74,7 @@ def main():
                                 else:
                                     extra_bonus__special_event = False
                                 Game_Settings[game]["function"](
-                                    get_daily_rewards_in_this_game, extra_bonus__special_event)
+                                    get_daily_rewards_in_this_game, extra_bonus__special_event, name_main)
                                 UPDATE_TIMER(window_numeric=i, game=game, settings_file=settings_file)
                                 SORTED_JSON(settings_file, settings_file)
                                 if CHECK_DAILY_REWARD(window_number=i, game=game, rewards_file=rewards_file):
@@ -87,7 +88,7 @@ def main():
 
                         Stop_BS_Windows()
                         ACTIVATE = False
-                time.sleep(600)
+                time.sleep(180)
                 break
     pass
 
@@ -122,7 +123,7 @@ if __name__ == '__main__':
         "SimpleCoin": {"seconds": 8 * 3600, "function": Run_SimpleCoin},
         "HEXN": {"seconds": 4 * 3600, "function": Run_HEXN},
         "TimeFarm": {"seconds": 4 * 3600, "function": Run_TimeFarm},
-        "Baboon": {"seconds": 12 * 3600, "function": Run_Baboon},
+        "Baboon": {"seconds": 2 * 3600, "function": Run_Baboon},
         "Time_TON_Ecosystem": {"seconds": 8 * 3600, "function": Run_Time_TON_Ecosystem},
         "TON_Station": {"seconds": 8 * 3600, "function": Run_TON_Station},
         "Cyber_Finance": {"seconds": 24 * 3600, "function": Run_Cyber_Finance},  # 86400
