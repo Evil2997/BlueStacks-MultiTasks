@@ -8,13 +8,34 @@ from modules import MAIN_DIR
 from modules.json_files import save_data, load_data
 
 
+def get_declension(number, forms):
+    if 11 <= number % 100 <= 14:
+        return forms[2]
+    elif number % 10 == 1:
+        return forms[0]
+    elif 2 <= number % 10 <= 4:
+        return forms[1]
+    else:
+        return forms[2]
+
 def time_end_print(time_end, time_start):
     elapsed_time = time_end - time_start
     days = elapsed_time // (24 * 3600)
     hours = (elapsed_time % (24 * 3600)) // 3600
     minutes = (elapsed_time % 3600) // 60
     seconds = elapsed_time % 60
-    print(f"Время работы процесса: {int(days)} дней, {int(hours)} часов, {int(minutes)} минут, {int(seconds)} секунд")
+
+    day_form = get_declension(int(days), ["день", "дня", "дней"])
+    hour_form = get_declension(int(hours), ["час", "часа", "часов"])
+    minute_form = get_declension(int(minutes), ["минута", "минуты", "минут"])
+    second_form = get_declension(int(seconds), ["секунда", "секунды", "секунд"])
+
+    print(f"Время работы процесса: {int(days)} {day_form}, {int(hours)} {hour_form}, {int(minutes)} {minute_form}, {int(seconds)} {second_form}")
+
+# Пример использования
+time_end = 3661
+time_start = 0
+time_end_print(time_end, time_start)
 
 
 
@@ -30,10 +51,22 @@ def timer_checker(seconds, window_number, game, settings_file):
 
         default_timestamp_HUMAN = "2002-10-29 10:00:00"
         current_time = datetime.now()
+
+        win_key = f"win{i}"
+        time_key = f"time_start_{game}"
+
+        if win_key not in Settings:
+            Settings[win_key] = {}
+
+        if time_key not in Settings[win_key]:
+            Settings[win_key][time_key] = default_timestamp_HUMAN
+            save_data(path_to_Settings, Settings)
+
+
         try:
-            timestamp = datetime.strptime(Settings[f"win{i}"][f"time_start_{game}"], "%Y-%m-%d %H:%M:%S")
+            timestamp = datetime.strptime(Settings[win_key][time_key], "%Y-%m-%d %H:%M:%S")
         except (ValueError, KeyError, TypeError):
-            Settings[f"win{i}"][f"time_start_{game}"] = default_timestamp_HUMAN
+            Settings[win_key][time_key] = default_timestamp_HUMAN
             save_data(path_to_Settings, Settings)
             timestamp = datetime.strptime(default_timestamp_HUMAN, "%Y-%m-%d %H:%M:%S")
 
