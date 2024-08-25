@@ -1,3 +1,6 @@
+import pathlib
+from typing import Final
+
 # [Moves]---[Start]
 cords_to_drag = (1700, 300)
 cords_close = (116, 132)
@@ -28,3 +31,6 @@ WIN_START = {
 }
 
 # [Windows]---[End]
+config = r'--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789/'
+
+MAIN_DIR: Final[pathlib.Path] = pathlib.Path(__file__).parents[1]
