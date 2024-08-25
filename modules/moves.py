@@ -15,7 +15,7 @@ def drag_to_up(duration=0.16, cords_to_drag=cords_to_drag):
 
 def drag_to_bottom(duration=0.16, cords_to_drag=cords_to_drag):
     random_y = random.uniform(-15, 15)
-    pg.moveTo(cords_to_drag[0], cords_to_drag[1] + random_y + 495)
+    pg.moveTo(cords_to_drag[0], cords_to_drag[1] + random_y + 345)
     pg.dragTo(cords_to_drag[0], cords_to_drag[1], duration=duration)
 
 
