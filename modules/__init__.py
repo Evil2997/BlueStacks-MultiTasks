@@ -28,6 +28,7 @@ WIN_START = {
     "win2": {"cords": (540, 310)},
     "win3": {"cords": (540, 360)},
     "win4": {"cords": (540, 420)},
+    "win5": {"cords": (540, 470)},
 }
 
 # [Windows]---[End]
