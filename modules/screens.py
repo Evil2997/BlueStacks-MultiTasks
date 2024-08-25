@@ -5,7 +5,9 @@ import cv2
 import numpy as np
 import pyautogui as pg
 from PIL import ImageGrab
+from pytesseract import pytesseract
 
+from modules import *
 from modules.Timers import delay
 
 
@@ -112,3 +114,18 @@ def click_on_images(target_colors, region=(0, 0, 1920, 1080), pixel_threshold=30
         return True
     else:
         return False
+
+
+def found_text_on_image(region):
+    screenshot = pg.screenshot(region=region)
+    text = pytesseract.image_to_string(screenshot, config=config)
+    return text
+
+
+def fff(name, region=(0, 0, 1920, 1080), threshold=0.92):
+    top_left = find_template_on_region(Image_Name=name, region=region, threshold=threshold)
+    width, height = get_image_size(name)
+    if top_left:
+        region_image_founded = (top_left[0], top_left[1], top_left[0] + width, top_left[1] + height)
+        text = found_text_on_image(region_image_founded)
+        print(text)
