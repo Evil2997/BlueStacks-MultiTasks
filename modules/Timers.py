@@ -32,12 +32,6 @@ def time_end_print(time_end, time_start):
 
     print(f"Время работы процесса: {int(days)} {day_form}, {int(hours)} {hour_form}, {int(minutes)} {minute_form}, {int(seconds)} {second_form}")
 
-# Пример использования
-time_end = 3661
-time_start = 0
-time_end_print(time_end, time_start)
-
-
 
 def delay(min_seconds: float = 1.0, max_seconds: float = 2.0):
     time.sleep(random.uniform(min_seconds, max_seconds))
