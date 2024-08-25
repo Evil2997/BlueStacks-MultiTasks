@@ -1,4 +1,5 @@
-datetime
-pyautogui
-ahk
-opencv-python
+datetime==5.5
+pyautogui==0.9.54
+ahk==1.7.8
+opencv-python==4.10.0.84
+pytesseract==0.3.10
