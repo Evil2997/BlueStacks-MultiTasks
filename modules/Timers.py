@@ -18,6 +18,7 @@ def get_declension(number, forms):
     else:
         return forms[2]
 
+
 def time_end_print(time_end, time_start):
     elapsed_time = time_end - time_start
     days = elapsed_time // (24 * 3600)
@@ -30,7 +31,8 @@ def time_end_print(time_end, time_start):
     minute_form = get_declension(int(minutes), ["минута", "минуты", "минут"])
     second_form = get_declension(int(seconds), ["секунда", "секунды", "секунд"])
 
-    print(f"Время работы процесса: {int(days)} {day_form}, {int(hours)} {hour_form}, {int(minutes)} {minute_form}, {int(seconds)} {second_form}")
+    print(
+        f"Время работы процесса: {int(days)} {day_form}, {int(hours)} {hour_form}, {int(minutes)} {minute_form}, {int(seconds)} {second_form}")
 
 
 def delay(min_seconds: float = 1.0, max_seconds: float = 2.0):
@@ -56,7 +58,6 @@ def timer_checker(seconds, window_number, game, settings_file):
             Settings[win_key][time_key] = default_timestamp_HUMAN
             save_data(path_to_Settings, Settings)
 
-
         try:
             timestamp = datetime.strptime(Settings[win_key][time_key], "%Y-%m-%d %H:%M:%S")
         except (ValueError, KeyError, TypeError):
@@ -80,7 +81,6 @@ def timer_update(settings_file, window_numeric, game):
 
 
 def check_reward(window_number, game, rewards_file):
-
     i = window_number
     path_to_Rewards: Final[pathlib.Path] = pathlib.Path(__file__).parent.parent / rewards_file
     Rewards = load_data(path_to_Rewards)
@@ -88,11 +88,22 @@ def check_reward(window_number, game, rewards_file):
     default_time = datetime(2002, 10, 29, 10, 0, 0, tzinfo=timezone.utc)
     default_time_str = default_time.strftime("%Y-%m-%d %H:%M:%S")
 
+    win_key = f"win{i}"
+    time_key = f"time_start_{game}"
+
+    if win_key not in Rewards:
+        Rewards[win_key] = {}
+
+    if time_key not in Rewards[win_key]:
+        Rewards[win_key][time_key] = default_time_str
+        save_data(path_to_Rewards, Rewards)
+
     try:
-        last_reward_time = datetime.strptime(Rewards[f"win{i}"][f"daily_reward_{game}"], "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
+        last_reward_time = datetime.strptime(Rewards[win_key][time_key], "%Y-%m-%d %H:%M:%S").replace(
+            tzinfo=timezone.utc)
     except (ValueError, KeyError, TypeError):
         last_reward_time = default_time
-        Rewards[f"win{i}"][f"daily_reward_{game}"] = default_time_str
+        Rewards[win_key][time_key] = default_time_str
         save_data(path_to_Rewards, Rewards)
 
     next_reward_time = last_reward_time.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1)
