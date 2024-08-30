@@ -6,8 +6,6 @@ from modules.Timers import delay
 from modules.moves import drag_to_up, drag_to_bottom
 from modules.screens import find_it_and_click_it, cycle_hunter_click, find_template_on_region
 
-number_bottom_drags = 64  # len(Game_Details) * 4
-
 main_group = ["main_group"]
 connect_to_vpn = ["collapse_all_windows", "check_all_windows",
                   "clear_all", "ProtonVPN", "ActivateVPN",
@@ -15,14 +13,18 @@ connect_to_vpn = ["collapse_all_windows", "check_all_windows",
 telegram = ["Telegram"]
 bug_while_scrolling_chat = "bug_while_scrolling_chat"
 
+cords_to_drag__standard = (1700, 300)
+cords_to_drag__win_main = (900, 300)
 cords_close = (116, 132)
 middle_screen = (960, 540)
 close_main_group = (730, 130)
 click_to_bottom_in_BotChat = [(900, 880), (900, 800), (900, 720)]
 
 
-def primary_hunter_click(finder, threshold):
+def primary_hunter_click(finder, threshold, win_main=False):
     MAIN_CYCLE = True
+    cords_to_drag = cords_to_drag__win_main if win_main else cords_to_drag__standard
+
     while MAIN_CYCLE:
         if not MAIN_CYCLE:
             break
@@ -32,7 +34,7 @@ def primary_hunter_click(finder, threshold):
             pg.click(close_main_group)
         delay(4, 5)
         find_it_and_click_it(main_group)
-        for _ in range(20):
+        for _ in range(16):
             if not MAIN_CYCLE:
                 break
             if find_template_on_region(bug_while_scrolling_chat):
@@ -43,10 +45,10 @@ def primary_hunter_click(finder, threshold):
                     MAIN_CYCLE = False
                     break
                 else:
-                    drag_to_up()
+                    drag_to_up(cords_to_drag=cords_to_drag)
 
 
-def PreRun(finder,
+def PreRun(finder, win_main,
            chat: bool = False,
            chat_type: Literal["image", "click"] = "click",
            chatbot_string: int = -1,
@@ -63,7 +65,7 @@ def PreRun(finder,
         delay(0.04, 0.6)
     drag_to_bottom()
 
-    primary_hunter_click(finder=finder, threshold=threshold)
+    primary_hunter_click(finder=finder, win_main=win_main, threshold=threshold)
 
     if chat:
         delay(8, 10)
@@ -71,4 +73,4 @@ def PreRun(finder,
             pg.click(click_to_bottom_in_BotChat[chatbot_string])
         elif chat_type == "image":
             cycle_hunter_click(chat_image_name)
-    delay(18, 20)
+    delay(24, 25)
