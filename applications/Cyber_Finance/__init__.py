@@ -1,7 +1,8 @@
 find_Cyber_Finance_1 = ["Cyber_Finance"]
 find_Cyber_Finance_2 = ["Cyber_Finance_2"]
 CyberFinance_play_video_ads = ["CyberFinance_play_video_ads"]
-claim_Cyber_Finance = (940, 540)
+CyberFinance_play_next_video = ["CyberFinance_play_next_video"]
+claim_Cyber_Finance = (370, 840)
 open_grades = (1570, 970)
 upgrade_egg_hummer = [(560, 860), (1060, 830)]
 open_tasks = (1150, 970)

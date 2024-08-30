@@ -7,18 +7,19 @@ from modules.screens import hunt_for_the_button_in_list
 def Run_Cyber_Finance(dailik, event, win_main):
     find_Cyber_Finance = find_Cyber_Finance_2 if win_main else find_Cyber_Finance_1
 
-    PreRun(find_Cyber_Finance, chat=True, chat_type="click", chatbot_string=2)
+    PreRun(find_Cyber_Finance, win_main, chat=True, chat_type="click", chatbot_string=2)
+
     for _ in range(3):
         pg.click(claim_Cyber_Finance)
         delay(0.4, 0.8)
     if dailik:
         pg.click(open_tasks)
         delay()
-        for _ in range(20):
-            find_it_and_click_it(CyberFinance_play_video_ads)
-            delay(18, 20)
-            pg.click(daily_video_for_money)
-            delay()
+        find_it_and_click_it(CyberFinance_play_video_ads)
+        delay(16, 18)
+        for _ in range(32):
+            if find_it_and_click_it(CyberFinance_play_next_video):
+                delay(16, 18)
         pg.press("Esc")
         delay()
     pg.click(open_grades)
