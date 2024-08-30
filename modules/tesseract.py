@@ -3,10 +3,10 @@ import json
 import os
 
 
-paths = ['C:\\', 'D:\\', 'E:\\']
-
 
 def setup_tesseract(search_paths=['C:\\'], config_file_name='tesseract_config.json'):
+    # search_paths = ['C:\\', 'D:\\', 'E:\\']
+
     # Функция для загрузки сохраненного пути
     def load_tesseract_path():
         if os.path.exists(config_file_name):
