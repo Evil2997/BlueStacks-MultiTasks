@@ -14,13 +14,14 @@ connect_to_vpn_AND_open_telegram = [
     "clear_all", "ProtonVPN", "ActivateVPN",
     "collapse_all_windows", "Telegram"
 ]
+full_screen = ["full_screen"]
 main_group = ["main_group"]
+close_all_windows = ["stop_all_BS_win", "yes_close_all"]
 
 telegram_account_settings = "telegram_account_settings"
 
-close_all_windows = ["stop_all_BS_win", "yes_close_all"]
+
 close_all_BS_window = [(350, 590), (500, 360)]
-full_screen = ["full_screen"]
 
 WIN_START = {
     "win0": {"cords": (540, 200)},
@@ -31,7 +32,9 @@ WIN_START = {
     "win5": {"cords": (540, 470)},
 }
 
+window_numbers = len(WIN_START)
 # [Windows]---[End]
+
 config = r'--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789/'
 
 MAIN_DIR: Final[pathlib.Path] = pathlib.Path(__file__).parents[1]
