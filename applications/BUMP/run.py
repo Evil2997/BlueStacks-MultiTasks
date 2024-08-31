@@ -34,7 +34,7 @@ def Run_BUMP(dailik, event, win_main):
 
     PreRun(find_BUMP, win_main, chat=True, chat_type="click", chatbot_string=1)
 
-    claim_daily__swipe_news()
+    claim_daily_and_swipe_news()
 
     if event:
         buy_bust_bump()
@@ -46,8 +46,9 @@ def Run_BUMP(dailik, event, win_main):
     Close_AnyWay()
 
 
-def claim_daily__swipe_news(opposite_direction_numeric=0):
-    for i in [2, 2, 2, 1]:
+def claim_daily_and_swipe_news(opposite_direction_numeric=0):
+    i_range = [1, 1, 1, 1, 1, 1, 1]
+    for i in i_range:
         for _ in range(i):
             drag_to_bottom(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
             opposite_direction_numeric = opposite_direction_numeric + 1

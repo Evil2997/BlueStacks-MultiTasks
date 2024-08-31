@@ -3,29 +3,14 @@ from applications.Diamond import *
 from modules.moves import Close_AnyWay
 
 
-def Old_Run_Diamond(dailik):
-    PreRun(find_Diamond)
-    for i in [0, 1]:
-        pg.press("num4")
-        delay(12, 14)
-        pg.press("num4")
-        delay()
-        pg.click(get_diamonds_reward_from_game)
-        delay()
-        if i == 0:
-            pg.click(get_diamonds_reward_from_game)
-            delay(18, 20)
-    if dailik:
-        for coordinates in diamond_daily_reward:
-            pg.click(coordinates)
-            delay()
-    Close_AnyWay()
-
-
 def Run_Diamond(dailik, event, win_main):
     find_Diamond = find_Diamond_2 if win_main else find_Diamond_1
 
-    PreRun(find_Diamond)
+    PreRun(find_Diamond, win_main)
+
+    find_it_and_click_it(diamond_claim_prerun)
+    delay(0.2, 0.4)
+
     if dailik:
         for coordinates in diamond_daily_reward:
             pg.click(coordinates)
@@ -41,8 +26,6 @@ def Run_Diamond(dailik, event, win_main):
                     break
                 else:
                     delay(0.02, 0.2)
-            # else:
-            #     pg.press("num4")
             # [Watch_ADS]-[Start]
             delay()
             if find_it_and_click_it(diamond_watch_ads):
@@ -51,12 +34,14 @@ def Run_Diamond(dailik, event, win_main):
             else:
                 break
             # [Watch_ADS]-[End]
-    # [Upgrades]-[Start]
-    pg.click(open_upgrades)
-    delay()
-    pg.click(grade_1)
-    delay()
-    pg.click(grade_2)
-    delay()
-    # [Upgrades]-[End]
+    make_upgrades()
     Close_AnyWay()
+
+def make_upgrades():
+    pg.click(open_upgrades)
+    delay(0.2, 0.4)
+    for _ in range(2):
+        pg.click(grade_1)
+        delay(0.2, 0.4)
+        pg.click(grade_2)
+        delay(0.2, 0.4)
