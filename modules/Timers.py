@@ -89,7 +89,7 @@ def check_reward(window_number, game, rewards_file):
     default_time_str = default_time.strftime("%Y-%m-%d %H:%M:%S")
 
     win_key = f"win{i}"
-    time_key = f"time_start_{game}"
+    time_key = f"daily_reward_{game}"
 
     if win_key not in Rewards:
         Rewards[win_key] = {}
