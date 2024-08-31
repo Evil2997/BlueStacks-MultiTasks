@@ -17,7 +17,7 @@ def Run_Baboon(dailik, event, win_main):
             delay(0.8, 1)
         pg.press("Esc")
         delay()
-    for _ in range(32):
+    for _ in range(64):
         pg.press("num4")
         delay(10, 15)
         pg.press("num4")
@@ -25,6 +25,8 @@ def Run_Baboon(dailik, event, win_main):
         for coordinates in repair_battery:
             pg.click(coordinates)
             delay(0.8, 1)
+        pg.click(close_repair_battery_menu)
+        delay(0.8, 1)
     for coordinates in upgrade_battery:
         pg.click(coordinates)
         delay()

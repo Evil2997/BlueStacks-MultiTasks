@@ -19,7 +19,7 @@ def Run_Diamond(dailik, event, win_main):
         if find_it_and_click_it(diamond_tap_to_start_game):
             pg.press("num4")
             for _ in range(1024):
-                if find_it_and_click_it(get_reward_diamond):
+                if find_it_and_click_it(get_reward_diamond, threshold=0.88):
                     pg.press("num4")
                     delay()
                     find_it_and_click_it(get_reward_diamond)
