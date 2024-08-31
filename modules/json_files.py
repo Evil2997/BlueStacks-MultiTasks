@@ -1,4 +1,5 @@
 import json
+import pathlib
 
 
 def save_data(file_path, data):
@@ -35,6 +36,19 @@ def align_json_values(file_path, output_path):
 
 
 def align_dict_values(d):
-    # Возвращает словарь, отсортированный по ключам
+    """Возвращает словарь, отсортированный по ключам"""
     return {k: d[k] for k in sorted(d)}
 
+
+def clear_and_save_win_keys(file_path: pathlib.Path):
+    """
+        Осторожно в использовании!
+    Стирает все данные о времени внутри json файла
+
+    """
+    data = load_data(file_path)
+    if data is not None:
+        keys_to_clear = [key for key in data if key.startswith('win')]
+        for key in keys_to_clear:
+            data[key] = {}
+        save_data(file_path, data)
