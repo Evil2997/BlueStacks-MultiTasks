@@ -1,9 +1,8 @@
-import pytesseract
-from PIL import Image
 import mss
 import pyautogui as pg
+import pytesseract
+from PIL import Image
 
-from modules.tesseract import setup_tesseract
 
 def capture_screen(region=(0, 0, 1920, 1080)):
     with mss.mss() as sct:
@@ -11,10 +10,12 @@ def capture_screen(region=(0, 0, 1920, 1080)):
         img = Image.frombytes('RGB', screenshot.size, screenshot.rgb)
         return img
 
+
 def extract_text_and_cords(image, lang='rus'):
     custom_config = r'--oem 3 --psm 6'
     data = pytesseract.image_to_data(image, lang=lang, config=custom_config, output_type=pytesseract.Output.DICT)
     return data
+
 
 def find_text_coordinates(data, target_phrases):
     coordinates = {}
@@ -23,27 +24,21 @@ def find_text_coordinates(data, target_phrases):
         if text in target_phrases:
             x, y, w, h = data['left'][i], data['top'][i], data['width'][i], data['height'][i]
             x_center, y_center = x + w // 2, y + h // 2
-            coordinates[text] = (x_center, y_center)
+            if text not in coordinates:
+                coordinates[text] = []
+            coordinates[text].append((x_center, y_center))
     return coordinates
 
-def scan_and_find_coordinates(region=(0, 0, 1920, 1080), lang='rus'):
+
+def scan_and_find_coordinates(region=(0, 0, 1920, 1080), lang='rus', target_phrases=None):
     img = capture_screen(region)
     data = extract_text_and_cords(img, lang)
-    target_phrases = ["ИИ", "Офис", "Команда", "Персональные", "Майнинг"]
     return find_text_coordinates(data, target_phrases)
 
-rus = 'rus'
-eng = 'eng'
-setup_tesseract()
 
-region = (0, 0, 1920, 1080)
-coordinates = scan_and_find_coordinates(region, lang=rus)
-
-print("Coordinates of target phrases:\n", coordinates)
-
-def VisualScanTracker():
-    for phrase, (x, y) in coordinates.items():
-        print(f"Moving to {phrase} at coordinates: ({x}, {y})")
-        pg.moveTo(x, y)
-
-VisualScanTracker()
+def VisualScanTracker(region=(0, 0, 1920, 1080), lang='rus', target_phrases=None):
+    coordinates = scan_and_find_coordinates(region=region, lang=lang, target_phrases=target_phrases)
+    for phrase, cords in coordinates.items():
+        for idx, (x, y) in enumerate(cords):
+            print(f"Moving to {phrase} [{idx}] at coordinates: ({x}, {y})")
+            pg.moveTo(x, y)
