@@ -10,7 +10,7 @@ from PIL import Image
 from modules.screens import find_template_in_region
 
 
-def capture_full_screen_or_region(region: Optional[Tuple[int, int, int, int]] = None) -> Image.Image:
+def capture_full_screen_or_region(region: Optional[Tuple[int, int, int, int]] = (0, 0, 1920, 1080)) -> Image.Image:
     """
     Захватывает скриншот всего экрана или указанной области экрана.
 
@@ -32,7 +32,7 @@ def extract_text_and_coordinates(image: Image.Image, lang: str = 'rus') -> Dict[
     :param lang: Язык для OCR (по умолчанию 'rus').
     :return: Словарь с данными, где ключ - текст, а значение - словарь индексов и координат.
     """
-    custom_config = r'--oem 3 --psm 6'
+    custom_config = r'--oem 3 --psm 11'
     ocr_data = pytesseract.image_to_data(image, lang=lang, config=custom_config, output_type=pytesseract.Output.DICT)
 
     coordinates = {}
@@ -47,7 +47,7 @@ def extract_text_and_coordinates(image: Image.Image, lang: str = 'rus') -> Dict[
     return coordinates
 
 
-def visual_scan_tracker(region: Optional[Tuple[int, int, int, int]] = None,
+def visual_scan_tracker(region: Optional[Tuple[int, int, int, int]] = (0, 0, 1920, 1080),
                         lang: str = 'rus',
                         target_phrase: str = '',
                         occurrence_index: int = 0) -> Optional[Tuple[int, int]] | None:
@@ -64,14 +64,8 @@ def visual_scan_tracker(region: Optional[Tuple[int, int, int, int]] = None,
     coordinates = extract_text_and_coordinates(img, lang)
 
     if target_phrase in coordinates:
-        if occurrence_index in coordinates[target_phrase]:
-            x, y = coordinates[target_phrase][occurrence_index]
-            print(f"Найдена фраза '{target_phrase}' с индексом {occurrence_index} на координатах: ({x}, {y})")
-            return x, y
-        else:
-            print(f"Индекс {occurrence_index} для фразы '{target_phrase}' не найден.")
-    else:
-        print(f"Фраза '{target_phrase}' не найдена на экране.")
+        x, y = list(coordinates[target_phrase].values())[occurrence_index]
+        return x, y
     return None
 
 
@@ -118,21 +112,25 @@ def extract_text_near_coin(image: Image.Image, coin_center: Tuple[int, int], lan
     return extracted_text.strip()
 
 
-def find_coin_and_check_text(template_name: str, image: Image.Image) -> Optional[Tuple[int, int]] | None:
+def find_coin_and_check_text(
+        template_name: str, region: Optional[Tuple[int, int, int, int]] = (0, 0, 1920, 1080)
+) -> Optional[Tuple[int, int]] | None:
+
     """
     Ищет монетку на экране и проверяет, является ли текст рядом с ней желтым.
 
+    :param region:
     :param template_name: Имя изображения-шаблона монетки.
-    :param image: Скриншот экрана в формате PIL.
     :return: True, если текст рядом с монеткой желтый; иначе False.
     """
     coin_center = find_template_in_region(template_name)
+
+    with mss.mss() as screen_capturer:
+        screenshot = screen_capturer.grab(region) if region else screen_capturer.grab(screen_capturer.monitors[1])
+        image = Image.frombytes('RGB', screenshot.size, screenshot.rgb)
+
     if coin_center:
         if is_text_yellow(image, coin_center):
             return coin_center
-        else:
-            print("Текст рядом с монеткой не является желтым.")
-    else:
-        print("Монетка не найдена.")
 
     return None
