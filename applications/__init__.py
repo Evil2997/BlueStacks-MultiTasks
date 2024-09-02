@@ -4,7 +4,7 @@ import pyautogui as pg
 
 from modules.Timers import delay
 from modules.moves import drag_to_up, drag_to_bottom
-from modules.screens import find_it_and_click_it, cycle_hunter_click, find_template_on_region
+from modules.screens import find_it_and_click_it, cycle_hunter_click, find_template_in_region
 
 main_group = ["main_group"]
 connect_to_vpn = ["collapse_all_windows", "check_all_windows",
@@ -21,7 +21,8 @@ close_main_group = (730, 130)
 click_to_bottom_in_BotChat = [(900, 880), (900, 800), (900, 720)]
 
 
-def primary_hunter_click(finder, threshold, win_main=False):
+def primary_hunter_click(finder, threshold, win_main=False, initial_setup_clicker=False,
+                         initial_setup_images: List[str] = None):
     MAIN_CYCLE = True
     cords_to_drag = cords_to_drag__win_main if win_main else cords_to_drag__standard
 
@@ -37,12 +38,14 @@ def primary_hunter_click(finder, threshold, win_main=False):
         for _ in range(16):
             if not MAIN_CYCLE:
                 break
-            if find_template_on_region(bug_while_scrolling_chat):
+            if find_template_in_region(bug_while_scrolling_chat):
                 pg.click(close_main_group)
                 find_it_and_click_it(main_group)
             for _ in range(20):
                 if find_it_and_click_it(finder, threshold=threshold):
                     MAIN_CYCLE = False
+                    if initial_setup_clicker:
+                        find_it_and_click_it(initial_setup_images)
                     break
                 else:
                     drag_to_up(cords_to_drag=cords_to_drag)
@@ -53,7 +56,9 @@ def PreRun(finder, win_main,
            chat_type: Literal["image", "click"] = "click",
            chatbot_string: int = -1,
            chat_image_name: List[str] = None,
-           threshold: float = 0.92
+           threshold: float = 0.92,
+           initial_setup_clicker=False,
+           initial_setup_images: List[str] = None
            ):
     if chat_type not in ["image", "click"]:
         raise ValueError("chat_type должен быть 'image' или 'click'")
@@ -65,7 +70,11 @@ def PreRun(finder, win_main,
         delay(0.04, 0.6)
     drag_to_bottom()
 
-    primary_hunter_click(finder=finder, win_main=win_main, threshold=threshold)
+    primary_hunter_click(
+        finder=finder, win_main=win_main, threshold=threshold,
+        initial_setup_clicker=initial_setup_clicker,
+        initial_setup_images=initial_setup_images,
+    )
 
     if chat:
         delay(8, 10)

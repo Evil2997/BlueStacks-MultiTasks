@@ -1,5 +1,6 @@
 import os
 import time
+from typing import Optional, Tuple
 
 import cv2
 import numpy as np
@@ -20,35 +21,42 @@ def get_image_size(image_name):
     return width, height
 
 
-def find_template_on_region(Image_Name, region=(0, 0, 1920, 1080), threshold=0.92):
+def find_template_in_region(
+        template_name: str, region: Tuple[int, int, int, int] = (0, 0, 1920, 1080),
+        threshold: float = 0.92, template_path: Optional[str] = "Images/") -> Optional[Tuple[int, int]]:
     """
-    Поиск фрагмента в нужном регионе экрана
-    :param region: регион экрана в диапазоне (0, 0, 1920, 1080)
-    :param Image_Name: Название изображения которое будем искать
-    :return: Верхний левый угол найденного фрагмента
-    """
-    template_path = f"Images/{Image_Name}.png"
-    (x1, y1, x2, y2) = region
-    screenshot = np.array(ImageGrab.grab(bbox=(x1, y1, x2 - x1, y2 - y1)))
-    template = cv2.imread(template_path, cv2.IMREAD_GRAYSCALE)
-    if template is None:
-        raise FileNotFoundError(f"Template image not found: {template_path}")
+    Поиск шаблона в указанной области экрана.
 
-    screenshot_gray = cv2.cvtColor(screenshot, cv2.COLOR_BGR2GRAY)
+    :param template_name: Название изображения-шаблона, который нужно найти.
+    :param region: Регион экрана в диапазоне (x1, y1, x2, y2).
+    :param threshold: Порог совпадения (значение от 0 до 1), выше которого считается, что шаблон найден.
+    :param template_path: Путь к директории, где находится изображение-шаблон.
+    :return: Координаты верхнего левого угла найденного фрагмента или None, если шаблон не найден.
+    """
+    template_full_path = f"{template_path}{template_name}.png"
+
+    (x1, y1, x2, y2) = region
+    screenshot = np.array(ImageGrab.grab(bbox=(x1, y1, x2, y2)))  # Захватываем регион экрана
+    template = cv2.imread(template_full_path, cv2.IMREAD_GRAYSCALE)
+
+    if template is None:
+        raise FileNotFoundError(f"Template image not found: {template_full_path}")
+
+    screenshot_gray = cv2.cvtColor(screenshot, cv2.COLOR_BGR2GRAY)  # Преобразуем скриншот в grayscale
 
     result = cv2.matchTemplate(screenshot_gray, template, cv2.TM_CCOEFF_NORMED)
-    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+    _, max_val, _, max_loc = cv2.minMaxLoc(result)
 
     if max_val >= threshold:
-        top_left = (max_loc[0] + region[0], max_loc[1] + region[1])
-    else:
-        top_left = None
-    return top_left
+        top_left = (max_loc[0] + region[0], max_loc[1] + region[1])  # Корректируем координаты для всей области экрана
+        return top_left
+
+    return None
 
 
 def find_it_and_click_it(name_list: list[str], region=(0, 0, 1920, 1080), threshold=0.92):
     for name in name_list:
-        top_left = find_template_on_region(name, region, threshold=threshold)
+        top_left = find_template_in_region(name, region, threshold=threshold)
         width, height = get_image_size(name)
         if top_left:
             delay(0.2, 0.3)
@@ -63,7 +71,7 @@ def hunt_for_the_button_in_list(name_list: list[str], hunt_in_seconds=10, region
     for name in name_list:
         time_start = time.time()
         while time.time() - time_start < hunt_in_seconds:
-            top_left = find_template_on_region(name, region)
+            top_left = find_template_in_region(name, region)
             width, height = get_image_size(name)
             if top_left:
                 delay(0.2, 0.3)
@@ -75,7 +83,7 @@ def hunt_for_the_button_in_list(name_list: list[str], hunt_in_seconds=10, region
 def cycle_hunter_click(name_list: list[str], region=(0, 0, 1920, 1080)):
     for name in name_list:
         while True:
-            top_left = find_template_on_region(name, region)
+            top_left = find_template_in_region(name, region)
             width, height = get_image_size(name)
             if top_left:
                 delay(0.2, 0.3)
@@ -121,7 +129,7 @@ def found_text_on_image(region):
 
 
 def fff(name, region=(0, 0, 1920, 1080), threshold=0.92):
-    top_left = find_template_on_region(Image_Name=name, region=region, threshold=threshold)
+    top_left = find_template_in_region(Image_Name=name, region=region, threshold=threshold)
     width, height = get_image_size(name)
     if top_left:
         region_image_founded = (top_left[0], top_left[1], top_left[0] + width, top_left[1] + height)

@@ -60,6 +60,6 @@ def claim_daily_and_swipe_news(opposite_direction_numeric=0):
         find_it_and_click_it(green_X)
         find_it_and_click_it(gray_X)
         delay(0.2, 0.4)
-    for _ in range(3):
+    for _ in range(4):
         swipe_left(duration=0.4)
     delay(3, 4)

@@ -34,15 +34,16 @@ def random_moves():
 
 def Run_Clayton(dailik, event, win_main):
     find_Clayton = find_Clayton_2 if win_main else find_Clayton_1
-
     how_much_you_want_to_play = 4
+
     PreRun(find_Clayton, win_main)
+
     pg.click(clayton_pre_game_ads)
     delay()
     if dailik:
         pg.click(claim_daily_reward)
         delay()
-        for _ in range(8):
+        for _ in range(4):
             find_it_and_click_it(clayton_lvl_up)
     drag_to_bottom(duration=0.4)
     for _ in range(4):
@@ -50,5 +51,5 @@ def Run_Clayton(dailik, event, win_main):
         delay(0.6, 1)
         for _ in range (4):
             find_it_and_click_it(clayton_lvl_up)
-    # play_512(how_much_you_want_to_play)
+    play_512(how_much_you_want_to_play)
     Close_AnyWay()

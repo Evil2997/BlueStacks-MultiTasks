@@ -9,6 +9,7 @@ get_reward_diamond = ["get_reward_diamond"]
 diamond_tap_to_start_game = ["diamond_tap_to_start_game"]
 diamond_watch_ads = ["diamond_watch_ads"]
 diamond_claim_prerun = ["diamond_claim_prerun"]
+no_have_ads = ["button_close"]
 
 open_upgrades = (950, 340)
 grade_1 = (1260, 500)
