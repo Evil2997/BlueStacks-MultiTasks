@@ -9,11 +9,11 @@ def Run_BOOMS(dailik, event, win_main):
 
     PreRun(find_BOOMS, win_main, initial_setup_clicker=True, initial_setup_images=pre_run_clicker)
 
-    if dailik:
-        for coordinates in open_daily:
-            pg.click(coordinates)
-            delay(0.4, 1)
-        delay(3, 4)
+    # if dailik:
+    for coordinates in open_daily:
+        pg.click(coordinates)
+        delay(0.4, 1)
+    delay(3, 4)
     for _ in range(clicks_cycle_numeric):
         pg.press('num4')
         delay(10, 15)
