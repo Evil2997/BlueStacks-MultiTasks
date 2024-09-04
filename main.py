@@ -130,7 +130,7 @@ if __name__ == '__main__':
         "Cyber_Finance": {"seconds": 24 * 3600, "function": Run_Cyber_Finance},
         "Baboon": {"seconds": 2 * 3600, "function": Run_Baboon},
         "Time_TON_Ecosystem": {"seconds": 8 * 3600, "function": Run_Time_TON_Ecosystem},
-        # "BOOMS": {"seconds": 2 * 3600, "function": Run_BOOMS},
+        "BOOMS": {"seconds": 2 * 3600, "function": Run_BOOMS},
 
         # "Tomato": {"seconds": 23 * 3600, "function": Run_Tomato},
         # "PocketFi": {"seconds": 5 * 3600, "function": Run_PocketFi},
@@ -149,3 +149,8 @@ if __name__ == '__main__':
     time_end = time.time()
     time_end_print(time_end, time_start)
     # [RUN_SCRIPT]---[END]
+# TimeFarm автоматическая покупка новых часов
+# SimpleCoin просмотр остатков кликов
+# HEXN выполнение квестов
+# ElonMusk автоматический апгрейд всего
+# BEE выгодные апгрейды
