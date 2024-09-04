@@ -1,7 +1,6 @@
 from applications import *
 from applications.BOOMS import *
 from modules.moves import Close_AnyWay
-from modules.screens import fff
 
 
 def Run_BOOMS(dailik, event, win_main):
@@ -19,5 +18,5 @@ def Run_BOOMS(dailik, event, win_main):
         pg.press('num4')
         delay(10, 15)
         pg.press('num4')
-    # fff()
+        delay(0.4, 0.6)
     Close_AnyWay()

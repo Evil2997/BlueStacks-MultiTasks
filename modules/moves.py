@@ -4,7 +4,7 @@ import pyautogui as pg
 
 from modules import *
 from modules.Timers import delay
-from modules.screens import find_it_and_click_it, find_template_on_region
+from modules.screens import find_it_and_click_it, find_template_in_region
 
 
 def drag_to_up(duration=0.16, cords_to_drag=cords_to_drag):
@@ -21,7 +21,7 @@ def drag_to_bottom(duration=0.16, cords_to_drag=cords_to_drag):
 
 def Close_AnyWay(times_to_click=8):
     for _ in range(times_to_click):
-        if find_template_on_region(telegram_account_settings):
+        if find_template_in_region(telegram_account_settings):
             break
         delay(2, 3)
         pg.click(cords_close)
@@ -37,6 +37,6 @@ def swipe_right(duration=0.2):
 
 
 def swipe_left(duration=0.2):
-    pg.moveTo(cords_to_swipe[0] + 600, cords_to_swipe[1])
-    pg.dragTo(cords_to_swipe[0] - 300, cords_to_swipe[1], duration=duration)
+    pg.moveTo(cords_to_swipe[0] + 1000, cords_to_swipe[1])
+    pg.dragTo(cords_to_swipe[0] - 600, cords_to_swipe[1], duration=duration)
     pg.mouseUp()

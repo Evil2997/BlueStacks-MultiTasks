@@ -76,6 +76,7 @@ def hunt_for_the_button_in_list(name_list: list[str], hunt_in_seconds=10, region
             if top_left:
                 delay(0.2, 0.3)
                 pg.click(top_left[0] + width / 2, top_left[1] + height / 2)
+                break
             else:
                 delay(0.01, 0.1)
 
@@ -120,18 +121,3 @@ def click_on_images(target_colors, region=(0, 0, 1920, 1080), pixel_threshold=30
         return True
     else:
         return False
-
-
-def found_text_on_image(region):
-    screenshot = pg.screenshot(region=region)
-    text = pytesseract.image_to_string(screenshot, config=config)
-    return text
-
-
-def fff(name, region=(0, 0, 1920, 1080), threshold=0.92):
-    top_left = find_template_in_region(Image_Name=name, region=region, threshold=threshold)
-    width, height = get_image_size(name)
-    if top_left:
-        region_image_founded = (top_left[0], top_left[1], top_left[0] + width, top_left[1] + height)
-        text = found_text_on_image(region_image_founded)
-        print(text)

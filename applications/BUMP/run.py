@@ -52,8 +52,8 @@ def claim_daily_and_swipe_news(opposite_direction_numeric=0):
         for _ in range(i):
             drag_to_bottom(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
             opposite_direction_numeric = opposite_direction_numeric + 1
-        if click_on_images(target_colors=colors_daily):
-            break
+            if click_on_images(target_colors=colors_daily):
+                break
     for _ in range(opposite_direction_numeric):
         drag_to_up(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
     for _ in range(3):

@@ -6,7 +6,8 @@ from modules.moves import Close_AnyWay
 def Run_Time_TON_Ecosystem(dailik, event, win_main):
     find_Time_TON_Ecosystem = find_Time_TON_Ecosystem_2 if win_main else find_Time_TON_Ecosystem_1
 
-    PreRun(find_Time_TON_Ecosystem, win_main, chat=True, chat_type="click", chatbot_string=2)
+    PreRun(find_Time_TON_Ecosystem, win_main, chat=True, chat_type="click", chatbot_string=2,
+           initial_setup_clicker=True, initial_setup_images=pre_run_clicker)
 
     if dailik:
         pg.click(daily_TON_Ecosystem)

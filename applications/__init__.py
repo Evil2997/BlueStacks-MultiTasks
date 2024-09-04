@@ -51,7 +51,8 @@ def primary_hunter_click(finder, threshold, win_main=False, initial_setup_clicke
                     drag_to_up(cords_to_drag=cords_to_drag)
 
 
-def PreRun(finder, win_main,
+def PreRun(finder,
+           win_main: bool = False,
            chat: bool = False,
            chat_type: Literal["image", "click"] = "click",
            chatbot_string: int = -1,
