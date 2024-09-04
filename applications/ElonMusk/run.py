@@ -10,13 +10,13 @@ from modules.moves import Close_AnyWay
 def Run_ElonMusk(dailik, event, win_main):
     find_ElonMusk = find_ElonMusk_2 if win_main else find_ElonMusk_1
 
-    # PreRun(find_ElonMusk, win_main)
+    PreRun(find_ElonMusk, win_main)
 
-    # pg.click(Musk_take)
-    # delay(4, 5)
-    # for coordinate in Elon_daily:
-    #     pg.click(coordinate)
-    #     delay(4, 5)
+    pg.click(Musk_take)
+    delay(4, 5)
+    for coordinate in Elon_daily:
+        pg.click(coordinate)
+        delay(4, 5)
     make_upgrades()
     Close_AnyWay()
 
