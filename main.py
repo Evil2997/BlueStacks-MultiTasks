@@ -142,8 +142,7 @@ if __name__ == '__main__':
     # [RUN_SCRIPT]---[START]
     time_start = time.time()
     try:
-        Run_ElonMusk(True, False, False)
-        # main()
+        main()
     except KeyboardInterrupt:
         pass
     print(f"Время окончания сеанса: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())}")
