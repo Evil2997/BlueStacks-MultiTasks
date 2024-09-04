@@ -2,7 +2,7 @@ find_BEE_1 = ["BEE"]
 find_BEE_2 = ["BEE_2"]
 daily_BEE = (950, 990)
 upgrades_BEE = (1150, 950)
-other_menu_BEE = (290, 950)
+other_menu_BEE = (470, 950)
 
 multiply = ["bee_stage_1", "bee_stage_2", "bee_stage_3", "bee_stage_4"]
 

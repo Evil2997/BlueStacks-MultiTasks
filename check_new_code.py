@@ -16,3 +16,42 @@ def WINDOWS_PARAMS():
                  "region": (B, R, B + A, Q + R)},
     }
     # [windows_params]-[END]
+
+def deedeed():
+    import json
+
+
+    # Определение функций (они должны быть определены или импортированы в вашем коде)
+    def Run_Blum():
+        print("Running Blum")
+
+
+    def Run_Diamond():
+        print("Running Diamond")
+
+
+    def Run_Clayton():
+        print("Running Clayton")
+
+
+    json_file = {"data.json": {
+            "Blum": {"seconds": 28800, "function": "Run_Blum"},
+            "Diamond": {"seconds": 28800, "function": "Run_Diamond"},
+            "Clayton": {"seconds": 28800, "function": "Run_Clayton"}
+        }
+    }
+
+    with open('data.json', 'r') as f:
+        data = json.load(f)
+
+    # Универсальный вызов функций
+    for key, value in data.items():
+        function_name = value["function"]
+
+        # Предполагаем, что все функции находятся в этом же модуле
+        function_to_call = globals().get(function_name)
+
+        if function_to_call:
+            function_to_call()  # Вызов функции
+        else:
+            print(f"Функция {function_name} не найдена.")
