@@ -4,7 +4,8 @@ import pyautogui as pg
 
 from modules.Timers import delay
 from modules.moves import drag_to_up, drag_to_bottom
-from modules.screens import find_it_and_click_it, cycle_hunter_click, find_template_in_region
+from modules.screens import find_it_and_click_it, cycle_hunter_click, find_template_in_region, \
+    hunt_for_the_button_in_list
 
 main_group = ["main_group"]
 connect_to_vpn = ["collapse_all_windows", "check_all_windows",
@@ -21,7 +22,8 @@ close_main_group = (730, 130)
 click_to_bottom_in_BotChat = [(900, 880), (900, 800), (900, 720)]
 
 
-def primary_hunter_click(finder, threshold, win_main=False, initial_setup_clicker=False,
+def primary_hunter_click(finder, threshold, win_main=False,
+                         initial_setup_clicker=False,
                          initial_setup_images: List[str] = None):
     MAIN_CYCLE = True
     cords_to_drag = cords_to_drag__win_main if win_main else cords_to_drag__standard
@@ -34,7 +36,7 @@ def primary_hunter_click(finder, threshold, win_main=False, initial_setup_clicke
             delay(0.4, 0.6)
             pg.click(close_main_group)
         delay(4, 5)
-        find_it_and_click_it(main_group)
+        hunt_for_the_button_in_list(main_group, hunt_in_seconds=4)
         for _ in range(16):
             if not MAIN_CYCLE:
                 break
