@@ -25,9 +25,8 @@ def Close_AnyWay(times_to_click=8):
             break
         delay(2, 3)
         pg.click(cords_close)
-        delay(0.4, 0.6)
+        delay()
         find_it_and_click_it(close_anyway)
-        delay(0.4, 0.6)
 
 
 def swipe_right(duration=0.2):
