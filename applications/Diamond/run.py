@@ -6,7 +6,7 @@ from modules.moves import Close_AnyWay
 def Run_Diamond(dailik, event, win_main):
     find_Diamond = find_Diamond_2 if win_main else find_Diamond_1
 
-    # PreRun(find_Diamond, win_main)
+    PreRun(find_Diamond, win_main)
 
     find_it_and_click_it(diamond_claim_prerun)
     delay(0.2, 0.4)
