@@ -79,9 +79,19 @@ def get_dominant_colors(image_array: np.ndarray, num_colors: int = 5) -> np.ndar
     return dominant_colors
 
 
-def image_colors(image_path, num_colors):
+def image_colors(image_path: str, num_colors: int) -> np.ndarray:
+    """
+    Обрабатывает изображение, удаляет фон, фильтрует только видимые пиксели и находит доминирующие цвета.
+
+    :param image_path: Путь к изображению для обработки.
+    :param num_colors: Количество доминирующих цветов, которые нужно выделить.
+    :return: NumPy массив доминирующих цветов в формате RGB.
+    """
+    # Удаление фона с изображения
     image_no_bg = remove_background(image_path)
 
+    # Фильтрация только видимых (непрозрачных) пикселей
     image_array = filter_visible_pixels(image_no_bg)
 
-    dominant_colors = get_dominant_colors(image_array, num_colors=num_colors)
+    # Нахождение доминирующих цветов
+    return get_dominant_colors(image_array, num_colors=num_colors)
