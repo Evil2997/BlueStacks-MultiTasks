@@ -1,5 +1,3 @@
-import time
-
 import cv2
 import numpy as np
 from rembg import remove
@@ -8,13 +6,23 @@ from sklearn.cluster import KMeans
 
 def remove_background(image_path: str) -> np.ndarray:
     """
-    Удаляет фон с изображения с помощью библиотеки rembg.
+    Удаляет фон с изображения с помощью библиотеки rembg и выполняет переворот цветов (BGR -> RGB).
 
     :param image_path: Путь к изображению.
-    :return: NumPy массив изображения без фона.
+    :return: NumPy массив изображения без фона в формате RGB.
     """
-    with open(image_path, "rb") as file:
-        input_image = file.read()
+    # Считываем изображение с помощью OpenCV
+    image_bgr = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
+
+    # Преобразуем BGR в RGB (если нужно)
+    if image_bgr.shape[2] == 4:  # Если есть альфа-канал (RGBA)
+        image_rgb = cv2.cvtColor(image_bgr, cv2.COLOR_BGRA2RGBA)
+    else:  # Если нет альфа-канала (BGR)
+        image_rgb = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
+
+    # Преобразуем изображение в байты
+    _, encoded_img = cv2.imencode('.png', image_rgb)
+    input_image = encoded_img.tobytes()
 
     # Удаление фона
     output_image = remove(input_image)
@@ -26,26 +34,32 @@ def remove_background(image_path: str) -> np.ndarray:
     return image_no_bg
 
 
-def image_to_array(image_no_bg: np.ndarray) -> np.ndarray:
+def filter_visible_pixels(image_with_alpha: np.ndarray) -> np.ndarray:
     """
-    Преобразует изображение с удаленным фоном в RGB NumPy массив.
+    Фильтрует пиксели, оставляя только те, где альфа-канал полностью непрозрачный (255).
 
-    :param image_no_bg: NumPy массив изображения с удаленным фоном.
-    :return: NumPy массив изображения в формате RGB.
+    :param image_with_alpha: NumPy массив изображения в формате RGBA.
+    :return: NumPy массив только видимых пикселей (RGB).
     """
-    if image_no_bg.shape[2] == 4:  # Если есть альфа-канал (прозрачность)
-        image_rgb = cv2.cvtColor(image_no_bg, cv2.COLOR_BGRA2RGB)
+    if image_with_alpha.shape[2] == 4:  # Проверяем, есть ли альфа-канал
+        # Маска для полностью непрозрачных пикселей (где альфа-канал == 255)
+        opaque_mask = image_with_alpha[:, :, 3] == 255
+
+        # Оставляем только непрозрачные пиксели и убираем альфа-канал
+        visible_pixels = image_with_alpha[opaque_mask]
+        visible_pixels_rgb = visible_pixels[:, :3]  # Берем только RGB каналы
+
+        return visible_pixels_rgb
     else:
-        image_rgb = cv2.cvtColor(image_no_bg, cv2.COLOR_BGR2RGB)
-
-    return image_rgb
+        # Если альфа-канала нет, возвращаем изображение как есть
+        return image_with_alpha
 
 
 def get_dominant_colors(image_array: np.ndarray, num_colors: int = 5) -> np.ndarray:
     """
     Определяет наиболее часто встречающиеся цвета в изображении с помощью кластеризации.
 
-    :param image_array: NumPy массив изображения.
+    :param image_array: NumPy массив видимых пикселей (RGB).
     :param num_colors: Количество кластеров (цветов), которые нужно выделить.
     :return: NumPy массив доминирующих цветов (целые числа).
     """
@@ -65,39 +79,9 @@ def get_dominant_colors(image_array: np.ndarray, num_colors: int = 5) -> np.ndar
     return dominant_colors
 
 
-# Пример использования
-image_path = r'C:\Users\Dmitriy\Pictures\Screenshots\yellow_text.png'
+def image_colors(image_path, num_colors):
+    image_no_bg = remove_background(image_path)
 
-# Начинаем замер времени
-start_time = time.time()
+    image_array = filter_visible_pixels(image_no_bg)
 
-# Удаление фона
-start_remove_bg = time.time()
-image_no_bg = remove_background(image_path)
-end_remove_bg = time.time()
-print(f"Время удаления фона: {end_remove_bg - start_remove_bg:.2f} секунд\n")
-
-# Преобразуем изображение без фона в RGB NumPy массив
-start_rgb_conversion = time.time()
-image_array = image_to_array(image_no_bg)
-end_rgb_conversion = time.time()
-print(f"Время преобразования изображения: {end_rgb_conversion - start_rgb_conversion:.2f} секунд\n")
-
-# Находим 10 наиболее часто встречающихся цветов
-start_color_analysis = time.time()
-dominant_colors = get_dominant_colors(image_array, num_colors=10)
-end_color_analysis = time.time()
-print(f"Время анализа доминирующих цветов: {end_color_analysis - start_color_analysis:.2f} секунд\n")
-
-# Выводим доминирующие цвета
-print(f"Доминирующие цвета (без фона):\n{dominant_colors}")
-
-# Сохраняем результат изображения без фона
-start_save_image = time.time()
-cv2.imwrite(r'C:\Users\Dmitriy\Pictures\Screenshots\111.png', cv2.cvtColor(image_no_bg, cv2.COLOR_RGBA2BGRA))
-end_save_image = time.time()
-print(f"Время сохранения изображения: {end_save_image - start_save_image:.2f} секунд\n")
-
-# Полное время выполнения
-end_time = time.time()
-print(f"Полное время работы скрипта: {end_time - start_time:.2f} секунд")
+    dominant_colors = get_dominant_colors(image_array, num_colors=num_colors)
