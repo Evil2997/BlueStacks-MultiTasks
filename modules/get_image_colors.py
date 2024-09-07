@@ -79,7 +79,7 @@ def get_dominant_colors(image_array: np.ndarray, num_colors: int = 5) -> np.ndar
     return dominant_colors
 
 
-def image_colors(image_path: str, num_colors: int) -> np.ndarray:
+def color_spectrum_scanner(image_path: str, num_colors: int) -> np.ndarray:
     """
     Обрабатывает изображение, удаляет фон, фильтрует только видимые пиксели и находит доминирующие цвета.
 
