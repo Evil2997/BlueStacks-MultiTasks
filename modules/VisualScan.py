@@ -69,32 +69,34 @@ def visual_scan_tracker(region: Optional[Tuple[int, int, int, int]] = (0, 0, 192
     return None
 
 
-def is_text_yellow(image: Image.Image, coin_center: Tuple[int, int]) -> bool:
+def is_text_yellow(image: Image.Image, coin_center: Tuple[int, int],
+                   lower_yellow: Optional[np.ndarray] = None,
+                   upper_yellow: Optional[np.ndarray] = None) -> bool:
     """
-    Проверяет, является ли текст рядом с центром найденной монетки желтым.
+    Проверяет, является ли текст рядом с центром найденной монетки заданного желтого цвета.
 
     :param image: Скриншот экрана в формате PIL.
     :param coin_center: Координаты центра монетки в формате (x_center, y_center).
-    :return: True, если текст желтый, иначе False.
+    :param lower_yellow: Нижняя граница диапазона желтого цвета в HSV (обязательный параметр).
+    :param upper_yellow: Верхняя граница диапазона желтого цвета в HSV (обязательный параметр).
+    :return: True, если текст заданного желтого цвета; иначе False.
+    :raises ValueError: Если диапазон желтого цвета не передан.
     """
+    if lower_yellow is None or upper_yellow is None:
+        raise ValueError("Диапазон желтого цвета (lower_yellow и upper_yellow) должен быть передан!")
+
     x_center, y_center = coin_center
-    text_region = image.crop((x_center, y_center - 20, x_center + 150,
-                              y_center + 20))  # Предполагаем, что текст находится справа от центра монетки
+    text_region = image.crop((x_center, y_center - 20, x_center + 150, y_center + 20))  # Текст справа от монетки
 
     # Преобразуем текстовую область в HSV для определения цвета
     text_region_np = np.array(text_region)
     hsv_image = cv2.cvtColor(text_region_np, cv2.COLOR_RGB2HSV)
 
-    # Диапазон для желтого цвета
-    # найти точные цифры желтого цвета
-    
-    lower_yellow = np.array([20, 150, 150])
-    upper_yellow = np.array([35, 255, 255])
-
+    # Создаем маску на основе переданных границ цвета
     mask = cv2.inRange(hsv_image, lower_yellow, upper_yellow)
     yellow_ratio = np.sum(mask > 0) / (mask.shape[0] * mask.shape[1])
 
-    return yellow_ratio > 0.5  # Если больше 50% области желтого цвета, считаем, что текст желтый
+    return yellow_ratio > 0.5  # Если больше 50% области желтого цвета, считаем текст желтым
 
 
 def extract_text_near_coin(image: Image.Image, coin_center: Tuple[int, int], lang: str = 'rus') -> str:
