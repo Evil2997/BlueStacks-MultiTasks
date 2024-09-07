@@ -190,7 +190,7 @@ def find_coin_in_region(
 
     # Загружаем шаблон в цвете (RGB)
     template = cv2.imread(template_full_path, cv2.IMREAD_COLOR)
-    cv2.imwrite("1.png", template)
+
     if template is None:
         raise FileNotFoundError(f"Template image not found: {template_full_path}")
 
