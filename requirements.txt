@@ -3,5 +3,7 @@ pyautogui==0.9.54
 ahk==1.7.8
 opencv-python==4.10.0.84
 pytesseract==0.3.10
-numpy==2.1.1
+numpy==1.26.4
 pillow==10.4.0
+scikit-learn==1.5.1
+rembg==2.0.59
