@@ -2,13 +2,13 @@ import numpy as np
 from PIL import ImageGrab as scr
 from pytesseract import pytesseract
 
-from modules import config
+from modules import config_numbers_0to9__add_slash_point
 from modules.screens import get_image_size, find_template_in_region
 
 
 def found_text_on_image(region=(0, 0, 1920, 1080), lang='eng'):
     screenshot = np.array(scr.grab(bbox=region))
-    text = pytesseract.image_to_string(screenshot, config=config, lang=lang)
+    text = pytesseract.image_to_string(screenshot, config=config_numbers_0to9__add_slash_point, lang=lang)
     return text
 
 

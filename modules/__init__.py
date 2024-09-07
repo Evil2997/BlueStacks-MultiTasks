@@ -35,6 +35,8 @@ WIN_START = {
 window_numbers = len(WIN_START)
 # [Windows]---[End]
 
-config = r'--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789/'
+config_numbers_0to9__add_slash_point = r'--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789/.'
+config___oem_3__psm_11 = r'--oem 3 --psm 11'
+config___oem_3__psm_6 = r'--oem 3 --psm 6'
 
 MAIN_DIR: Final[pathlib.Path] = pathlib.Path(__file__).parents[1]

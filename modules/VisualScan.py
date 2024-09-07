@@ -7,6 +7,7 @@ import numpy as np
 import pytesseract
 from PIL import Image
 
+from modules import config___oem_3__psm_11, config___oem_3__psm_6
 from modules.screens import find_template_in_region
 
 
@@ -32,8 +33,7 @@ def extract_text_and_coordinates(image: Image.Image, lang: str = 'rus') -> Dict[
     :param lang: Язык для OCR (по умолчанию 'rus').
     :return: Словарь с данными, где ключ - текст, а значение - словарь индексов и координат.
     """
-    custom_config = r'--oem 3 --psm 11'
-    ocr_data = pytesseract.image_to_data(image, lang=lang, config=custom_config, output_type=pytesseract.Output.DICT)
+    ocr_data = pytesseract.image_to_data(image, lang=lang, config=config___oem_3__psm_11, output_type=pytesseract.Output.DICT)
 
     coordinates = {}
     for i in range(len(ocr_data['text'])):
@@ -86,6 +86,8 @@ def is_text_yellow(image: Image.Image, coin_center: Tuple[int, int]) -> bool:
     hsv_image = cv2.cvtColor(text_region_np, cv2.COLOR_RGB2HSV)
 
     # Диапазон для желтого цвета
+    # найти точные цифры желтого цвета
+    
     lower_yellow = np.array([20, 150, 150])
     upper_yellow = np.array([35, 255, 255])
 
@@ -105,11 +107,10 @@ def extract_text_near_coin(image: Image.Image, coin_center: Tuple[int, int], lan
     :return: Извлеченный текст.
     """
     x_center, y_center = coin_center
-    text_region = image.crop((x_center + 10, y_center - 20, x_center + 150,
-                              y_center + 20))  # Предполагаем, что текст находится справа от центра монетки
-    custom_config = r'--oem 3 --psm 6'
-    extracted_text = pytesseract.image_to_string(text_region, lang=lang, config=custom_config)
-    return extracted_text.strip()
+    text_region = image.crop((x_center + 10, y_center - 20, x_center + 150, y_center + 20))
+
+    extracted_text = pytesseract.image_to_string(text_region, lang=lang, config=config___oem_3__psm_6)
+    return extracted_text.strip
 
 
 def find_coin_and_check_text(
