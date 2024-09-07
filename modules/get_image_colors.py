@@ -1,3 +1,5 @@
+from typing import Tuple
+
 import cv2
 import numpy as np
 from rembg import remove
@@ -79,14 +81,15 @@ def get_dominant_colors(image_array: np.ndarray, num_colors: int = 5) -> np.ndar
     return dominant_colors
 
 
-def color_spectrum_scanner(image_path: str, num_colors: int) -> np.ndarray:
+def color_spectrum_scanner(template_image: str, num_colors: int) -> np.ndarray:
     """
     Обрабатывает изображение, удаляет фон, фильтрует только видимые пиксели и находит доминирующие цвета.
 
-    :param image_path: Путь к изображению для обработки.
+    :param template_image: Путь к изображению для обработки.
     :param num_colors: Количество доминирующих цветов, которые нужно выделить.
     :return: NumPy массив доминирующих цветов в формате RGB.
     """
+    image_path = f"Images/{template_image}.png"
     # Удаление фона с изображения
     image_no_bg = remove_background(image_path)
 
@@ -95,3 +98,21 @@ def color_spectrum_scanner(image_path: str, num_colors: int) -> np.ndarray:
 
     # Нахождение доминирующих цветов
     return get_dominant_colors(image_array, num_colors=num_colors)
+
+
+def get_rgb_bounds(colors: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Получает нижнюю и верхнюю границы цвета в RGB на основе списка цветов.
+
+    :param colors: NumPy массив цветов в формате RGB (shape: Nx3).
+    :return: Нижняя и верхняя границы цвета в RGB в формате np.ndarray.
+    """
+    # Преобразуем список RGB цветов в формат NumPy массива, если это еще не массив
+    if not isinstance(colors, np.ndarray):
+        colors = np.array(colors)
+
+    # Определим нижние и верхние границы по каждому каналу (R, G, B)
+    lower_bound = np.min(colors, axis=0)  # Минимальные значения для каждого канала
+    upper_bound = np.max(colors, axis=0)  # Максимальные значения для каждого канала
+
+    return lower_bound, upper_bound

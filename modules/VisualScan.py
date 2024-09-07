@@ -1,11 +1,11 @@
-from typing import Dict
+from typing import Dict, List
 from typing import Optional, Tuple
 
 import cv2
 import mss
 import numpy as np
 import pytesseract
-from PIL import Image
+from PIL import Image, ImageGrab
 
 from modules import config___oem_3__psm_11, config___oem_3__psm_6
 from modules.screens import find_template_in_region
@@ -95,8 +95,8 @@ def is_text_yellow(image: Image.Image, coin_center: Tuple[int, int],
     # Создаем маску на основе переданных границ цвета
     mask = cv2.inRange(hsv_image, lower_yellow, upper_yellow)
     yellow_ratio = np.sum(mask > 0) / (mask.shape[0] * mask.shape[1])
-
-    return yellow_ratio > 0.5  # Если больше 50% области желтого цвета, считаем текст желтым
+    print(yellow_ratio)
+    return yellow_ratio == 0  # Если больше 50% области желтого цвета, считаем текст желтым
 
 
 def extract_text_near_coin(image: Image.Image, coin_center: Tuple[int, int], lang: str = 'rus') -> str:
@@ -116,24 +116,94 @@ def extract_text_near_coin(image: Image.Image, coin_center: Tuple[int, int], lan
 
 
 def find_coin_and_check_text(
-        template_name: str, region: Optional[Tuple[int, int, int, int]] = (0, 0, 1920, 1080)
-) -> Optional[Tuple[int, int]] | None:
-
+        template_name: str,
+        lower_yellow: np.ndarray,
+        upper_yellow: np.ndarray,
+        region: Optional[Tuple[int, int, int, int]] = (0, 0, 1920, 1080)
+) -> List[Tuple[int, int]]:
     """
-    Ищет монетку на экране и проверяет, является ли текст рядом с ней желтым.
+    Ищет все монетки на экране и проверяет, является ли текст рядом с каждой из них заданного желтого цвета.
 
-    :param region:
     :param template_name: Имя изображения-шаблона монетки.
-    :return: True, если текст рядом с монеткой желтый; иначе False.
+    :param lower_yellow: Нижняя граница диапазона желтого цвета в HSV.
+    :param upper_yellow: Верхняя граница диапазона желтого цвета в HSV.
+    :param region: Регион экрана для захвата (по умолчанию захватывается весь экран).
+    :return: Список координат центров монеток, если текст рядом с ними желтого цвета.
     """
-    coin_center = find_template_in_region(template_name)
+    # Поиск всех монеток в регионе
+    coin_centers = find_coin_in_region(template_name, region=region)
 
+    if not coin_centers:
+        print("Монетки не найдены.")
+        return []
+
+    # Захват экрана для дальнейшего анализа
     with mss.mss() as screen_capturer:
         screenshot = screen_capturer.grab(region) if region else screen_capturer.grab(screen_capturer.monitors[1])
         image = Image.frombytes('RGB', screenshot.size, screenshot.rgb)
 
-    if coin_center:
-        if is_text_yellow(image, coin_center):
-            return coin_center
+    valid_coin_centers = []
 
-    return None
+    # Проверяем текст рядом с каждой монеткой
+    for coin_center in coin_centers:
+        if is_text_yellow(image, coin_center, lower_yellow, upper_yellow):
+            valid_coin_centers.append(coin_center)
+
+    return valid_coin_centers
+
+def get_hsv_bounds(colors: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Получает нижнюю и верхнюю границы цвета в HSV на основе списка цветов в формате RGB.
+
+    :param colors: NumPy массив цветов в формате RGB (shape: Nx3).
+    :return: Нижняя и верхняя границы цвета в HSV.
+    """
+    colors = colors.astype(np.uint8)
+
+    # Преобразуем RGB цвета в HSV
+    colors_hsv = cv2.cvtColor(colors.reshape(1, -1, 3), cv2.COLOR_RGB2HSV)
+
+    # Найдем минимальные и максимальные значения по каждому каналу (H, S, V)
+    lower_bound = np.min(colors_hsv, axis=1)[0]
+    upper_bound = np.max(colors_hsv, axis=1)[0]
+
+    return lower_bound, upper_bound
+
+
+def find_coin_in_region(
+        template_name: str, region: Tuple[int, int, int, int] = (0, 0, 1920, 1080),
+        threshold: float = 0.92, template_path: Optional[str] = "Images/") -> List[Tuple[int, int]]:
+    """
+    Поиск всех цветных шаблонов в указанной области экрана.
+
+    :param template_name: Название изображения-шаблона, который нужно найти.
+    :param region: Регион экрана в диапазоне (x1, y1, x2, y2).
+    :param threshold: Порог совпадения (значение от 0 до 1), выше которого считается, что шаблон найден.
+    :param template_path: Путь к директории, где находится изображение-шаблон.
+    :return: Список координат верхнего левого угла найденных фрагментов или пустой список, если шаблоны не найдены.
+    """
+    template_full_path = f"{template_path}{template_name}.png"
+
+    # Захватываем регион экрана
+    (x1, y1, x2, y2) = region
+    screenshot = np.array(ImageGrab.grab(bbox=(x1, y1, x2, y2)))
+
+    # Загружаем шаблон в цвете (RGB)
+    template = cv2.imread(template_full_path, cv2.IMREAD_COLOR)
+    cv2.imwrite("1.png", template)
+    if template is None:
+        raise FileNotFoundError(f"Template image not found: {template_full_path}")
+
+    # Поиск всех совпадений на цветном изображении
+    result = cv2.matchTemplate(screenshot, template, cv2.TM_CCOEFF_NORMED)
+    locations = np.where(result >= threshold)
+
+    # Получаем координаты всех найденных совпадений
+    matches = []
+    template_height, template_width = template.shape[:2]
+
+    for point in zip(*locations[::-1]):  # Инвертируем координаты
+        top_left = (point[0] + region[0], point[1] + region[1])
+        matches.append(top_left)
+
+    return matches
