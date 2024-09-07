@@ -96,7 +96,7 @@ def is_text_yellow(image: Image.Image, coin_center: Tuple[int, int],
     mask = cv2.inRange(hsv_image, lower_yellow, upper_yellow)
     yellow_ratio = np.sum(mask > 0) / (mask.shape[0] * mask.shape[1])
     print(yellow_ratio)
-    return yellow_ratio == 0  # Если больше 50% области желтого цвета, считаем текст желтым
+    return yellow_ratio > 0.5  # Если больше 50% области желтого цвета, считаем текст желтым
 
 
 def extract_text_near_coin(image: Image.Image, coin_center: Tuple[int, int], lang: str = 'rus') -> str:
