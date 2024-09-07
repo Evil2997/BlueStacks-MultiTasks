@@ -28,7 +28,7 @@ def upgrade_stage_1():
     for _ in range(3):
         drag_to_bottom(duration=0.2)
         delay(0.2, 0.3)
-    for _ in range(10):
+    for _ in range(4):
         for coordinates in upgrades_all:
             pg.click(coordinates)
             delay(0.02, 0.2)
@@ -39,7 +39,7 @@ def upgrade_stage_2():
     pg.click(other_menu_BEE)
     delay(3, 4)
     pg.click(upgrades_BEE)
-    for _ in range(10):
+    for _ in range(32):
         pg.click(upgrades_last)
         delay(0.6, 0.8)
 
