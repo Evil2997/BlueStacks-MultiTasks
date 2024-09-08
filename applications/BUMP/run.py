@@ -1,7 +1,7 @@
 from applications import *
 from applications.BUMP import *
 from modules.moves import Close_AnyWay, swipe_left
-from modules.screens import click_on_images
+from modules.screens import click_in_center_on_region_by_color
 
 
 def buy_bust_bump():
@@ -52,7 +52,7 @@ def claim_daily_and_swipe_news(opposite_direction_numeric=0):
         for _ in range(i):
             drag_to_bottom(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
             opposite_direction_numeric = opposite_direction_numeric + 1
-            if click_on_images(target_colors=colors_daily):
+            if click_in_center_on_region_by_color(target_colors=colors_daily):
                 break
     for _ in range(opposite_direction_numeric):
         drag_to_up(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)

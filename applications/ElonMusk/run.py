@@ -1,11 +1,9 @@
-import time
-
 from applications import *
 from applications.ElonMusk import *
-from modules.VisualScan import visual_scan_tracker, find_coin_and_check_text, capture_full_screen_or_region, \
-    extract_text_and_coordinates
-from modules.get_image_colors import color_spectrum_scanner, get_rgb_bounds
+from modules.VisualScan import visual_scan_tracker
+from modules.get_image_colors import color_spectrum_scanner
 from modules.moves import Close_AnyWay
+from modules.screens import click_on_big_range_of_colors
 
 
 def Run_ElonMusk(dailik, event, win_main):
@@ -26,8 +24,7 @@ def make_upgrades():
     """
     Функция проходит по всем вкладкам и прокликивает улучшения (монетки с желтым текстом).
     """
-    dominant_colors = color_spectrum_scanner(template_image=yellow_text, num_colors=10)
-    lower_yellow, upper_yellow = get_rgb_bounds(dominant_colors)
+    dominant_colors = color_spectrum_scanner(template_image=yellow_text, num_colors=40)
 
     pg.click(open_upgrades)
     delay()
@@ -35,13 +32,13 @@ def make_upgrades():
         if target_coordinates := visual_scan_tracker(target_phrase=navigation_target):
             pg.click(target_coordinates)
             for _ in range(10):
-                coins_centers = find_coin_and_check_text(
-                    template_name=yellow_coin,
-                    lower_yellow=lower_yellow,
-                    upper_yellow=upper_yellow
+                click_on_big_range_of_colors(
+                    target_colors=dominant_colors,
+                    region=(1040, 320, 1370, 930),
+                    pixel_threshold=300,
+                    tolerance=10,
+                    min_samples=100,
+                    eps=10
                 )
-                for coin_center in coins_centers:
-                    pg.click(coin_center)
-                    delay()
                 drag_to_bottom()
-                delay(0.2, 0.4)
+                delay()

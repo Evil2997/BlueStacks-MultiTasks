@@ -2,7 +2,7 @@ from applications import *
 from applications.BEE import *
 from modules.Text_workers import fff
 from modules.moves import Close_AnyWay
-from modules.screens import click_on_images
+from modules.screens import click_in_center_on_region_by_color
 
 
 def Run_BEE(dailik, event, win_main):
@@ -17,7 +17,7 @@ def Run_BEE(dailik, event, win_main):
 
 
 def get_dailik():
-    if click_on_images(target_colors=colors_check_daily):
+    if click_in_center_on_region_by_color(target_colors=colors_check_daily):
         pg.click(daily_BEE)
         delay()
 

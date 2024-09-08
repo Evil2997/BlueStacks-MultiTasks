@@ -6,9 +6,8 @@ import cv2
 import numpy as np
 import pyautogui as pg
 from PIL import ImageGrab
-from pytesseract import pytesseract
+from sklearn.cluster import DBSCAN
 
-from modules import *
 from modules.Timers import delay
 
 
@@ -95,7 +94,7 @@ def cycle_hunter_click(name_list: list[str], region=(0, 0, 1920, 1080)):
         delay(0.8, 1.2)
 
 
-def click_on_images(target_colors, region=(0, 0, 1920, 1080), pixel_threshold=300):
+def click_in_center_on_region_by_color(target_colors, region=(0, 0, 1920, 1080), pixel_threshold=300):
     (x1, y1, x2, y2) = region
     screenshot = np.array(pg.screenshot(region=(x1, y1, x2 - x1, y2 - y1)))
 
@@ -113,7 +112,7 @@ def click_on_images(target_colors, region=(0, 0, 1920, 1080), pixel_threshold=30
     image = cv2.imread("1.png", cv2.IMREAD_GRAYSCALE)
     os.remove("1.png")
     white_pixels = np.column_stack(np.where(image == 255))
-
+    print(len(white_pixels))
     if len(white_pixels) > pixel_threshold:
         center_x = int(np.mean(white_pixels[:, 1]))
         center_y = int(np.mean(white_pixels[:, 0]))
@@ -121,3 +120,55 @@ def click_on_images(target_colors, region=(0, 0, 1920, 1080), pixel_threshold=30
         return True
     else:
         return False
+
+
+def click_on_big_range_of_colors(target_colors, region=(0, 0, 1920, 1080), pixel_threshold=300, tolerance=10, min_samples=10,
+                      eps=10):
+    (x1, y1, x2, y2) = region
+    # Делаем скриншот
+    screenshot = np.array(pg.screenshot(region=(x1, y1, x2 - x1, y2 - y1)))
+
+    # Конвертируем скриншот из RGB в BGR для корректной работы с OpenCV
+    # screenshot = cv2.cvtColor(screenshot, cv2.COLOR_RGB2BGR)
+
+    final_mask = np.zeros((screenshot.shape[0], screenshot.shape[1]), dtype=np.uint8)
+
+    for color in target_colors:
+        # Устанавливаем нижнюю и верхнюю границы цвета с учётом tolerance
+        lower_bound = np.clip(np.array([c - tolerance for c in color]), 0, 255)
+        upper_bound = np.clip(np.array([c + tolerance for c in color]), 0, 255)
+
+        mask = cv2.inRange(screenshot, lower_bound, upper_bound)
+        final_mask = cv2.bitwise_or(final_mask, mask)
+
+    # Найдем белые пиксели (пиксели, соответствующие целевым цветам)
+    white_pixels = np.column_stack(np.where(final_mask == 255))
+    print(len(white_pixels))
+    if len(white_pixels) > pixel_threshold:
+        # Применение DBSCAN для нахождения скоплений
+        clustering = DBSCAN(eps=eps, min_samples=min_samples).fit(white_pixels)
+
+        # Получаем уникальные метки кластеров (шумовые точки имеют метку -1)
+        unique_labels = set(clustering.labels_)
+
+        # Список для хранения центров кластеров
+        cluster_centers = []
+
+        for label in unique_labels:
+            if label == -1:
+                continue  # Пропускаем шумовые точки
+
+            # Находим пиксели, относящиеся к текущему кластеру
+            cluster_points = white_pixels[clustering.labels_ == label]
+
+            # Находим центр кластера
+            center_x = int(np.mean(cluster_points[:, 1])) + x1
+            center_y = int(np.mean(cluster_points[:, 0])) + y1
+            cluster_centers.append((center_x, center_y))
+
+        # Проходим по всем центрам кластеров и кликаем по ним
+        for center_x, center_y in cluster_centers:
+            print(f"Кликаем по координатам: ({center_x}, {center_y})")
+            pg.click(center_x, center_y)
+    else:
+        print("Пикселей недостаточно для клика")
