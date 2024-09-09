@@ -21,8 +21,11 @@ def get_image_size(image_name):
 
 
 def find_template_in_region(
-        template_name: str, region: Tuple[int, int, int, int] = (0, 0, 1920, 1080),
-        threshold: float = 0.92, template_path: Optional[str] = "Images/") -> Optional[Tuple[int, int]]:
+        template_name: str,
+        region: Tuple[int, int, int, int] = (0, 0, 1920, 1080),
+        threshold: float = 0.92,
+        template_path: Optional[str] = "Images/"
+) -> Optional[Tuple[int, int]]:
     """
     Поиск шаблона в указанной области экрана.
 
@@ -66,11 +69,11 @@ def find_it_and_click_it(name_list: list[str], region=(0, 0, 1920, 1080), thresh
             return False
 
 
-def hunt_for_the_button_in_list(name_list: list[str], hunt_in_seconds=10, region=(0, 0, 1920, 1080)):
+def hunt_for_the_button_in_list(name_list: list[str], hunt_in_seconds=10, region=(0, 0, 1920, 1080), threshold=0.92):
     for name in name_list:
         time_start = time.time()
         while time.time() - time_start < hunt_in_seconds:
-            top_left = find_template_in_region(name, region)
+            top_left = find_template_in_region(name, region, threshold=threshold)
             width, height = get_image_size(name)
             if top_left:
                 delay(0.2, 0.3)
@@ -94,13 +97,12 @@ def cycle_hunter_click(name_list: list[str], region=(0, 0, 1920, 1080)):
         delay(0.8, 1.2)
 
 
-def click_in_center_on_region_by_color(target_colors, region=(0, 0, 1920, 1080), pixel_threshold=300):
+def click_in_center_on_region_by_color(target_colors, region=(0, 0, 1920, 1080), pixel_threshold=300, tolerance=3):
     (x1, y1, x2, y2) = region
     screenshot = np.array(pg.screenshot(region=(x1, y1, x2 - x1, y2 - y1)))
 
     final_mask = np.zeros((screenshot.shape[0], screenshot.shape[1]), dtype=np.uint8)
 
-    tolerance = 3
     for color in target_colors:
         lower_bound = np.array([c - tolerance for c in color])
         upper_bound = np.array([c + tolerance for c in color])
@@ -112,7 +114,7 @@ def click_in_center_on_region_by_color(target_colors, region=(0, 0, 1920, 1080),
     image = cv2.imread("1.png", cv2.IMREAD_GRAYSCALE)
     os.remove("1.png")
     white_pixels = np.column_stack(np.where(image == 255))
-    print(len(white_pixels))
+
     if len(white_pixels) > pixel_threshold:
         center_x = int(np.mean(white_pixels[:, 1]))
         center_y = int(np.mean(white_pixels[:, 0]))
@@ -122,19 +124,14 @@ def click_in_center_on_region_by_color(target_colors, region=(0, 0, 1920, 1080),
         return False
 
 
-def click_on_big_range_of_colors(target_colors, region=(0, 0, 1920, 1080), pixel_threshold=300, tolerance=10, min_samples=10,
-                      eps=10):
+def click_on_big_range_of_colors(target_colors, region=(0, 0, 1920, 1080), pixel_threshold=300, tolerance=10,
+                                 min_samples=10,
+                                 eps=10):
     (x1, y1, x2, y2) = region
-    # Делаем скриншот
     screenshot = np.array(pg.screenshot(region=(x1, y1, x2 - x1, y2 - y1)))
-
-    # Конвертируем скриншот из RGB в BGR для корректной работы с OpenCV
-    # screenshot = cv2.cvtColor(screenshot, cv2.COLOR_RGB2BGR)
-
     final_mask = np.zeros((screenshot.shape[0], screenshot.shape[1]), dtype=np.uint8)
 
     for color in target_colors:
-        # Устанавливаем нижнюю и верхнюю границы цвета с учётом tolerance
         lower_bound = np.clip(np.array([c - tolerance for c in color]), 0, 255)
         upper_bound = np.clip(np.array([c + tolerance for c in color]), 0, 255)
 
@@ -143,7 +140,7 @@ def click_on_big_range_of_colors(target_colors, region=(0, 0, 1920, 1080), pixel
 
     # Найдем белые пиксели (пиксели, соответствующие целевым цветам)
     white_pixels = np.column_stack(np.where(final_mask == 255))
-    print(len(white_pixels))
+
     if len(white_pixels) > pixel_threshold:
         # Применение DBSCAN для нахождения скоплений
         clustering = DBSCAN(eps=eps, min_samples=min_samples).fit(white_pixels)
@@ -151,9 +148,7 @@ def click_on_big_range_of_colors(target_colors, region=(0, 0, 1920, 1080), pixel
         # Получаем уникальные метки кластеров (шумовые точки имеют метку -1)
         unique_labels = set(clustering.labels_)
 
-        # Список для хранения центров кластеров
         cluster_centers = []
-
         for label in unique_labels:
             if label == -1:
                 continue  # Пропускаем шумовые точки
@@ -161,14 +156,9 @@ def click_on_big_range_of_colors(target_colors, region=(0, 0, 1920, 1080), pixel
             # Находим пиксели, относящиеся к текущему кластеру
             cluster_points = white_pixels[clustering.labels_ == label]
 
-            # Находим центр кластера
             center_x = int(np.mean(cluster_points[:, 1])) + x1
             center_y = int(np.mean(cluster_points[:, 0])) + y1
             cluster_centers.append((center_x, center_y))
 
-        # Проходим по всем центрам кластеров и кликаем по ним
         for center_x, center_y in cluster_centers:
-            print(f"Кликаем по координатам: ({center_x}, {center_y})")
             pg.click(center_x, center_y)
-    else:
-        print("Пикселей недостаточно для клика")

@@ -5,10 +5,11 @@ from modules.moves import Close_AnyWay
 
 def Run_Baboon(dailik, event, win_main, click=False):
     find_Baboon = find_Baboon_2 if win_main else find_Baboon_1
-    number_iterations_in_cycle = 128 if click else 16
+    number_iterations_in_cycle = 128 if click else 32
 
     PreRun(find_Baboon, win_main, chat=True, chat_type="click", chatbot_string=0)
 
+    pg.click(button_play)
     if dailik:
         for coordinates in Baboon_daily_reward:
             pg.click(coordinates)
