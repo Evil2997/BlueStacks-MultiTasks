@@ -4,35 +4,28 @@ from typing import Final
 
 from ahk import AHK
 
-from applications.BEE.run import Run_BEE, f1
+from applications.BEE.run import Run_BEE
 from applications.BOOMS.run import Run_BOOMS
 from applications.BUMP.run import Run_BUMP
 from applications.Baboon.run import Run_Baboon
 from applications.Blum.run import Run_Blum
 from applications.Clayton.run import Run_Clayton
 from applications.Cyber_Finance.run import Run_Cyber_Finance
-from applications.DejenDog.run import Run_DejenDog
 from applications.Diamond.run import Run_Diamond
 from applications.ElonMusk.run import Run_ElonMusk
 from applications.HEXN.run import Run_HEXN
-from applications.PocketFi.run import Run_PocketFi
-from applications.Seeds.run import Run_Seeds
 from applications.SimpleCoin.run import Run_SimpleCoin
 from applications.SnapSter.run import Run_SnapSter
 from applications.TON_Station.run import Run_TON_Station
 from applications.TimeFarm.run import Run_TimeFarm
-from applications.Time_TON_Ecosystem.run import Run_Time_TON_Ecosystem
-from applications.Tomato.run import Run_Tomato
-
 from modules import window_numbers
-from modules.Text_workers import fff
 from modules.Timers import check_reward as CHECK_DAILY_REWARD, time_end_print
 from modules.Timers import timer_buster as TIME_TO_EXTRA_BONUS
 from modules.Timers import timer_checker as TIME_CHECK
 from modules.Timers import timer_update as UPDATE_TIMER
 from modules.Timers import timer_update_buster as UPDATE_TIME_TO_EXTRA_BONUS
 from modules.Timers import update_time_reward as UPDATE_TIME_DAILY_REWARD
-from modules.json_files import align_json_values as SORTED_JSON, clear_and_save_win_keys
+from modules.json_files import align_json_values as SORTED_JSON
 from modules.json_files import load_data
 from modules.tesseract import setup_tesseract
 from modules.windows import Stop_BS_Windows
@@ -129,9 +122,9 @@ if __name__ == '__main__':
         "ElonMusk": {"seconds": 2 * 3600, "function": Run_ElonMusk},
         "Cyber_Finance": {"seconds": 24 * 3600, "function": Run_Cyber_Finance},
         "Baboon": {"seconds": 2 * 3600, "function": Run_Baboon},
-        "Time_TON_Ecosystem": {"seconds": 8 * 3600, "function": Run_Time_TON_Ecosystem},
         "BOOMS": {"seconds": 2 * 3600, "function": Run_BOOMS},
 
+        # "Time_TON_Ecosystem": {"seconds": 8 * 3600, "function": Run_Time_TON_Ecosystem},
         # "Tomato": {"seconds": 23 * 3600, "function": Run_Tomato},
         # "PocketFi": {"seconds": 5 * 3600, "function": Run_PocketFi},
         # "Seeds": {"seconds": 4 * 3600, "function": Run_Seeds},
@@ -149,8 +142,7 @@ if __name__ == '__main__':
     time_end = time.time()
     time_end_print(time_end, time_start)
     # [RUN_SCRIPT]---[END]
-# TimeFarm автоматическая покупка новых часов
 # SimpleCoin просмотр остатков кликов
 # HEXN выполнение квестов
-# ElonMusk автоматический апгрейд всего
 # BEE выгодные апгрейды
+# Blum игра
