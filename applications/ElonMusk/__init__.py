@@ -8,3 +8,6 @@ yellow_text = "ElonMusk_yellow_text"
 navigation_tabs = ["Персональные", "Майнинг", "Офис", "Команда", "ИИ"]
 color_lvl_up = [(7, 193, 96)]
 mining = (940, 940)
+get_reward = ["ElonMusk_get_reward"]
+close_upgrade = (1740, 240)
+
