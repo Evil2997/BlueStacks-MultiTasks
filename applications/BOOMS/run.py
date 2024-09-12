@@ -16,7 +16,7 @@ def Run_BOOMS(dailik, event, win_main):
     delay(3, 4)
     for _ in range(clicks_cycle_numeric):
         pg.press('num4')
-        delay(10, 15)
+        delay(8, 12)
         pg.press('num4')
         delay(0.4, 0.6)
     Close_AnyWay()
