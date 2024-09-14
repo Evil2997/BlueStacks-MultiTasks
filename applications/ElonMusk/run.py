@@ -14,10 +14,7 @@ def Run_ElonMusk(dailik, event, win_main):
     pg.click(Musk_take)
     delay()
 
-    pg.press('num4')
-    delay(12, 15)
-    pg.press('num4')
-    delay(0.2, 0.4)
+    musk_clicker()
 
     for coordinate in Elon_daily:
         pg.click(coordinate)
@@ -26,10 +23,7 @@ def Run_ElonMusk(dailik, event, win_main):
     pg.doubleClick(mining)
     delay(0.6, 1)
 
-    pg.press('num4')
-    delay(12, 15)
-    pg.press('num4')
-    delay(0.2, 0.4)
+    musk_clicker()
 
     pg.click(Elon_daily[0])
     delay()
@@ -72,3 +66,10 @@ def make_upgrades():
                     drag_to_bottom()
                     delay(0.2, 0.5)
     delay()
+
+
+def musk_clicker():
+    pg.press('num4')
+    delay(12, 15)
+    pg.press('num4')
+    delay(0.2, 0.4)

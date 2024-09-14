@@ -7,6 +7,7 @@ def Run_HEXN(dailik, event, win_main):
     find_HEXN = find_HEXN_2 if win_main else find_HEXN_1
 
     PreRun(find_HEXN, win_main)
+
     for coordinates in claim_reward_HEXN:
         pg.click(coordinates)
         delay(2, 3)

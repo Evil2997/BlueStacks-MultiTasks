@@ -7,6 +7,7 @@ def Run_TON_Station(dailik, event, win_main):
     find_TON_Station = find_TON_Station_2 if win_main else find_TON_Station_1
 
     PreRun(find_TON_Station, win_main)
+
     for _ in range(3):
         pg.click(TON_Station_claim)
         delay(3, 4)

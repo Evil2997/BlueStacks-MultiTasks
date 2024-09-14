@@ -3,7 +3,7 @@ from ahk import AHK
 
 from modules import *
 from modules.Timers import delay
-from modules.screens import cycle_hunter_click, hunt_for_the_button_in_list
+from modules.screens import cycle_hunter_click, hunt_for_the_button_in_list, find_it_and_click_it
 
 ahk = AHK()
 
@@ -42,6 +42,8 @@ def activate_window(win, win_numeric):
     delay(30, 40)
     activate_main_window()
     cycle_hunter_click(connect_to_vpn_AND_open_telegram)
+    delay()
+    find_it_and_click_it(Telegram)
     delay(20, 30)
     hunt_for_the_button_in_list(main_group)
     delay(14, 16)
