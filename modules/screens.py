@@ -78,10 +78,10 @@ def hunt_for_the_button_in_list(name_list: list[str], hunt_in_seconds=10, region
             if top_left:
                 delay(0.2, 0.3)
                 pg.click(top_left[0] + width / 2, top_left[1] + height / 2)
-                break
+                return True
             else:
                 delay(0.01, 0.1)
-
+    return False
 
 def cycle_hunter_click(name_list: list[str], region=(0, 0, 1920, 1080)):
     for name in name_list:

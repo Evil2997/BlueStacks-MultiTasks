@@ -2,12 +2,12 @@ from typing import Literal, List
 
 import pyautogui as pg
 
+from modules import main_group
 from modules.Timers import delay
 from modules.moves import drag_to_up, drag_to_bottom
 from modules.screens import find_it_and_click_it, cycle_hunter_click, find_template_in_region, \
     hunt_for_the_button_in_list
 
-main_group = ["main_group"]
 connect_to_vpn = ["collapse_all_windows", "check_all_windows",
                   "clear_all", "ProtonVPN", "ActivateVPN",
                   "collapse_all_windows"]
@@ -31,7 +31,7 @@ def primary_hunter_click(finder, threshold, win_main=False,
     while MAIN_CYCLE:
         if not MAIN_CYCLE:
             break
-        find_it_and_click_it(main_group)
+        hunt_for_the_button_in_list(main_group)
         for _ in range(3):
             delay(0.4, 0.6)
             pg.click(close_main_group)
@@ -42,7 +42,7 @@ def primary_hunter_click(finder, threshold, win_main=False,
                 break
             if find_template_in_region(bug_while_scrolling_chat):
                 pg.click(close_main_group)
-                find_it_and_click_it(main_group)
+                hunt_for_the_button_in_list(main_group)
             for _ in range(20):
                 if find_it_and_click_it(finder, threshold=threshold):
                     MAIN_CYCLE = False

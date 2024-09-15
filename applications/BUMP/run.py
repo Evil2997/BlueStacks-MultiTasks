@@ -24,20 +24,38 @@ def Run_BUMP(dailik, event, win_main):
 def claim_daily_and_swipe_news(opposite_direction_numeric=0):
     if click_in_center_on_region_by_color(
             target_colors=colors_daily,
-            pixel_threshold=1000,
+            pixel_threshold=500,
             tolerance=3
     ):
-        for _ in range(7):
-            drag_to_bottom(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
-            opposite_direction_numeric = opposite_direction_numeric + 1
-            if click_in_center_on_region_by_color(
-                    target_colors=colors_daily,
-                    pixel_threshold=100,
-                    tolerance=5
-            ):
-                break
-    for _ in range(opposite_direction_numeric):
-        drag_to_up(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
+        drag_to_bottom(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
+        for coordinates in daily_reward__1:
+            pg.click(coordinates)
+            delay(0.02, 0.1)
+
+        drag_to_bottom(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
+        drag_to_bottom(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
+
+        for coordinates in daily_reward__2_3:
+            pg.click(coordinates)
+            delay(0.02, 0.1)
+
+        drag_to_bottom(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
+        drag_to_bottom(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
+
+        for coordinates in daily_reward__2_3:
+            pg.click(coordinates)
+            delay(0.02, 0.1)
+
+        drag_to_bottom(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
+        drag_to_bottom(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
+        drag_to_bottom(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
+
+        for coordinates in daily_reward__4:
+            pg.click(coordinates)
+            delay(0.02, 0.1)
+
+        for _ in range(8):
+            drag_to_up(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
     for _ in range(4):
         find_it_and_click_it(X)
         delay(0.2, 0.4)

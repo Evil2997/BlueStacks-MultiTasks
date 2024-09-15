@@ -2,12 +2,19 @@ click_at_moon = ["click_at_moon"]
 find_BUMP_1 = ["BUMP"]
 find_BUMP_2 = ["BUMP_2"]
 X = ["green_X", "gray_X"]
-BUMP_some_icon = ["BUMP_some_icon__size_1"]#, "BUMP_some_icon__size_2"]
 
 open_bust = (940, 800)
 bust_activate = [(940, 720), (940, 950)]
 cords_to_drag__for_BUMP = (940, 300)
 colors_daily = [(36, 143, 72)]
+# colors_get_daily = [(53, 170, 93), (29, 119, 60), (50, 200, 99)]
+
+daily_reward__1 = [(200, 800), (400, 800), (580, 800), (750, 800), (950, 800), (1100, 800)]
+daily_reward__2_3 = [(970, 500),
+                     (200, 800), (400, 800), (580, 800), (750, 800), (950, 800), (1100, 800)]
+daily_reward__4 = [(970, 400),
+                  (200, 650), (400, 650), (580, 650), (750, 650), (950, 650), (1100, 650),
+                  (900, 840)]
 
 from typing import Optional, List, Tuple
 import pyautogui as pg
