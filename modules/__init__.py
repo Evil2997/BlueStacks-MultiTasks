@@ -15,7 +15,7 @@ connect_to_vpn_AND_open_telegram = [
     "collapse_all_windows", "Telegram"
 ]
 full_screen = ["full_screen"]
-main_group = ["main_group"]
+main_group = ["main_group_1", "main_group_2"]
 close_all_windows = ["stop_all_BS_win", "yes_close_all"]
 Telegram = ["Telegram"]
 

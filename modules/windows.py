@@ -45,5 +45,5 @@ def activate_window(win, win_numeric):
     delay()
     find_it_and_click_it(Telegram)
     delay(20, 30)
-    hunt_for_the_button_in_list(main_group)
+    hunt_for_the_button_in_list(main_group, hunt_in_seconds=4)
     delay(14, 16)
