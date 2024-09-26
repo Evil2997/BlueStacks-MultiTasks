@@ -43,7 +43,7 @@ def activate_window(win, win_numeric):
     activate_main_window()
     cycle_hunter_click(connect_to_vpn_AND_open_telegram)
     delay()
-    find_it_and_click_it(Telegram)
+    find_it_and_click_it(Telegram, threshold=0.88)
     delay(20, 30)
     hunt_for_the_button_in_list(main_group, hunt_in_seconds=4)
     delay(14, 16)
