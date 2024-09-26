@@ -15,3 +15,7 @@ def Run_Blum(dailik, event, win_main):
             pg.click(claim_farm)
             delay()
         Close_AnyWay()
+
+def get_toxin_game():
+
+    pass

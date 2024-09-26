@@ -11,7 +11,7 @@ def Run_SimpleCoin(dailik, event, win_main):
 
     pg.click(news_click)
     delay()
-    for _ in range(3):
+    for _ in range(4):
         pg.click(claim_SimpleCoins)
         delay()
 

@@ -1,3 +1,5 @@
+from numba.core.typing.builtins import Range
+
 from applications import *
 from applications.ElonMusk import *
 from modules.VisualScan import visual_scan_tracker
@@ -8,6 +10,7 @@ from modules.screens import click_on_big_range_of_colors, click_in_center_on_reg
 
 def Run_ElonMusk(dailik, event, win_main):
     find_ElonMusk = find_ElonMusk_2 if win_main else find_ElonMusk_1
+    iterations = 1 if win_main else 1
 
     PreRun(find_ElonMusk, win_main)
 
@@ -19,9 +22,6 @@ def Run_ElonMusk(dailik, event, win_main):
     for coordinate in Elon_daily:
         pg.click(coordinate)
         delay(2, 3)
-    make_upgrades()
-    pg.doubleClick(mining)
-    delay(0.6, 1)
 
     musk_clicker()
 
@@ -34,13 +34,13 @@ def Run_ElonMusk(dailik, event, win_main):
     Close_AnyWay()
 
 
-def make_upgrades():
+def make_upgrades(iterations=5):
     """
     Функция проходит по всем вкладкам и прокликивает улучшения (монетки с желтым текстом).
     """
     dominant_colors = color_spectrum_scanner(template_image=yellow_text, num_colors=40)
 
-    for _ in range(5):
+    for _ in range(iterations):
         pg.click(open_upgrades)
         delay(0.2, 0.5)
         pg.click(close_upgrade)
@@ -52,7 +52,8 @@ def make_upgrades():
 
             if target_coordinates := visual_scan_tracker(target_phrase=navigation_target):
                 pg.click(target_coordinates)
-
+                delay(0.2, 0.5)
+                drag_to_up()
                 for _ in range(drags_numeric):
                     click_on_big_range_of_colors(
                         target_colors=dominant_colors,
@@ -69,7 +70,20 @@ def make_upgrades():
 
 
 def musk_clicker():
+    pg.doubleClick(mining)
+    delay(0.6, 1)
+
     pg.press('num4')
     delay(12, 15)
     pg.press('num4')
     delay(0.2, 0.4)
+
+
+def f1(iterations=5):
+    make_upgrades(iterations=iterations)
+    numerate = [f for f in range(9)]
+    numerate.append(0)
+    for i in numerate:
+        musk_clicker()
+        if i == 1:
+            delay(26, 30)

@@ -51,5 +51,5 @@ def Run_Clayton(dailik, event, win_main):
         delay(0.6, 1)
         for _ in range (4):
             find_it_and_click_it(clayton_lvl_up)
-    # play_512(how_much_you_want_to_play)
+    play_512(how_much_you_want_to_play)
     Close_AnyWay()
