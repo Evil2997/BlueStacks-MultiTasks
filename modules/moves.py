@@ -36,6 +36,6 @@ def swipe_right(duration=0.2):
 
 
 def swipe_left(duration=0.2):
-    pg.moveTo(cords_to_swipe[0] + 1100, cords_to_swipe[1])
+    pg.moveTo(cords_to_swipe[0] + 1000, cords_to_swipe[1])
     pg.dragTo(cords_to_swipe[0] - 600, cords_to_swipe[1], duration=duration)
     pg.mouseUp()
