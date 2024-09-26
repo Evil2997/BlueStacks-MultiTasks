@@ -57,7 +57,7 @@ def filter_visible_pixels(image_with_alpha: np.ndarray) -> np.ndarray:
         return image_with_alpha
 
 
-def get_dominant_colors(image_array: np.ndarray, num_colors: int = 5) -> np.ndarray:
+def get_dominant_colors(image_array: np.ndarray, num_colors: int = 5) -> np.ndarray | None:
     """
     Определяет наиболее часто встречающиеся цвета в изображении с помощью кластеризации.
 
@@ -67,6 +67,9 @@ def get_dominant_colors(image_array: np.ndarray, num_colors: int = 5) -> np.ndar
     """
     # Преобразуем изображение в двумерный массив пикселей
     pixels = image_array.reshape(-1, 3)
+    if pixels.shape[0] == 0:
+        print("Нет видимых пикселей для обработки. Проверьте исходное изображение или фильтрацию.")
+        return None
 
     # Используем KMeans для кластеризации пикселей
     kmeans = KMeans(n_clusters=num_colors)
