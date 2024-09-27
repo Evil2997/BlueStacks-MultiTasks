@@ -31,18 +31,18 @@ def primary_hunter_click(finder, threshold, win_main=False,
     while MAIN_CYCLE:
         if not MAIN_CYCLE:
             break
-        hunt_for_the_button_in_list(main_group)
-        for _ in range(3):
-            delay(0.4, 0.6)
+        hunt_for_the_button_in_list(main_group, hunt_in_seconds=2)
+        for _ in range(4):
+            delay(0.02, 0.1)
             pg.click(close_main_group)
-        delay(4, 5)
-        hunt_for_the_button_in_list(main_group, hunt_in_seconds=4)
+        delay()
+        hunt_for_the_button_in_list(main_group, hunt_in_seconds=2)
         for _ in range(16):
             if not MAIN_CYCLE:
                 break
             if find_template_in_region(bug_while_scrolling_chat):
                 pg.click(close_main_group)
-                hunt_for_the_button_in_list(main_group)
+                hunt_for_the_button_in_list(main_group, hunt_in_seconds=2)
             for _ in range(20):
                 if find_it_and_click_it(finder, threshold=threshold):
                     MAIN_CYCLE = False

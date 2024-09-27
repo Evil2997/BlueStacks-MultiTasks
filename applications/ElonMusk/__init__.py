@@ -8,5 +8,4 @@ navigation_tabs = ["Персональные", "Офис", "Команда", "И
 color_lvl_up = [(7, 193, 96)]
 mining = (940, 940)
 get_reward = ["ElonMusk_get_reward"]
-close_upgrade = (1740, 240)
-
+close_upgrade_ElonMusk = (1740, 240)

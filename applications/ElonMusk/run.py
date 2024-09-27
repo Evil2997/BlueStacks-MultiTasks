@@ -43,7 +43,7 @@ def make_upgrades(iterations=5):
     for _ in range(iterations):
         pg.click(open_upgrades)
         delay(0.2, 0.5)
-        pg.click(close_upgrade)
+        pg.click(close_upgrade_ElonMusk)
         delay(0.2, 0.5)
         pg.click(open_upgrades)
 
