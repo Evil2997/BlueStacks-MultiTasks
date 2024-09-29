@@ -23,18 +23,20 @@ def Run_ElonMusk(dailik, event, win_main):
         pg.click(coordinate)
         delay(2, 3)
 
+    make_upgrades()
+
     musk_clicker()
 
     pg.click(Elon_daily[0])
     delay()
-    for _ in range(4):
-        find_it_and_click_it(get_reward)
+    for _ in range(8):
+        find_it_and_click_it(get_reward, threshold=0.86)
         drag_to_bottom(duration=0.25)
         delay(0.2, 0.5)
     Close_AnyWay()
 
 
-def make_upgrades(iterations=5):
+def make_upgrades(iterations=2):
     """
     Функция проходит по всем вкладкам и прокликивает улучшения (монетки с желтым текстом).
     """
@@ -48,7 +50,7 @@ def make_upgrades(iterations=5):
         pg.click(open_upgrades)
 
         for navigation_target in navigation_tabs:
-            drags_numeric = 6 if navigation_target == "Майнинг" else 10
+            drags_numeric = 8 if navigation_target == "Майнинг" else 16
 
             if target_coordinates := visual_scan_tracker(target_phrase=navigation_target):
                 pg.click(target_coordinates)
@@ -60,7 +62,7 @@ def make_upgrades(iterations=5):
                         region=(1040, 320, 1370, 930),
                         pixel_threshold=300,
                         tolerance=10,
-                        min_samples=160,
+                        min_samples=120,
                         eps=10
                     )
                     click_in_center_on_region_by_color(color_lvl_up)
@@ -70,20 +72,10 @@ def make_upgrades(iterations=5):
 
 
 def musk_clicker():
-    pg.doubleClick(mining)
+    pg.click(mining)
     delay(0.6, 1)
 
     pg.press('num4')
     delay(12, 15)
     pg.press('num4')
     delay(0.2, 0.4)
-
-
-def f1(iterations=5):
-    make_upgrades(iterations=iterations)
-    numerate = [f for f in range(9)]
-    numerate.append(0)
-    for i in numerate:
-        musk_clicker()
-        if i == 1:
-            delay(26, 30)
