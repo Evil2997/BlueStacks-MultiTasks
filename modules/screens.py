@@ -124,9 +124,14 @@ def click_in_center_on_region_by_color(target_colors, region=(0, 0, 1920, 1080),
         return False
 
 
-def click_on_big_range_of_colors(target_colors, region=(0, 0, 1920, 1080), pixel_threshold=300, tolerance=10,
+def click_on_big_range_of_colors(target_colors,
+                                 region=(0, 0, 1920, 1080),
+                                 pixel_threshold=300,
+                                 tolerance=10,
                                  min_samples=10,
-                                 eps=10):
+                                 eps=10
+    ):
+
     (x1, y1, x2, y2) = region
     screenshot = np.array(pg.screenshot(region=(x1, y1, x2 - x1, y2 - y1)))
     final_mask = np.zeros((screenshot.shape[0], screenshot.shape[1]), dtype=np.uint8)
