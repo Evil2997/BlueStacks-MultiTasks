@@ -1,0 +1,13 @@
+find_Dogiators_1 = ["Dogiators"]
+find_Dogiators_2 = ["Dogiators_2"]
+Dogiators_drag_upgrades = (1060, 820)
+pixels_drags = 520
+open_earn = (260, 940)
+open_upgrades = (600, 940)
+upgrades_in_line = [(200, 670), (440, 670), (700, 670), (950, 670), (1200, 670), (1440, 670), (1700, 670)]
+upgrade_click = open_upgrades
+close_upgrade_Dogiator = (1760, 240)
+pre_run_clicker = ["button_start", "button_start", "button_start"]
+subscribe_on_telegram = ["Dogiator_subscribe_on_telegram"]
+subscribe = [(1690, 140), (970, 970), (970, 970), (630, 970)]
+cords_to_drag_up_Dogiator = (1060, 600)
