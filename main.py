@@ -12,6 +12,7 @@ from applications.Blum.run import Run_Blum
 from applications.Clayton.run import Run_Clayton
 from applications.Cyber_Finance.run import Run_Cyber_Finance
 from applications.Diamond.run import Run_Diamond
+from applications.Dogiators.run import Run_Dogiators
 from applications.ElonMusk.run import Run_ElonMusk
 from applications.HEXN.run import Run_HEXN
 from applications.SimpleCoin.run import Run_SimpleCoin
@@ -19,7 +20,7 @@ from applications.SnapSter.run import Run_SnapSter
 from applications.TON_Station.run import Run_TON_Station
 from applications.TimeFarm.run import Run_TimeFarm
 from modules import window_numbers
-from modules.Timers import check_reward as CHECK_DAILY_REWARD, time_end_print
+from modules.Timers import check_reward as CHECK_DAILY_REWARD, time_end_print, delay
 from modules.Timers import timer_buster as TIME_TO_EXTRA_BONUS
 from modules.Timers import timer_checker as TIME_CHECK
 from modules.Timers import timer_update as UPDATE_TIMER
@@ -48,6 +49,7 @@ def main():
                     if ACTIVATE:
                         ACTIVATE_WINDOW(win, i)
                         games_is_activated_now = []
+
                         for game, value in Game_Settings.items():
                             sec = value["seconds"]
                             try:
@@ -55,23 +57,34 @@ def main():
                             except KeyError:
                                 sec_1 = False
                             if TIME_CHECK(seconds=sec, window_number=i, game=game, settings_file=settings_file):
+
                                 if CHECK_DAILY_REWARD(window_number=i, game=game, rewards_file=rewards_file):
                                     get_daily_rewards_in_this_game = True
                                 else:
                                     get_daily_rewards_in_this_game = False
+
                                 if TIME_TO_EXTRA_BONUS(seconds=sec_1, window_number=i, game=game,
                                                        special_events__file=special_events__file):
                                     extra_bonus__special_event = True
                                 else:
                                     extra_bonus__special_event = False
+
                                 Game_Settings[game]["function"](
                                     dailik=get_daily_rewards_in_this_game,
                                     event=extra_bonus__special_event,
                                     win_main=win_main)
                                 games_is_activated_now.append(game)
-                                UPDATE_TIMER(window_numeric=i, game=game, settings_file=settings_file)
+                                UPDATE_TIMER(
+                                    window_numeric=i,
+                                    game=game,
+                                    settings_file=settings_file
+                                )
                                 SORTED_JSON(settings_file, settings_file)
-                                if CHECK_DAILY_REWARD(window_number=i, game=game, rewards_file=rewards_file):
+                                if CHECK_DAILY_REWARD(
+                                        window_number=i,
+                                        game=game,
+                                        rewards_file=rewards_file
+                                ):
                                     UPDATE_TIME_DAILY_REWARD(window_numeric=i, game=game, rewards_file=rewards_file)
                                     SORTED_JSON(rewards_file, rewards_file)
                                 if TIME_TO_EXTRA_BONUS(seconds=sec_1, window_number=i, game=game,
@@ -111,18 +124,19 @@ if __name__ == '__main__':
         "Blum": {"seconds": 8 * 3600, "function": Run_Blum},
         "Diamond": {"seconds": 8 * 3600, "function": Run_Diamond},
         "Clayton": {"seconds": 8 * 3600, "function": Run_Clayton},
+        "SimpleCoin": {"seconds": 8 * 3600, "function": Run_SimpleCoin},
+        "TON_Station": {"seconds": 8 * 3600, "function": Run_TON_Station},
         "BUMP": {"seconds": 6 * 3600, "function": Run_BUMP,
                  "special_event_1": 30 * 24 * 3600},
         "BEE": {"seconds": 4 * 3600, "function": Run_BEE},
-        "SimpleCoin": {"seconds": 8 * 3600, "function": Run_SimpleCoin},
         "HEXN": {"seconds": 4 * 3600, "function": Run_HEXN},
         "TimeFarm": {"seconds": 4 * 3600, "function": Run_TimeFarm},
-        "TON_Station": {"seconds": 8 * 3600, "function": Run_TON_Station},
-        "SnapSter": {"seconds": 12 * 3600, "function": Run_SnapSter},
+        "SnapSter": {"seconds": 4 * 3600, "function": Run_SnapSter},
+        "Baboon": {"seconds": 4 * 3600, "function": Run_Baboon},
+        "BOOMS": {"seconds": 4 * 3600, "function": Run_BOOMS},
         "ElonMusk": {"seconds": 2 * 3600, "function": Run_ElonMusk},
+        "Dogiators": {"seconds": 2 * 3600, "function": Run_Dogiators},
         "Cyber_Finance": {"seconds": 24 * 3600, "function": Run_Cyber_Finance},
-        "Baboon": {"seconds": 2 * 3600, "function": Run_Baboon},
-        "BOOMS": {"seconds": 2 * 3600, "function": Run_BOOMS},
 
         # "Time_TON_Ecosystem": {"seconds": 8 * 3600, "function": Run_Time_TON_Ecosystem},
         # "Tomato": {"seconds": 23 * 3600, "function": Run_Tomato},
