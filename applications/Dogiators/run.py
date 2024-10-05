@@ -5,8 +5,7 @@ from modules.moves import Close_AnyWay
 
 def Run_Dogiators(dailik, event, win_main):
     find_Dogiators = find_Dogiators_2 if win_main else find_Dogiators_1
-    lines_numeric_to_upgrades = [1, 0]  # 1, 1, 0]
-    upgrades_numeric = 2
+    lines_numeric_to_upgrades = [1, 1, 0]   # 3/5
 
     PreRun(
         find_Dogiators, win_main,
@@ -24,7 +23,6 @@ def Run_Dogiators(dailik, event, win_main):
 
     upgrades_Dogiators(
         lines_numeric_to_upgrades=lines_numeric_to_upgrades,
-        upgrades_numeric=upgrades_numeric
     )
 
     auto_clicker_Dogiator()
@@ -38,9 +36,9 @@ def auto_clicker_Dogiator(iteration_numbers=16):
         pg.press("num4")
 
 
-def upgrades_Dogiators(lines_numeric_to_upgrades, upgrades_numeric=4):
+def upgrades_Dogiators(lines_numeric_to_upgrades, upgrades_numeric=2):
     pg.click(open_upgrades)
-    delay(3, 4)
+    delay(2, 3)
     for i in range(upgrades_numeric):
         for ii, line in enumerate(lines_numeric_to_upgrades):
             from applications.Dogiators import upgrades_in_line
@@ -57,10 +55,10 @@ def upgrades_Dogiators(lines_numeric_to_upgrades, upgrades_numeric=4):
                 pg.moveTo(Dogiators_drag_upgrades, duration=0.4)
                 pg.dragTo(Dogiators_drag_upgrades[0], Dogiators_drag_upgrades[1] - pixels_drags, duration=0.6)
                 delay(0.2, 0.5)
-            delay(5, 6)
+            delay(3, 4)
         for _ in range(len(lines_numeric_to_upgrades) * 2):
             drag_to_up(cords_to_drag=cords_to_drag_up_Dogiator)
-        delay(3, 4)
+        delay(2, 3)
     delay()
     pg.click(open_earn)
     delay(0.2, 0.5)
