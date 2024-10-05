@@ -93,13 +93,9 @@ def color_spectrum_scanner(template_image: str, num_colors: int) -> np.ndarray:
     :return: NumPy массив доминирующих цветов в формате RGB.
     """
     image_path = f"Images/{template_image}.png"
-    # Удаление фона с изображения
     image_no_bg = remove_background(image_path)
-
-    # Фильтрация только видимых (непрозрачных) пикселей
     image_array = filter_visible_pixels(image_no_bg)
 
-    # Нахождение доминирующих цветов
     return get_dominant_colors(image_array, num_colors=num_colors)
 
 

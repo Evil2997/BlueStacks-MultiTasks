@@ -1,6 +1,9 @@
+import os
 from typing import Dict
 from typing import Optional, Tuple
 
+import cv2
+import numpy as np
 import pytesseract
 from PIL import Image, ImageGrab
 
@@ -50,3 +53,13 @@ def visual_scan_tracker(region: Optional[Tuple[int, int, int, int]] = (0, 0, 192
         x, y = list(coordinates[target_phrase].values())[occurrence_index]
         return x, y
     return None
+
+
+def resize_image_to_64x64(template_image: str) -> np.ndarray:
+    image_path = f"Images/{template_image}.png"
+    image = cv2.imread(image_path)
+    if image is None:
+        raise ValueError(f"Не удалось загрузить изображение по пути: {image_path}")
+    resized_image = cv2.resize(image, (64, 64), interpolation=cv2.INTER_AREA)
+
+    return resized_image

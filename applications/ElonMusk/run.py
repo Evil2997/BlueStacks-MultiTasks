@@ -1,5 +1,3 @@
-from numba.core.typing.builtins import Range
-
 from applications import *
 from applications.ElonMusk import *
 from modules.VisualScan import visual_scan_tracker
@@ -30,15 +28,22 @@ def Run_ElonMusk(dailik, event, win_main):
     pg.click(Elon_daily[0])
     delay()
     for _ in range(8):
-        find_it_and_click_it(get_reward, threshold=0.86)
+        if find_it_and_click_it(get_reward, threshold=0.86):
+            delay()
+            pg.click(Elon_daily[0])
+            pg.click(Elon_daily[0])
+            delay(0.2, 0.5)
         drag_to_bottom(duration=0.25)
-        delay(0.2, 0.5)
+        delay(0.02, 0.1)
+
+    make_upgrades()
+
     Close_AnyWay()
 
 
-def make_upgrades(iterations=2):
+def make_upgrades(iterations=1):
     """
-    Функция проходит по всем вкладкам и прокликивает улучшения (монетки с желтым текстом).
+    Функция проходит по всем вкладкам и прокликивает улучшениям.
     """
     dominant_colors = color_spectrum_scanner(template_image=yellow_text, num_colors=40)
 

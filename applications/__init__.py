@@ -66,7 +66,7 @@ def PreRun(finder,
     if chat_type not in ["image", "click"]:
         raise ValueError("chat_type должен быть 'image' или 'click'")
     # [---Start---]
-    for _ in range(16):
+    for _ in range(8):
         if find_it_and_click_it(main_group):
             find_it_and_click_it(main_group)
             break
@@ -80,7 +80,7 @@ def PreRun(finder,
     )
 
     if chat:
-        delay(8, 10)
+        delay(4, 5)
         if chat_type == "click":
             pg.click(click_to_bottom_in_BotChat[chatbot_string])
         elif chat_type == "image":

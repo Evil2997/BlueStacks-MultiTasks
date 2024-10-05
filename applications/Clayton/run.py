@@ -7,19 +7,24 @@ from modules.moves import Close_AnyWay, swipe_right
 
 def play_512(how_much_you_want_to_play):
     for game in range(how_much_you_want_to_play):
-        delay(3, 4)
-        drag_to_bottom(duration=0.4)
+        pg.click(go_to_games)
         delay()
-        swipe_right()
-        delay()
+        for _ in range(4):
+            drag_to_up()
         pg.click(button_play_512)
-        delay(6, 7)
+        delay()
         for i in range(1024):
             pg.press(random_moves())
             if i % 10 == 0:
-                if find_it_and_click_it(main_menu_Clayton_game):
-                    delay()
-                    find_it_and_click_it(main_menu_Clayton_game)
+                if find_template_in_region(next_game_clayton, threshold=0.86):
+                    delay(3, 4)
+                    for _ in range(4):
+                        pg.click(get_reward_clayton_game)
+                        delay(0.02, 0.1)
+                    delay(3, 4)
+                    for _ in range(4):
+                        pg.click(next_game_play)
+                        delay(0.02, 0.1)
                     delay()
                     find_it_and_click_it(clayton_lvl_up)
                     break
@@ -40,16 +45,10 @@ def Run_Clayton(dailik, event, win_main):
 
     pg.click(clayton_pre_game_ads)
     delay()
-    if dailik:
-        pg.click(claim_daily_reward)
-        delay()
-        for _ in range(4):
-            find_it_and_click_it(clayton_lvl_up)
-    drag_to_bottom(duration=0.4)
+    pg.click(claim_daily_reward)
+    delay()
     for _ in range(4):
-        pg.click(claim_coins)
-        delay(0.6, 1)
-        for _ in range (4):
-            find_it_and_click_it(clayton_lvl_up)
-    play_512(how_much_you_want_to_play)
+        find_it_and_click_it(clayton_lvl_up)
+
+    # play_512(how_much_you_want_to_play)
     Close_AnyWay()

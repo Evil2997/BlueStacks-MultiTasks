@@ -35,6 +35,6 @@ def fortuna_ring():
 
 
 def auto_taps():
-    pg.press("num4")
+    pg.press("num2")
     delay(8, 9)
-    pg.press("num4")
+    pg.press("num2")
