@@ -1,20 +1,21 @@
 {
-"win0"                   :  {
-"time_start_BUMP"        :  "2024-09-25 21:49:30"
+"win0"                        :  {
+"time_start_BUMP"             :  "2024-08-25 21:49:30",
+"time_start_Dogiators"        :  "2002-10-29 10:00:00"
     },
-"win1"                   :  {
-"time_start_BUMP"        :  "2024-09-26 00:41:09"
+"win1"                        :  {
+"time_start_BUMP"             :  "2024-08-26 00:41:09"
     },
-"win2"                   :  {
-"time_start_BUMP"        :  "2024-09-25 21:24:41"
+"win2"                        :  {
+"time_start_BUMP"             :  "2024-08-10 13:28:36"
     },
-"win3"                   :  {
-"time_start_BUMP"        :  "2024-09-25 22:24:58"
+"win3"                        :  {
+"time_start_BUMP"             :  "2024-08-25 22:24:58"
     },
-"win4"                   :  {
-"time_start_BUMP"        :  "2024-09-26 01:52:17"
+"win4"                        :  {
+"time_start_BUMP"             :  "2024-08-26 01:52:17"
     },
-"win5"                   :  {
-"time_start_BUMP"        :  "2024-09-26 01:36:38"
+"win5"                        :  {
+"time_start_BUMP"             :  "2024-08-26 01:36:38"
     }
 }
