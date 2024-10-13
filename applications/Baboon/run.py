@@ -31,11 +31,11 @@ def battery_repair():
     if find_it_and_click_it(Baboon_repair_1):
         for coordinates in repair_battery:
             pg.click(coordinates)
-            delay(0.8, 1)
+            delay(0.6, 0.8)
     elif find_it_and_click_it(Baboon_repair_2):
         for coordinates in repair_battery:
             pg.click(coordinates)
-            delay(0.8, 1)
+            delay(0.6, 0.8)
     else:
         pg.click(button_play)
 
@@ -43,9 +43,9 @@ def battery_repair():
 def make_dailik():
     for coordinates in Baboon_daily_reward:
         pg.click(coordinates)
-        delay(0.8, 1)
+        delay(0.6, 0.8)
     for battery in combo_battery:
         pg.click(battery)
-        delay(0.8, 1)
+        delay(0.6, 0.8)
     pg.press("Esc")
     delay()

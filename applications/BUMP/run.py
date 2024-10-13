@@ -24,14 +24,13 @@ def Run_BUMP(dailik, event, win_main):
 
 
 def swipe_news():
-    for _ in range(2):
-        for _ in range(4):
-            find_it_and_click_it(X)
-            delay(0.02, 0.1)
-        for _ in range(6):
-            swipe_left(duration=0.4)
-            delay(0.02, 0.1)
-        delay()
+    for _ in range(4):
+        find_it_and_click_it(X)
+        delay(0.04, 0.2)
+    for _ in range(4):
+        swipe_left(duration=0.4)
+        delay(0.04, 0.2)
+    delay()
 
 
 def claim_daily():
@@ -43,21 +42,21 @@ def claim_daily():
         drag_to_bottom(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
         for coordinates in daily_reward__1:
             pg.click(coordinates)
-            delay(0.02, 0.1)
+            delay(0.04, 0.2)
 
         drag_to_bottom(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
         drag_to_bottom(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
 
         for coordinates in daily_reward__2_3:
             pg.click(coordinates)
-            delay(0.02, 0.1)
+            delay(0.04, 0.2)
 
         drag_to_bottom(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
         drag_to_bottom(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
 
         for coordinates in daily_reward__2_3:
             pg.click(coordinates)
-            delay(0.02, 0.1)
+            delay(0.04, 0.2)
 
         drag_to_bottom(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
         drag_to_bottom(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
@@ -65,7 +64,7 @@ def claim_daily():
 
         for coordinates in daily_reward__4:
             pg.click(coordinates)
-            delay(0.02, 0.1)
+            delay(0.04, 0.2)
 
         for _ in range(9):
             drag_to_up(duration=0.4, cords_to_drag=cords_to_drag__for_BUMP)
