@@ -13,19 +13,20 @@ def Run_Dogiators(dailik, event, win_main):
         initial_setup_images=pre_run_clicker
     )
 
-    auto_get_telegram_subscribe_reward()
+    # auto_get_telegram_subscribe_reward()
 
     started_pack()
     auto_clicker_Dogiator()
 
     pg.click(open_upgrades)
     delay()
+    if event:
+        upgrades_Dogiators(
+            lines_numeric_to_upgrades=lines_numeric_to_upgrades,
+        )
 
-    upgrades_Dogiators(
-        lines_numeric_to_upgrades=lines_numeric_to_upgrades,
-    )
+        auto_clicker_Dogiator()
 
-    auto_clicker_Dogiator()
     Close_AnyWay()
 
 

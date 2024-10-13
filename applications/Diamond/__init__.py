@@ -6,10 +6,11 @@ get_diamonds_reward_from_game = (940, 820)
 diamond_daily_reward = [(1160, 340), (870, 480), (300, 940), (740, 340)]
 
 get_reward_diamond = ["get_reward_diamond"]
-diamond_tap_to_start_game = ["diamond_tap_to_start_game"]
-diamond_watch_ads = ["diamond_watch_ads"]
+diamond_tap_to_start_game_list = ["diamond_tap_to_start_game"]
+diamond_watch_ads = "diamond_watch_ads"
 diamond_claim_prerun = ["diamond_claim_prerun"]
 no_have_ads = ["button_close"]
+diamond_tap_to_start_game_str = "diamond_tap_to_start_game"
 
 open_upgrades = (950, 340)
 grade_1 = (1260, 500)

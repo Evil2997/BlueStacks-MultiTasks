@@ -9,3 +9,4 @@ color_lvl_up = [(7, 193, 96)]
 mining = (940, 940)
 get_reward = ["ElonMusk_get_reward"]
 close_upgrade_ElonMusk = (1740, 240)
+close_button = ["MuskEmpire_close_button"]

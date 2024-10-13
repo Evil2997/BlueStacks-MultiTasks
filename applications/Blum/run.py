@@ -11,10 +11,11 @@ def Run_Blum(dailik, event, win_main):
     for _ in range(2):
         pg.click(claim_reward_daily)
         delay()
-        for _ in range(3):
+        for _ in range(4):
             pg.click(claim_farm)
             delay()
-        Close_AnyWay()
+
+    Close_AnyWay()
 
 def get_toxin_game():
 

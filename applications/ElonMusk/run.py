@@ -37,6 +37,7 @@ def Run_ElonMusk(dailik, event, win_main):
         delay(0.02, 0.1)
 
     make_upgrades()
+    musk_clicker()
 
     Close_AnyWay()
 
@@ -49,10 +50,8 @@ def make_upgrades(iterations=1):
 
     for _ in range(iterations):
         pg.click(open_upgrades)
-        delay(0.2, 0.5)
-        pg.click(close_upgrade_ElonMusk)
-        delay(0.2, 0.5)
-        pg.click(open_upgrades)
+        delay()
+        find_it_and_click_it(close_button, threshold=0.88)
 
         for navigation_target in navigation_tabs:
             drags_numeric = 8 if navigation_target == "Майнинг" else 16
@@ -60,6 +59,7 @@ def make_upgrades(iterations=1):
             if target_coordinates := visual_scan_tracker(target_phrase=navigation_target):
                 pg.click(target_coordinates)
                 delay(0.2, 0.5)
+                find_it_and_click_it(close_button, threshold=0.88)
                 drag_to_up()
                 for _ in range(drags_numeric):
                     click_on_big_range_of_colors(
@@ -71,6 +71,7 @@ def make_upgrades(iterations=1):
                         eps=10
                     )
                     click_in_center_on_region_by_color(color_lvl_up)
+                    find_it_and_click_it(close_button, threshold=0.88)
                     drag_to_bottom()
                     delay(0.2, 0.5)
     delay()

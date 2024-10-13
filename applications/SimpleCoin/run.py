@@ -5,7 +5,7 @@ from modules.moves import Close_AnyWay
 
 def Run_SimpleCoin(dailik, event, win_main):
     find_SimpleCoin = find_SimpleCoin_2 if win_main else find_SimpleCoin_1
-    num_clicker = 16 if win_main else 2
+    num_clicker = 24 if win_main else 2
 
     PreRun(find_SimpleCoin, win_main)
 
