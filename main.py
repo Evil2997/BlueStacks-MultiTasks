@@ -1,4 +1,5 @@
 import pathlib
+import random
 import time
 from typing import Final
 
@@ -10,17 +11,14 @@ from applications.BUMP.run import Run_BUMP
 from applications.Baboon.run import Run_Baboon
 from applications.Blum.run import Run_Blum
 from applications.Clayton.run import Run_Clayton
-from applications.Cyber_Finance.run import Run_Cyber_Finance
 from applications.Diamond.run import Run_Diamond
-from applications.Dogiators.run import Run_Dogiators
-from applications.ElonMusk.run import Run_ElonMusk
 from applications.HEXN.run import Run_HEXN
 from applications.SimpleCoin.run import Run_SimpleCoin
 from applications.SnapSter.run import Run_SnapSter
 from applications.TON_Station.run import Run_TON_Station
 from applications.TimeFarm.run import Run_TimeFarm
 from modules import window_numbers
-from modules.Timers import check_reward as CHECK_DAILY_REWARD, time_end_print, delay
+from modules.Timers import check_reward as CHECK_DAILY_REWARD, time_end_print
 from modules.Timers import timer_buster as TIME_TO_EXTRA_BONUS
 from modules.Timers import timer_checker as TIME_CHECK
 from modules.Timers import timer_update as UPDATE_TIMER
@@ -47,6 +45,7 @@ def main():
                         if TIME_CHECK(seconds=sec, window_number=i, game=game, settings_file=settings_file):
                             ACTIVATE = True
                     if ACTIVATE:
+                        Stop_BS_Windows()
                         ACTIVATE_WINDOW(win, i)
                         games_is_activated_now = []
 
@@ -103,40 +102,45 @@ def main():
 
 
 if __name__ == '__main__':
-    if True:
-        setup_tesseract()
+    setup_tesseract()
 
-        MAIN_DIR: Final[pathlib.Path] = pathlib.Path(__file__).parent
+    MAIN_DIR: Final[pathlib.Path] = pathlib.Path(__file__).parent
 
-        settings_file = "Settings.json"
-        path_to_Settings: Final[pathlib.Path] = MAIN_DIR / settings_file
-        Settings = load_data(path_to_Settings)
+    settings_file = "Settings.json"
+    path_to_Settings: Final[pathlib.Path] = MAIN_DIR / settings_file
+    Settings = load_data(path_to_Settings)
 
-        rewards_file = "Rewards.json"
-        path_to_Rewards: Final[pathlib.Path] = MAIN_DIR / rewards_file
-        Rewards = load_data(path_to_Rewards)
+    rewards_file = "Rewards.json"
+    path_to_Rewards: Final[pathlib.Path] = MAIN_DIR / rewards_file
+    Rewards = load_data(path_to_Rewards)
 
-        special_events__file = "Special_Events.json"
-        path_to__Special_Events: Final[pathlib.Path] = MAIN_DIR / special_events__file
-        Special_Events = load_data(path_to__Special_Events)
+    special_events__file = "Special_Events.json"
+    path_to__Special_Events: Final[pathlib.Path] = MAIN_DIR / special_events__file
+    Special_Events = load_data(path_to__Special_Events)
+
+    SS = Seconds_time_to_Started = random.randint(50, 90)
+    dogiators_time = 2 * 3600 - SS
 
     Game_Settings = {
-        "Blum": {"seconds": 8 * 3600, "function": Run_Blum},
-        "Diamond": {"seconds": 8 * 3600, "function": Run_Diamond},
-        "Clayton": {"seconds": 8 * 3600, "function": Run_Clayton},
-        "SimpleCoin": {"seconds": 8 * 3600, "function": Run_SimpleCoin},
-        "TON_Station": {"seconds": 8 * 3600, "function": Run_TON_Station},
-        "BUMP": {"seconds": 6 * 3600, "function": Run_BUMP,
+        "Blum": {"seconds": 8 * 3600 - SS, "function": Run_Blum},
+        "Diamond": {"seconds": 8 * 3600 - SS, "function": Run_Diamond},
+        "Clayton": {"seconds": 8 * 3600 - SS, "function": Run_Clayton},
+        "SimpleCoin": {"seconds": 8 * 3600 - SS, "function": Run_SimpleCoin},
+        "TON_Station": {"seconds": 8 * 3600 - SS, "function": Run_TON_Station},
+        "BUMP": {"seconds": 6 * 3600 - SS, "function": Run_BUMP,
                  "special_event_1": 30 * 24 * 3600},
-        "BEE": {"seconds": 4 * 3600, "function": Run_BEE},
-        "HEXN": {"seconds": 4 * 3600, "function": Run_HEXN},
-        "TimeFarm": {"seconds": 4 * 3600, "function": Run_TimeFarm},
-        "SnapSter": {"seconds": 4 * 3600, "function": Run_SnapSter},
-        "Baboon": {"seconds": 4 * 3600, "function": Run_Baboon},
-        "BOOMS": {"seconds": 4 * 3600, "function": Run_BOOMS},
-        "ElonMusk": {"seconds": 2 * 3600, "function": Run_ElonMusk},
-        "Dogiators": {"seconds": 2 * 3600, "function": Run_Dogiators},
-        "Cyber_Finance": {"seconds": 24 * 3600, "function": Run_Cyber_Finance},
+        "SnapSter": {"seconds": 8 * 3600 - SS, "function": Run_SnapSter},
+        "HEXN": {"seconds": 4 * 3600 - SS, "function": Run_HEXN},
+        "TimeFarm": {"seconds": 4 * 3600 - SS, "function": Run_TimeFarm},
+        "Baboon": {"seconds": 4 * 3600 - SS, "function": Run_Baboon},
+        "BOOMS": {"seconds": 4 * 3600 - SS, "function": Run_BOOMS},
+        "BEE": {"seconds": 4 * 3600 - SS, "function": Run_BEE},
+
+        # "Dogiators": {"seconds": dogiators_time, "function": Run_Dogiators,
+        #               "special_event_1":  dogiators_time * 3},
+
+        # "Cyber_Finance": {"seconds": 24 * 3600 - SS, "function": Run_Cyber_Finance},
+        # "ElonMusk": {"seconds": 600, "function": Run_ElonMusk},
 
         # "Time_TON_Ecosystem": {"seconds": 8 * 3600, "function": Run_Time_TON_Ecosystem},
         # "Tomato": {"seconds": 23 * 3600, "function": Run_Tomato},
@@ -156,7 +160,8 @@ if __name__ == '__main__':
     time_end = time.time()
     time_end_print(time_end, time_start)
     # [RUN_SCRIPT]---[END]
+
 # SimpleCoin просмотр остатков кликов
-# HEXN выполнение квестов
+# Автоматическое выполнение заданий
 # BEE выгодные апгрейды
 # Blum игра
