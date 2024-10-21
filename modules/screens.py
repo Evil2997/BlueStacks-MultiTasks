@@ -6,6 +6,7 @@ import cv2
 import numpy as np
 import pyautogui as pg
 from PIL import ImageGrab
+from mss import mss
 from sklearn.cluster import DBSCAN
 
 from modules.Timers import delay
@@ -83,6 +84,7 @@ def hunt_for_the_button_in_list(name_list: list[str], hunt_in_seconds=10, region
                 delay(0.01, 0.1)
     return False
 
+
 def cycle_hunter_click(name_list: list[str], region=(0, 0, 1920, 1080)):
     for name in name_list:
         while True:
@@ -129,9 +131,8 @@ def click_on_big_range_of_colors(target_colors,
                                  pixel_threshold=300,
                                  tolerance=10,
                                  min_samples=10,
-                                 eps=10
-    ):
-
+                                 eps=10,
+                                 ):
     (x1, y1, x2, y2) = region
     screenshot = np.array(pg.screenshot(region=(x1, y1, x2 - x1, y2 - y1)))
     final_mask = np.zeros((screenshot.shape[0], screenshot.shape[1]), dtype=np.uint8)
@@ -143,6 +144,7 @@ def click_on_big_range_of_colors(target_colors,
         mask = cv2.inRange(screenshot, lower_bound, upper_bound)
         final_mask = cv2.bitwise_or(final_mask, mask)
 
+    # cv2.imwrite("111.png", final_mask)
     # Найдем белые пиксели (пиксели, соответствующие целевым цветам)
     white_pixels = np.column_stack(np.where(final_mask == 255))
 
