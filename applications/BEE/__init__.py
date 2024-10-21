@@ -11,3 +11,5 @@ upgrades_last = (1100, 700)
 
 colors_check_daily = [(119, 218, 64)]
 colors_upgrades = [(245, 152, 0), (255, 162, 0), (244, 151, 0), (217, 122, 0)]
+
+region_honey_update = (1036, 185, 1136, 875)

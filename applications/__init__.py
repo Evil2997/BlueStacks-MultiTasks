@@ -85,4 +85,5 @@ def PreRun(finder,
             pg.click(click_to_bottom_in_BotChat[chatbot_string])
         elif chat_type == "image":
             cycle_hunter_click(chat_image_name)
-    delay(24, 25)
+    N = 20
+    delay(24+N, 25+N)
