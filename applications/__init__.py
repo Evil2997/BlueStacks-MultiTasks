@@ -20,6 +20,7 @@ cords_close = (116, 132)
 middle_screen = (960, 540)
 close_main_group = (730, 130)
 click_to_bottom_in_BotChat = [(900, 880), (900, 800), (900, 720)]
+close_repeat_message = (1760, 900)
 
 
 def primary_hunter_click(finder, threshold, win_main=False,
@@ -82,8 +83,12 @@ def PreRun(finder,
     if chat:
         delay(4, 5)
         if chat_type == "click":
-            pg.click(click_to_bottom_in_BotChat[chatbot_string])
+            pg.click(close_repeat_message)
+            delay(0.2, 0.5)
+            for _ in range(2):
+                pg.click(click_to_bottom_in_BotChat[chatbot_string])
+                delay(0.2, 0.5)
         elif chat_type == "image":
             cycle_hunter_click(chat_image_name)
     N = 20
-    delay(24+N, 25+N)
+    delay(24 + N, 25 + N)
