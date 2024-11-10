@@ -19,6 +19,8 @@ main_group = ["main_group_1", "main_group_2"]
 close_all_windows = ["stop_all_BS_win", "yes_close_all"]
 Telegram = ["Telegram"]
 
+skip_option = ["skip_option"]
+
 telegram_account_settings = "telegram_account_settings"
 
 

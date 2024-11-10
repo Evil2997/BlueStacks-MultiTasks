@@ -16,7 +16,7 @@ def Stop_BS_Windows():
                 delay(0.02, 0.2)
             for coordinates in close_all_BS_window:
                 pg.click(coordinates)
-                delay()
+                delay(1.6, 3.2)
 
 
 def activate_main_window():
@@ -41,8 +41,10 @@ def activate_window(win, win_numeric):
     pg.click(WIN_START[f"win{i}"]["cords"])
     delay(30, 40)
     activate_main_window()
+    hunt_for_the_button_in_list(skip_option, hunt_in_seconds=2, threshold=0.88)
     cycle_hunter_click(connect_to_vpn_AND_open_telegram)
     delay()
+    hunt_for_the_button_in_list(skip_option, hunt_in_seconds=2, threshold=0.88)
     find_it_and_click_it(Telegram, threshold=0.88)
     delay(20, 30)
     hunt_for_the_button_in_list(main_group, hunt_in_seconds=4)

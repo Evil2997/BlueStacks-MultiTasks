@@ -118,22 +118,22 @@ if __name__ == '__main__':
     path_to__Special_Events: Final[pathlib.Path] = MAIN_DIR / special_events__file
     Special_Events = load_data(path_to__Special_Events)
 
-    SS = Seconds_time_to_Started = random.randint(50, 90)
+    SS = Seconds_time_to_Started = random.randint(30, 40)
     dogiators_time = 2 * 3600 - SS
 
     Game_Settings = {
         "Blum": {"seconds": 8 * 3600 - SS, "function": Run_Blum},
         "Diamond": {"seconds": 8 * 3600 - SS, "function": Run_Diamond},
-        "Clayton": {"seconds": 8 * 3600 - SS, "function": Run_Clayton},
+        "Clayton": {"seconds": 16 * 3600 - SS, "function": Run_Clayton},
         "SimpleCoin": {"seconds": 8 * 3600 - SS, "function": Run_SimpleCoin},
-        "TON_Station": {"seconds": 8 * 3600 - SS, "function": Run_TON_Station},
-        "BUMP": {"seconds": 6 * 3600 - SS, "function": Run_BUMP,
-                 "special_event_1": 30 * 24 * 3600},
-        "SnapSter": {"seconds": 8 * 3600 - SS, "function": Run_SnapSter},
-        "HEXN": {"seconds": 4 * 3600 - SS, "function": Run_HEXN},
-        "TimeFarm": {"seconds": 4 * 3600 - SS, "function": Run_TimeFarm},
-        "Baboon": {"seconds": 4 * 3600 - SS, "function": Run_Baboon},
-        "BOOMS": {"seconds": 4 * 3600 - SS, "function": Run_BOOMS},
+        # "TON_Station": {"seconds": 8 * 3600 - SS, "function": Run_TON_Station},
+        # "BUMP": {"seconds": 6 * 3600 - SS, "function": Run_BUMP,
+        #          "special_event_1": 30 * 24 * 3600},
+        # "SnapSter": {"seconds": 8 * 3600 - SS, "function": Run_SnapSter},
+        # "HEXN": {"seconds": 4 * 3600 - SS, "function": Run_HEXN},
+        # "TimeFarm": {"seconds": 8 * 3600 - SS, "function": Run_TimeFarm},
+        # "Baboon": {"seconds": 4 * 3600 - SS, "function": Run_Baboon},
+        # "BOOMS": {"seconds": 4 * 3600 - SS, "function": Run_BOOMS},
         "BEE": {"seconds": 4 * 3600 - SS, "function": Run_BEE},
 
         # "Dogiators": {"seconds": dogiators_time, "function": Run_Dogiators,
@@ -147,7 +147,6 @@ if __name__ == '__main__':
         # "PocketFi": {"seconds": 5 * 3600, "function": Run_PocketFi},
         # "Seeds": {"seconds": 4 * 3600, "function": Run_Seeds},
         # "DejenDog": {"seconds": 4 * 3600, "function": Run_DejenDog},
-        # +3 game
     }
 
     # [RUN_SCRIPT]---[START]
@@ -163,5 +162,4 @@ if __name__ == '__main__':
 
 # SimpleCoin просмотр остатков кликов
 # Автоматическое выполнение заданий
-# BEE выгодные апгрейды
 # Blum игра
